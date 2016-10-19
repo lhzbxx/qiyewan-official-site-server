@@ -1,6 +1,8 @@
 package com.qiyewan.domain;
 
-import javax.persistence.Column;
+import lombok.Data;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -9,6 +11,9 @@ import javax.persistence.Id;
  *
  * 用户-认证
  */
+
+@Entity
+@Data
 public class UserAuth {
 
     @Id
