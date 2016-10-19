@@ -28,4 +28,10 @@ public class UserAuth {
 
     private String salt;
 
+    public UserAuth(Long userId, String identifier, String credential) {
+        this.userId = userId;
+        this.identifier = identifier;
+        this.credential = credential;
+    }
+
 }

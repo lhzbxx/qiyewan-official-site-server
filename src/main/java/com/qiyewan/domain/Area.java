@@ -9,23 +9,28 @@ import javax.persistence.Id;
 /**
  * Created by lhzbxx on 2016/10/19.
  *
- * 常见问题
+ * 区域
  */
 
 @Entity
 @Data
-public class Faq {
+public class Area {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long productId;
+    // 省
+    private String province;
 
-    // 问题
-    private String question;
+    // 城市
+    private String city;
 
-    // 回答
-    private String answer;
+    // 区域
+    private String area;
+
+    public String address() {
+        return this.province + this.city + this.area;
+    }
 
 }

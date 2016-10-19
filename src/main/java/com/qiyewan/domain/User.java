@@ -1,10 +1,9 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -21,12 +20,18 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    // 手机号
     private String phone;
 
+    // 头像
     private String avatar;
 
-    private Date createAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createAt = new Date();
 
-    private Date updateAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updateAt = new Date();
 
 }

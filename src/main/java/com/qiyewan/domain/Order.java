@@ -20,6 +20,9 @@ public class Order {
     @GeneratedValue
     private Long id;
 
+    // 区域ID
+    private Long areaId;
+
     // 订单编号
     private Long serialId;
 
