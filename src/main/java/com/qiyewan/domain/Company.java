@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by lhzbxx on 2016/10/19.
  *
- * 企业/公司信息
+ * 公司/企业信息
  */
 
 @Entity
