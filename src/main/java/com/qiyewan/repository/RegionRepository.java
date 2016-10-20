@@ -1,6 +1,6 @@
 package com.qiyewan.repository;
 
-import com.qiyewan.domain.Area;
+import com.qiyewan.domain.Region;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface AreaRepository extends JpaRepository<Area, Long> {
+public interface RegionRepository extends JpaRepository<Region, Long> {
 }

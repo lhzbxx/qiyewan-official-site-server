@@ -14,7 +14,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Area {
+public class Region {
 
     @Id
     @GeneratedValue

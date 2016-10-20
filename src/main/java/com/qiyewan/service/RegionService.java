@@ -6,5 +6,5 @@ package com.qiyewan.service;
  * 区域
  */
 
-public interface AreaService {
+public interface RegionService {
 }

@@ -3,7 +3,7 @@ version: '2'
 services:
 
   mariadb:
-    build: ./storage/dockerfiles/mariadb
+    build: ./storage/dockerfiles/MariaDB
     volumes_from:
       - volumes_data
     ports:
@@ -16,12 +16,24 @@ services:
     container_name: Site_mariadb
 
   redis:
-    build: ./storage/dockerfiles/redis
+    build: ./storage/dockerfiles/Redis
     volumes_from:
       - volumes_data
     ports:
       - "6379:6379"
     container_name: Site_redis
+
+  rabbitmq:
+    build: ./storage/dockerfiles/RabbitMQ
+    ports:
+        - "5672:5672"
+        - "15671:15671"
+        - "15672:15672"
+    privileged: true
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest
+    container_name: Site_rabbitmq
 
   volumes_data:
     image: tianon/true
