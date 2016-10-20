@@ -52,6 +52,7 @@ public class Ip2RegionUtil {
             response.append(inputLine);
         }
         in.close();
+
         return response.toString();
     }
 
