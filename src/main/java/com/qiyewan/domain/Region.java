@@ -27,10 +27,10 @@ public class Region {
     private String city;
 
     // 区域
-    private String area;
+    private String district;
 
     public String address() {
-        return this.province + this.city + this.area;
+        return this.province + this.city + this.district;
     }
 
 }

@@ -27,7 +27,7 @@ public class Cart {
     private Long productId;
 
     // 区域ID
-    private Long areaId;
+    private Long regionId;
 
     // 数量
     private Integer amount;
@@ -35,5 +35,7 @@ public class Cart {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
+
+    public Cart() {}
 
 }

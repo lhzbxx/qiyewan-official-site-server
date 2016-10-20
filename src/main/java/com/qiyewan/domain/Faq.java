@@ -20,6 +20,7 @@ public class Faq {
     @GeneratedValue
     private Long id;
 
+    // 产品ID
     private Long productId;
 
     // 问题

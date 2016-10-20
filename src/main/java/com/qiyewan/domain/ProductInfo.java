@@ -1,5 +1,6 @@
 package com.qiyewan.domain;
 
+import com.qiyewan.enums.InfoType;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -7,26 +8,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Created by lhzbxx on 2016/10/19.
+ * Created by lhzbxx on 2016/10/20.
  *
- * 评论-标签
+ * 产品信息
  */
 
 @Entity
 @Data
-public class ReviewTag {
+public class ProductInfo {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    // 产品ID
     private Long productId;
 
-    // 评论ID
-    private Long reviewId;
+    private InfoType infoType;
 
-    // 标签内容
+    private String url;
+
+    private String title;
+
     private String content;
 
 }

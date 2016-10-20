@@ -7,26 +7,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Created by lhzbxx on 2016/10/19.
+ * Created by lhzbxx on 2016/10/20.
  *
- * 评论-标签
+ * 产品分类
  */
 
 @Entity
 @Data
-public class ReviewTag {
+public class Classification {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    // 产品ID
-    private Long productId;
-
-    // 评论ID
-    private Long reviewId;
-
-    // 标签内容
-    private String content;
+    private String name;
 
 }

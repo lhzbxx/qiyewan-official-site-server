@@ -6,8 +6,11 @@ package com.qiyewan.enums;
  * 产品-状态
  */
 
-public enum ProductStatus {
+public enum ProductState {
 
-    PutAway, SoldOut
+    // 在售
+    PutAway,
+    // 下架
+    SoldOut
 
 }

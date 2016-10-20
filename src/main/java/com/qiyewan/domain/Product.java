@@ -1,5 +1,6 @@
 package com.qiyewan.domain;
 
+import com.qiyewan.enums.ProductState;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -27,6 +28,17 @@ public class Product {
 
     private String classificationName;
 
+    private Long regionId;
+
+    // 是否热门
+    private Boolean isHot;
+
+    // 热度（排序）
+    private Integer heat;
+
+    // 状态
+    private ProductState productState;
+
     // 单价
     private BigDecimal unitPrice;
 
@@ -36,6 +48,7 @@ public class Product {
     // 描述
     private String summary;
 
+    // 封面
     private String cover;
 
 }
