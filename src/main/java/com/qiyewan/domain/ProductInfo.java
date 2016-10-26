@@ -31,4 +31,8 @@ public class ProductInfo {
 
     private String content;
 
+    private String whatNeed;
+
+    private String whatObtain;
+
 }

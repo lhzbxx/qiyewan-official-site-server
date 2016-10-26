@@ -1,12 +1,12 @@
 package com.qiyewan.controller;
 
-import com.qiyewan.utils.Ip2RegionUtil;
-import com.qiyewan.utils.SmsUtil;
+import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.enums.ErrorType;
+import com.qiyewan.service.CaptchaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -17,40 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
+//    @Autowired
+//    private TokenService tokenService;
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private CaptchaService captchaService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String hello() {
-        return "OK";
-    }
+//    @Autowired
+//    private UserService userService;
 
-    @RequestMapping(value = "/ip", method = RequestMethod.GET)
-    public String ip() {
-        return new Ip2RegionUtil("59.78.46.141").toRegion();
-    }
-
-    @RequestMapping(value = "/sms", method = RequestMethod.GET)
-    public String sms() {
-        try {
-            return SmsUtil.send("13651608916", "TEST");
-        } catch (Exception e) {
-            e.printStackTrace();
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public ErrorDto<?> register(@Validated @RequestBody AuthDto authDto) {
+        if (authDto.getCaptcha().isEmpty()) {
+            return new ErrorDto<>(ErrorType.InvalidParamError, "验证码不能为空！");
         }
-        return "网络错误！";
+        return new ErrorDto<>();
     }
 
-    @RequestMapping(value = "/write", method = RequestMethod.GET)
-    public String write() {
-        stringRedisTemplate.opsForValue().set("key", "fuck you!");
-        return "OK";
+    @RequestMapping(value = "/captcha/{phone}", method = RequestMethod.POST)
+    public ErrorDto<?> getForDay(@PathVariable String phone) {
+        // TODO: 2016/10/26 验证手机号
+//        SmsUtil.send(phone, "");
+        return new ErrorDto<>();
     }
-
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read() {
-        return stringRedisTemplate.opsForValue().get("key");
-    }
-
-
 
 }

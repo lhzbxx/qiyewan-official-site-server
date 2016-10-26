@@ -1,5 +1,7 @@
 package com.qiyewan.controller;
 
+import com.qiyewan.dto.AuthDto;
+import com.qiyewan.service.CaptchaService;
 import com.qiyewan.utils.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by lhzbxx on 2016/10/20.
  *
- * 用户-身份认证
+ * 测试
  */
 
 @RestController
@@ -19,6 +21,9 @@ public class TestController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private CaptchaService captchaService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String hello() {
@@ -42,15 +47,13 @@ public class TestController {
 
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String write() {
-        stringRedisTemplate.opsForValue().set("key", "fuck you!");
+        captchaService.setCaptcha("13651608916", "123456");
         return "OK";
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read() {
-        return stringRedisTemplate.opsForValue().get("key");
+    public AuthDto read() {
+        return captchaService.getUserWithToken("123456");
     }
-
-
 
 }
