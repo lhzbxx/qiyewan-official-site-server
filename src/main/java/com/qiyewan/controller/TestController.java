@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class AuthController {
+public class TestController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
