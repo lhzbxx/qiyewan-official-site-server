@@ -10,11 +10,17 @@ import com.qiyewan.dto.AuthDto;
 
 public interface CaptchaService {
 
+    // 6位
+    // 长度
     int captchaLength = 6;
+
+    // 15分钟
+    // 过期时间
+    long expire = 15 * 60;
 
     String numberChars = "0123456789";
 
-    AuthDto getUserWithToken(String token);
+    AuthDto getAuthDtoWithPhone(String token);
 
     void setCaptcha(String phone, String password);
 

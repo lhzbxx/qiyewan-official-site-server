@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -24,6 +25,8 @@ public class AuthDto {
 
     @Size(min = 4, max = 6)
     private String captcha;
+
+    private Date date = new Date();
 
     public AuthDto() {}
 

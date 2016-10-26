@@ -53,7 +53,7 @@ public class TestController {
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public AuthDto read() {
-        return captchaService.getUserWithToken("123456");
+        return captchaService.getAuthDtoWithPhone("123456");
     }
 
 }

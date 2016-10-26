@@ -1,14 +1,12 @@
 package com.qiyewan.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qiyewan.dto.AuthDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -20,40 +18,32 @@ import java.util.Random;
 public class CaptchaServiceImpl implements CaptchaService {
 
     @Autowired
-    private StringRedisTemplate template;
-
-    private ObjectMapper mapper = new ObjectMapper();
+    private RedisTemplate<String, AuthDto> template;
 
     @Override
-    public AuthDto getUserWithToken(String token) {
-        String key = keyWithToken(token);
-        try {
-            return mapper.readValue(template.opsForValue().get(key), AuthDto.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public AuthDto getAuthDtoWithPhone(String phone) {
+        String key = keyWithPhone(phone);
+        return template.opsForValue().get(key);
     }
 
     @Override
     public void setCaptcha(String phone, String password) {
-        String token = generateToken();
-        try {
-            template.opsForValue().set(keyWithToken(token), mapper.writeValueAsString(new AuthDto(phone, password, token)));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        String captcha = generateCaptcha();
+        String key = keyWithPhone(phone);
+        template.opsForValue().set(key, new AuthDto(phone, password, captcha));
+        template.expire(key, expire, TimeUnit.SECONDS);
     }
 
-    private String keyWithToken(String token) {
-        return "captcha:" + token;
+    private String keyWithPhone(String phone) {
+        return "captcha:" + phone;
     }
 
-    private String generateToken() {
+    private String generateCaptcha() {
         StringBuilder stringBuilder = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < captchaLength; i++)
             stringBuilder.append(numberChars.charAt(random.nextInt(numberChars.length())));
         return stringBuilder.toString();
     }
+
 }
