@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -21,10 +22,9 @@ public class SmsUtil {
                 "?account=" + account +
                 "&pswd=" + password +
                 "&mobile=" + mobile +
-                "&msg=" + msg +
+                "&msg=" + URLEncoder.encode(msg, "UTF-8") +
                 "&needstatus=true" +
                 "&product=&extno=";
-        System.out.println(url);
         URL obj = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
         conn.setRequestMethod("GET");

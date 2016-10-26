@@ -20,8 +20,8 @@ public interface CaptchaService {
 
     String numberChars = "0123456789";
 
-    AuthDto getAuthDtoWithPhone(String token);
+    AuthDto getAuthDtoWithPhone(String phone);
 
-    void setCaptcha(String phone, String password);
+    AuthDto setCaptcha(String phone);
 
 }

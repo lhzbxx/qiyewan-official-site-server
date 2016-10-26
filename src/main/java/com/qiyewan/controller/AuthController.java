@@ -4,6 +4,8 @@ import com.qiyewan.dto.AuthDto;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.enums.ErrorType;
 import com.qiyewan.service.CaptchaService;
+import com.qiyewan.service.TokenService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AuthController {
 
-//    @Autowired
-//    private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private CaptchaService captchaService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
 //    @Autowired
 //    private UserService userService;
@@ -36,8 +41,8 @@ public class AuthController {
 
     @RequestMapping(value = "/captcha/{phone}", method = RequestMethod.POST)
     public ErrorDto<?> getForDay(@PathVariable String phone) {
-        // TODO: 2016/10/26 验证手机号
-//        SmsUtil.send(phone, "");
+        AuthDto authDto = captchaService.setCaptcha(phone);
+        rabbitTemplate.convertAndSend("sms-queue", authDto);
         return new ErrorDto<>();
     }
 

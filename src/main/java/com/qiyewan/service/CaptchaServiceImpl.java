@@ -27,11 +27,13 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     @Override
-    public void setCaptcha(String phone, String password) {
+    public AuthDto setCaptcha(String phone) {
         String captcha = generateCaptcha();
         String key = keyWithPhone(phone);
-        template.opsForValue().set(key, new AuthDto(phone, password, captcha));
+        AuthDto authDto = new AuthDto(phone, "", captcha);
+        template.opsForValue().set(key, authDto);
         template.expire(key, expire, TimeUnit.SECONDS);
+        return authDto;
     }
 
     private String keyWithPhone(String phone) {

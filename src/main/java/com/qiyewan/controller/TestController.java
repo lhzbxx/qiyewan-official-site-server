@@ -47,7 +47,7 @@ public class TestController {
 
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String write() {
-        captchaService.setCaptcha("13651608916", "123456");
+        captchaService.setCaptcha("13651608916");
         return "OK";
     }
 
