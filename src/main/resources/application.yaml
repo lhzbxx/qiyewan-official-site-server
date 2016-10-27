@@ -19,16 +19,15 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   redis:
     host: 127.0.0.1
+  rabbitmq:
+    addresses: 127.0.0.1:5672
+    username: guest
+    password: guest
 server:
   error:
     whitelabel:
       enabled: false
 
-## RabbitMQ
-##spring.rabbitmq.addresses=127.0.0.1:5672
-##spring.rabbitmq.username=guest
-##spring.rabbitmq.password=guest
-#
 ## SSL
 ##server.port=8443
 ##server.ssl.key-store=.keystore
