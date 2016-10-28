@@ -16,4 +16,7 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long> {
     UserAuth findFirstByIdentifierAndCredential(String identifier, String credential);
 
     UserAuth findFirstByIdentifier(String identifier);
+
+    UserAuth findByUserId(Long userId);
+
 }

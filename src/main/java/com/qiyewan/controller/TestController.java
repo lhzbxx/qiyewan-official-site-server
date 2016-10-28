@@ -2,7 +2,7 @@ package com.qiyewan.controller;
 
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.service.CaptchaService;
-import com.qiyewan.utils.Ip2RegionUtil;
+import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

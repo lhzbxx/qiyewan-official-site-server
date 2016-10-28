@@ -1,4 +1,4 @@
-package com.qiyewan.utils;
+package com.qiyewan.utils.Ip2Region;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

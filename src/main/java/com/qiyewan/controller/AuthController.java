@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/captcha/{phone}", method = RequestMethod.POST)
-    public ErrorDto<?> getForDay(@PathVariable String phone) {
+    public ErrorDto<?> requestCaptcha(@PathVariable String phone) {
         AuthDto authDto = captchaService.setCaptcha(phone);
         rabbitTemplate.convertAndSend("sms-queue", authDto);
         return new ErrorDto<>();

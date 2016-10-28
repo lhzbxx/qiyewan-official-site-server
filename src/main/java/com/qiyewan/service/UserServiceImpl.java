@@ -3,6 +3,8 @@ package com.qiyewan.service;
 import com.qiyewan.domain.User;
 import com.qiyewan.domain.UserAuth;
 import com.qiyewan.dto.AuthDto;
+import com.qiyewan.exceptions.DuplicatedException;
+import com.qiyewan.exceptions.NoAuthException;
 import com.qiyewan.repository.UserAuthRepository;
 import com.qiyewan.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long createAndSaveUser(AuthDto authDto) {
         if (userAuthRepository.findFirstByIdentifier(authDto.getPhone()) != null) {
-//            throw new DuplicatedException("已经被绑定或注册。");
+            throw new DuplicatedException("已经被绑定或注册。");
         }
         User user = new User();
         userRepository.saveAndFlush(user);
@@ -52,7 +54,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long updateUserPhone(AuthDto authDto) {
-        return null;
+    public Long updateUserPhone(Long userId, AuthDto authDto) {
+        UserAuth userAuth = userAuthRepository.findByUserId(userId);
+        if (userAuth == null) {
+            throw new NoAuthException("用户不存在！");
+        }
+        if ( ! userAuth.isValid(authDto.getPassword())) {
+            throw new NoAuthException("密码不正确！");
+        }
+        userAuth.setIdentifier(authDto.getPhone());
+        userAuthRepository.saveAndFlush(userAuth);
+        return userAuth.getUserId();
     }
 }

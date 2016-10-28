@@ -17,6 +17,6 @@ public interface UserService {
 
     Long createAndSaveUser(AuthDto authDto);
 
-    Long updateUserPhone(AuthDto authDto);
+    Long updateUserPhone(Long userId, AuthDto authDto);
 
 }
