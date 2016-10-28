@@ -22,6 +22,9 @@ public class Order {
     @GeneratedValue
     private Long id;
 
+    // 用户ID
+    private Long userId;
+
     // 区域ID
     private Long regionId;
 
