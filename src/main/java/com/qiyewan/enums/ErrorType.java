@@ -12,7 +12,7 @@ public enum ErrorType {
     InvalidMethodError(1001, "请求方法不正确。"),
     DatabaseError(1002, "数据库写入失败。"),
     InvalidApiError(1003, "请求的API不存在。"),
-    UnsupportMedia(1004, "请求格式不合法，请使用JSON！"),
+    UnsupportedMedia(1004, "请求格式不合法，请使用JSON！"),
 
     // 用户行为错误
     NoAuthError(2001, "缺少权限。"),
