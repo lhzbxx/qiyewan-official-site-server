@@ -1,7 +1,6 @@
 package com.qiyewan.service;
 
 import com.qiyewan.dto.AuthDto;
-import com.qiyewan.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +13,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RabbitService {
 
+    // 注意！
+    // 生产环境使用打印验证码的形式方便测试。
+    // 正式环境中要解除这部分注释。
     @RabbitListener(queues = "sms-queue")
     public void sendSMS(AuthDto authDto) {
-        try {
-            SmsUtil.send(authDto.getPhone(), "您的验证码是" + authDto.getCaptcha() + ", 15分钟内有效。");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println(authDto.getCaptcha());
+//        try {
+//            SmsUtil.send(authDto.getPhone(), "您的验证码是" + authDto.getCaptcha() + ", 15分钟内有效。");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 public class AuthDto {
 
-    @NotNull
+    @NotNull(message = "Error.Param.NO_PHONE")
     @Size
     private String phone;
 
@@ -29,6 +29,11 @@ public class AuthDto {
     private Date date = new Date();
 
     public AuthDto() {}
+
+    public AuthDto(String phone, String password) {
+        this.phone = phone;
+        this.password = password;
+    }
 
     public AuthDto(String phone, String password, String captcha) {
         this.phone = phone;

@@ -30,6 +30,8 @@ public class UserAuth {
 
     private String salt;
 
+    public UserAuth() {}
+
     public UserAuth(Long userId, String identifier, String credential) {
         this.salt = UUID.randomUUID().toString();
         this.userId = userId;

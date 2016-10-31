@@ -1,9 +1,11 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -21,9 +23,11 @@ public class Cart {
     private Long id;
 
     // 用户ID
+    @JsonIgnore
     private Long userId;
 
     // 产品ID
+    @NotNull(message = "Error.Param.NO_PRODUCT_ID")
     private Long productId;
 
     // 区域ID

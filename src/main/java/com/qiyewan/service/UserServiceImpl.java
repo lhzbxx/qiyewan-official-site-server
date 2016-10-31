@@ -35,7 +35,10 @@ public class UserServiceImpl implements UserService {
         UserAuth userAuth = this.userAuthRepository.
                 findFirstByIdentifierAndCredential(authDto.getPhone(), authDto.getPassword());
         if (userAuth == null) {
-            // TODO: 2016/10/26 Throw IllegalActionException
+            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
+        }
+        if ( ! userAuth.isValid(authDto.getPassword())) {
+            throw new NoAuthException("Error.Auth.WRONG_PASSWORD");
         }
         Long userId = userAuth.getUserId();
         return this.userRepository.findOne(userId);
@@ -44,9 +47,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long createAndSaveUser(AuthDto authDto) {
         if (userAuthRepository.findFirstByIdentifier(authDto.getPhone()) != null) {
-            throw new DuplicatedException("已经被绑定或注册。");
+            throw new DuplicatedException("Error.Duplicated.USER_EXISTS");
         }
-        User user = new User();
+        User user = new User(authDto.getPhone());
         userRepository.saveAndFlush(user);
         UserAuth userAuth = new UserAuth(user.getId(), authDto.getPhone(), authDto.getPassword());
         this.userAuthRepository.save(userAuth);
@@ -57,10 +60,10 @@ public class UserServiceImpl implements UserService {
     public Long updateUserPhone(Long userId, AuthDto authDto) {
         UserAuth userAuth = userAuthRepository.findByUserId(userId);
         if (userAuth == null) {
-            throw new NoAuthException("用户不存在！");
+            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
         if ( ! userAuth.isValid(authDto.getPassword())) {
-            throw new NoAuthException("密码不正确！");
+            throw new NoAuthException("Error.Auth.WRONG_PASSWORD");
         }
         userAuth.setIdentifier(authDto.getPhone());
         userAuthRepository.saveAndFlush(userAuth);

@@ -1,6 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.dto.AuthDto;
+import com.qiyewan.exceptions.IllegalActionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,11 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public AuthDto getAuthDtoWithPhone(String phone) {
         String key = keyWithPhone(phone);
-        return template.opsForValue().get(key);
+        AuthDto authDto = template.opsForValue().get(key);
+        if (authDto == null) {
+            throw new IllegalActionException("Error.Action.INVALID_OR_EXPIRED_CAPTCHA");
+        }
+        return authDto;
     }
 
     @Override

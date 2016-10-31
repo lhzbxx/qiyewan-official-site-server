@@ -34,4 +34,10 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
 
+    public User() {}
+
+    public User(String phone) {
+        this.phone = phone;
+    }
+
 }

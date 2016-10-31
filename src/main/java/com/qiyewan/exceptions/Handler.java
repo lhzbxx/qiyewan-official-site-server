@@ -30,7 +30,7 @@ public class Handler {
     @ResponseBody
     public ErrorDto<String> processValidationError
             (MethodArgumentNotValidException e) throws Exception {
-        return new ErrorDto<>(ErrorType.InvalidParamError);
+        return new ErrorDto<>(ErrorType.InvalidParamError, e.getMessage());
     }
 
     @ExceptionHandler(DuplicatedException.class)
