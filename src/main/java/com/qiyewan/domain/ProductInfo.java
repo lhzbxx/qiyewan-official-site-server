@@ -1,11 +1,9 @@
 package com.qiyewan.domain;
 
-import com.qiyewan.enums.InfoType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -19,20 +17,21 @@ public class ProductInfo {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
-    private Long productId;
+    // 产品ID
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    private Product product;
 
-    private InfoType infoType;
-
-    private String url;
-
+    // 标题
     private String title;
 
+    // 主要内容
     private String content;
 
-    private String whatNeed;
-
-    private String whatObtain;
+    public ProductInfo() {}
 
 }

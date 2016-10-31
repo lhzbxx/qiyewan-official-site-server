@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -61,6 +62,16 @@ public class Product {
     // 封面
     private String cover;
 
+    // 您需要提供...
+    private String whatNeed;
+
+    // 您将得到...
+    private String whatObtain;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    @PrimaryKeyJoinColumn
+    private List<ProductInfo> infoList;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
@@ -68,5 +79,7 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
+
+    public Product() {}
 
 }
