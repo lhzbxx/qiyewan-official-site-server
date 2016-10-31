@@ -4,6 +4,10 @@ import com.qiyewan.domain.Cart;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +28,19 @@ public class CartApi {
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    public ErrorDto<?> add(@RequestBody @Validated Cart cart) {
+    @RequestMapping(value = "/carts", method = RequestMethod.GET)
+    public Page<Cart> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Long userId = (Long) request.getAttribute("userId");
-        return new ErrorDto<>();
+        return cartService.getCartsByUser(userId, pageable);
     }
 
-    @RequestMapping(value = "/cart/{cartId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/carts", method = RequestMethod.POST)
+    public Cart add(@RequestBody @Validated Cart cart) {
+        Long userId = (Long) request.getAttribute("userId");
+        return cartService.saveCart(userId, cart);
+    }
+
+    @RequestMapping(value = "/carts/{cartId}", method = RequestMethod.DELETE)
     public ErrorDto<?> remove(@PathVariable Long cartId) {
         Long userId = (Long) request.getAttribute("userId");
         cartService.deleteCart(userId, cartId);

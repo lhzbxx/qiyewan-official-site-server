@@ -36,4 +36,9 @@ public class AuthDto {
         this.captcha = captcha;
     }
 
+    public boolean isEqual(AuthDto authDto) {
+        return this.phone.equals(authDto.getPhone()) &&
+                this.captcha.equals(authDto.getCaptcha());
+    }
+
 }

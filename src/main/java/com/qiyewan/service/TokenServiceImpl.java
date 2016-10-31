@@ -1,5 +1,6 @@
 package com.qiyewan.service;
 
+import com.qiyewan.exceptions.NoAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Long getUserIdWithToken(String token) {
-        return Long.parseLong(template.opsForValue().get(keyWithToken(token)));
+        String userId = template.opsForValue().get(keyWithToken(token));
+        if (userId == null) throw new NoAuthException("Error.Auth.INVALID_TOKEN");
+        return Long.parseLong(userId);
     }
 
     @Override

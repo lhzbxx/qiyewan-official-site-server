@@ -33,8 +33,8 @@ public class AuthAop {
     @Before("apiAuth()")
     public void beforeApiAuth(JoinPoint joinPoint) throws Throwable {
         String authorization = request.getHeader("Authorization");
+        if (authorization == null) throw new NoAuthException("Error.Auth.NO_TOKEN");
         Long userId = tokenService.getUserIdWithToken(authorization);
-        if (userId == null) throw new NoAuthException("Token无效或已过期。");
         request.setAttribute("userId", userId);
     }
 

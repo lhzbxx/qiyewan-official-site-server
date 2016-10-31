@@ -5,6 +5,7 @@ import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.enums.ErrorType;
 import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.TokenService;
+import com.qiyewan.service.UserService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -28,14 +29,22 @@ public class AuthController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ErrorDto<?> register(@Validated @RequestBody AuthDto authDto) {
         if (authDto.getCaptcha().isEmpty()) {
-            return new ErrorDto<>(ErrorType.InvalidParamError, "验证码不能为空！");
+            return new ErrorDto<>(ErrorType.InvalidParamError, "Error.Param.NO_CAPTCHA");
         }
+        AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
+        if (auth == null) {
+            return new ErrorDto<>(ErrorType.IllegalActionError, "Error.Action.INVALID_OR_EXPIRED_CAPTCHA");
+        }
+        if ( ! auth.isEqual(authDto)) {
+            return new ErrorDto<>(ErrorType.IllegalActionError, "Error.Action.WRONG_CAPTCHA");
+        }
+        userService.createAndSaveUser(authDto);
         return new ErrorDto<>();
     }
 
