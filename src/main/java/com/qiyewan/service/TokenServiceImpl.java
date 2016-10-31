@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -29,7 +30,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String setToken(Long userId) {
         String token = generateToken();
-        template.opsForValue().set(keyWithToken(token), userId.toString());
+        String key = keyWithToken(token);
+        template.opsForValue().set(key, userId.toString());
+        template.expire(key, expire, TimeUnit.DAYS);
         return token;
     }
 

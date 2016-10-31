@@ -32,8 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByAuth(AuthDto authDto) {
-        UserAuth userAuth = this.userAuthRepository.
-                findFirstByIdentifierAndCredential(authDto.getPhone(), authDto.getPassword());
+        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(authDto.getPhone());
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }

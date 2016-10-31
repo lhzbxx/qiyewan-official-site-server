@@ -1,6 +1,6 @@
 package com.qiyewan.domain;
 
-import com.alipay.sign.RSA;
+import com.qiyewan.utils.Md5Util;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -36,15 +36,11 @@ public class UserAuth {
         this.salt = UUID.randomUUID().toString();
         this.userId = userId;
         this.identifier = identifier;
-        this.credential = RSA.sign(credential, this.salt, "utf-8");
-    }
-
-    public void rsaWithSalt() {
-        this.credential = RSA.sign(credential, this.salt, "utf-8");
+        this.credential = Md5Util.genMd5(credential + this.salt);
     }
 
     public boolean isValid(String credential) {
-        return this.credential.equals(RSA.sign(credential, this.salt, "utf-8"));
+        return this.credential.equals(Md5Util.genMd5(credential + this.salt));
     }
 
 }
