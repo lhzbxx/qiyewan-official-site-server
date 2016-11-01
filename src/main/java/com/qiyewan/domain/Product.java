@@ -70,6 +70,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
+    private List<ProductProcess> process;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    @PrimaryKeyJoinColumn
     private List<ProductInfo> infoList;
 
     @Temporal(TemporalType.TIMESTAMP)
