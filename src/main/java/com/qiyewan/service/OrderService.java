@@ -14,4 +14,6 @@ public interface OrderService {
 
     Page<Order> getOrdersByUser(Long userId, Pageable pageable);
 
+    Order saveOrder(Long userId, Order order);
+
 }

@@ -24,4 +24,12 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByUserId(userId, pageable);
     }
 
+    @Override
+    public Order saveOrder(Long userId, Order order) {
+        orderRepository.saveAndFlush(order);
+        order.generateSerial();
+        orderRepository.save(order);
+        return order;
+    }
+
 }

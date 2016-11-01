@@ -33,8 +33,11 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue smsQueue() {
+    public Queue captchaQueue() {
         return new Queue("sms-queue");
     }
+
+    @Bean
+    public Queue orderQueue() { return new Queue("order-queue"); }
 
 }
