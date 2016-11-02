@@ -20,6 +20,17 @@ public class Classification {
     @GeneratedValue
     private Long id;
 
+    // 分类名称
     private String name;
+
+    // 分类代号
+    private String code;
+
+    // 父分类
+    private Long parentId;
+
+    // 分类编号
+    // 3占位-NodeId-遍历
+    private Long serialId;
 
 }

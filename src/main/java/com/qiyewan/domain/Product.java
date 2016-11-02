@@ -29,14 +29,11 @@ public class Product {
     // 产品名称
     private String name;
 
-    // 分类ID
-    private Long classificationId;
-
     // 分类名称
-    private String classificationName;
+    private String classificationCode;
 
     // 区域ID
-    private Long regionId;
+    private String regionCode;
 
     // 热度（排序）
     private Integer heat;
@@ -54,7 +51,7 @@ public class Product {
     private Boolean isHot;
 
     // 是否立即交付
-    private Boolean isInstant;
+    private Boolean isInstant = false;
 
     // 描述
     private String summary;

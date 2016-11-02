@@ -32,4 +32,10 @@ public class CustomerVoice {
     // 内容
     private String content;
 
+    // 背景
+    private String background;
+
+    // 备注
+    private String comment;
+
 }

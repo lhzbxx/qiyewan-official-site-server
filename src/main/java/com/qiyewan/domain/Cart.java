@@ -27,14 +27,16 @@ public class Cart {
     private Long userId;
 
     // 产品ID
-    @NotNull(message = "Error.Param.NO_PRODUCT_ID")
+    @NotNull
     private Long productId;
 
-    // 区域ID
-    private Long regionId;
+    // 区域编号
+    @NotNull
+    private String regionCode;
 
     // 数量
-    private Integer amount;
+    @NotNull
+    private Integer amount = 1;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

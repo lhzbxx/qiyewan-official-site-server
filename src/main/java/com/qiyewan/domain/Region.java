@@ -26,8 +26,11 @@ public class Region {
     // 城市
     private String city;
 
-    // 区域
+    // 区
     private String district;
+
+    // 地区编号
+    private String code;
 
     public String address() {
         return this.province + this.city + this.district;

@@ -1,6 +1,7 @@
 package com.qiyewan.api;
 
 import com.qiyewan.domain.Order;
+import com.qiyewan.enums.OrderState;
 import com.qiyewan.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,8 @@ public class OrderApi {
     private OrderService orderService;
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public Page<Order> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<Order> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam OrderState state) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrdersByUser(userId, pageable);
     }

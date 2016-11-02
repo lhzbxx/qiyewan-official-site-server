@@ -1,10 +1,10 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -23,11 +23,25 @@ public class Article {
     // 文章标题
     private String title;
 
+    // 封面（图片）
+    private String cover;
+
     // 文章摘要
     private String summary;
 
-    // 主要内容
+    // 内容
     private String content;
+
+    // 分类
+    private String category;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createAt = new Date();
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updateAt = new Date();
 
     public Article() {}
 

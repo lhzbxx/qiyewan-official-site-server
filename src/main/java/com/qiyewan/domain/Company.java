@@ -1,5 +1,6 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class Company {
     private Long id;
 
     // 用户ID
+    @JsonIgnore
     private Long userId;
 
     // 公司名称
