@@ -1,7 +1,6 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Product;
-import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,16 +20,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Page<Product> getProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Product getProduct(String serialId) {
+        return productRepository.findFirstBySerialId(serialId);
     }
 
     @Override
-    public Product getProduct(Long productId) {
-        Product product = productRepository.getOne(productId);
-        if (product == null)
-            throw new NotFoundException("Error.NotFound.NO_SUCH_PRODUCT");
-        return product;
+    public Page<Product> getProductsWithClassification(String classificationName, Pageable pageable) {
+        return productRepository.findByClassificationName(classificationName, pageable);
     }
 
     @Override

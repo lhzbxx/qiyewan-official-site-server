@@ -45,7 +45,6 @@ public class OrderApi {
 
     @RequestMapping(value = "/orders/{orderSerialId}", method = RequestMethod.POST)
     public void pay(@PathVariable String orderSerialId) {
-
     }
 
 }

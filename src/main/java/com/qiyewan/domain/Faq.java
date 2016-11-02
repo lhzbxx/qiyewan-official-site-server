@@ -20,8 +20,8 @@ public class Faq {
     @GeneratedValue
     private Long id;
 
-    // 产品ID
-    private Long productId;
+    // 产品编号
+    private String serialId;
 
     // 问题
     private String question;

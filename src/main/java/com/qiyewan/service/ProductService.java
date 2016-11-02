@@ -12,9 +12,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-    Page<Product> getProducts(Pageable pageable);
+    Page<Product> getProductsWithClassification(String classificationName, Pageable pageable);
 
-    Product getProduct(Long productId);
+    Product getProduct(String serialId);
 
     Product saveProduct(Product product);
 

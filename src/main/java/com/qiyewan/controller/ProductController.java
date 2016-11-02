@@ -1,7 +1,9 @@
 package com.qiyewan.controller;
 
+import com.qiyewan.domain.Faq;
 import com.qiyewan.domain.Product;
 import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.service.FaqService;
 import com.qiyewan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -23,26 +27,36 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
-    public Product login(@PathVariable Long productId) {
-        return productService.getProduct(productId);
+    @Autowired
+    private FaqService faqService;
+
+    @GetMapping("/products/{serialId}")
+    public Product show(@PathVariable String serialId) {
+        return productService.getProduct(serialId);
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public Page<Product> login(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return productService.getProducts(pageable);
+    @GetMapping("/products")
+    public Page<Product> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                  @NotNull @RequestParam String classificationName) {
+        return productService.getProductsWithClassification(classificationName, pageable);
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping("/products")
     public ErrorDto<?> add(@Validated @RequestBody Product product) {
         productService.saveProduct(product);
         return new ErrorDto<>();
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.PUT)
+    @PutMapping("/products")
     public ErrorDto<?> update(@Validated @RequestBody Product product) {
         productService.updateProduct(product);
         return new ErrorDto<>();
+    }
+
+    @GetMapping("/products/{serialId}/faq")
+    public Page<Faq> faq(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                         @PathVariable String serialId) {
+        return faqService.getFaqs(serialId, pageable);
     }
 
 }
