@@ -2,9 +2,11 @@ package com.qiyewan.controller;
 
 import com.qiyewan.domain.Faq;
 import com.qiyewan.domain.Product;
+import com.qiyewan.domain.Review;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.service.FaqService;
 import com.qiyewan.service.ProductService;
+import com.qiyewan.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,9 @@ public class ProductController {
 
     @Autowired
     private FaqService faqService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/products/{serialId}")
     public Product show(@PathVariable String serialId) {
@@ -57,6 +62,12 @@ public class ProductController {
     public Page<Faq> faq(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                          @PathVariable String serialId) {
         return faqService.getFaqs(serialId, pageable);
+    }
+
+    @GetMapping("/products/{serialId}/review")
+    public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                               @PathVariable String serialId) {
+        return reviewService.getReviewsBySerialId(serialId, pageable);
     }
 
 }

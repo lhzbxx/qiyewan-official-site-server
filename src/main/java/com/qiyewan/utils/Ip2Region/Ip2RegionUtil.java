@@ -1,6 +1,7 @@
 package com.qiyewan.utils.Ip2Region;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qiyewan.enums.RegionCode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +31,19 @@ public class Ip2RegionUtil {
             response = sendPost();
             result = parseResponse(response);
             return result.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String toRegionCode() {
+        String response;
+        IpLookupResult result;
+        try {
+            response = sendPost();
+            result = parseResponse(response);
+            return RegionCode.valueOf(result.getCity()).getCode();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,19 +8,25 @@ import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.TokenService;
 import com.qiyewan.service.UserService;
+import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by lhzbxx on 2016/10/20.
- *
+ * <p>
  * 用户-身份认证
  */
 
 @RestController
 public class AuthController {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private TokenService tokenService;
@@ -47,7 +53,7 @@ public class AuthController {
             throw new InvalidParamException("Error.Param.NO_CAPTCHA");
         }
         AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
-        if ( ! auth.isEqual(authDto)) {
+        if (!auth.isEqual(authDto)) {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
         userService.createAndSaveUser(authDto);
@@ -59,6 +65,15 @@ public class AuthController {
         AuthDto authDto = captchaService.setCaptcha(phone);
         rabbitTemplate.convertAndSend("sms-queue", authDto);
         return new ErrorDto<>();
+    }
+
+    @GetMapping(value = "/region")
+    public String getRegion() {
+        String ip = request.getHeader("X-FORWARDED-FOR");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        return new Ip2RegionUtil(ip).toRegionCode();
     }
 
 }
