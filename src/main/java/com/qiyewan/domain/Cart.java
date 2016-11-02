@@ -26,9 +26,12 @@ public class Cart {
     @JsonIgnore
     private Long userId;
 
-    // 产品ID
+    // 产品编号
     @NotNull
-    private Long productId;
+    private String serialId;
+
+    @ManyToOne
+    private Product product;
 
     // 区域编号
     @NotNull

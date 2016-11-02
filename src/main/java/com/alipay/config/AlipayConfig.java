@@ -39,7 +39,7 @@ public class AlipayConfig {
 	public static String sign_type = "RSA";
 	
 	// 调试用，创建TXT日志文件夹路径，见AlipayCore.java类中的logResult(String sWord)打印方法。
-	public static String log_path = "/Users/lhzbxx/Develop/QiYeWan/New/offical-website/Server/storage/data/alipay/";
+	public static String log_path = "/Users/lhzbxx/Develop/QiYeWan/New/official-website/Server/storage/data/alipay/";
 		
 	// 字符编码格式 目前支持 gbk 或 utf-8
 	public static String input_charset = "utf-8";

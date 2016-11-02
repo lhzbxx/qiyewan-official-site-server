@@ -28,19 +28,26 @@ public class CartApi {
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value = "/carts", method = RequestMethod.GET)
+    @GetMapping("/carts")
     public Page<Cart> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.getCartsByUser(userId, pageable);
     }
 
-    @RequestMapping(value = "/carts", method = RequestMethod.POST)
+    @PostMapping("/carts")
     public Cart add(@RequestBody @Validated Cart cart) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.saveCart(userId, cart);
     }
 
-    @RequestMapping(value = "/carts/{cartId}", method = RequestMethod.DELETE)
+    @PatchMapping("/carts")
+    public Cart update(@RequestBody @Validated Cart cart) {
+        Long userId = (Long) request.getAttribute("userId");
+        return cartService.updateCart(userId, cart);
+    }
+
+
+    @DeleteMapping("/carts/{cartId}")
     public ErrorDto<?> remove(@PathVariable Long cartId) {
         Long userId = (Long) request.getAttribute("userId");
         cartService.deleteCart(userId, cartId);

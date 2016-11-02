@@ -16,6 +16,8 @@ public interface CartService {
 
     Cart saveCart(Long userId, Cart cart);
 
+    Cart updateCart(Long userId, Cart cart);
+
     void deleteCart(Long userId, Long id);
 
 }

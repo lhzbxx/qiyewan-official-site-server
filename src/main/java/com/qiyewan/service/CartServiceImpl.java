@@ -1,8 +1,11 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Cart;
+import com.qiyewan.domain.Product;
 import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.CartRepository;
+import com.qiyewan.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,9 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public Page<Cart> getCartsByUser(Long userId, Pageable pageable) {
         return cartRepository.findByUserId(userId, pageable);
@@ -28,7 +34,19 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart saveCart(Long userId, Cart cart) {
         cart.setUserId(userId);
+        Product product = productRepository.findFirstBySerialId(cart.getSerialId());
+        if (product == null)
+            throw new NotFoundException("Error.Product.NOT_EXIST");
+        cart.setProduct(product);
         cartRepository.saveAndFlush(cart);
+        return cart;
+    }
+
+    @Override
+    public Cart updateCart(Long userId, Cart cart) {
+        if ( ! cart.getUserId().equals(userId))
+            throw new IllegalActionException("Error.Cart.NOT_YOUR_CART");
+        cartRepository.save(cart);
         return cart;
     }
 
@@ -36,7 +54,7 @@ public class CartServiceImpl implements CartService {
     public void deleteCart(Long userId, Long id) {
         Cart cart = cartRepository.findOne(id);
         if ( ! cart.getUserId().equals(userId)) {
-            throw new IllegalActionException("无法删除其他人的购物车内容。");
+            throw new IllegalActionException("Error.Cart.NOT_YOUR_CART");
         }
     }
 
