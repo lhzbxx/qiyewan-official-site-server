@@ -7,7 +7,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -29,17 +28,20 @@ public class Product {
     // 产品名称
     private String name;
 
-    // 分类名称
+    // （大）分类编号
     private String classificationCode;
 
-    // 区域ID
+    // 分类名称
+    private String classificationName;
+
+    // 区域编号
     private String regionCode;
 
     // 热度（排序）
-    private Integer heat;
+    private Integer heat = 0;
 
     // 状态
-    private ProductState productState;
+    private ProductState productState = ProductState.PutAway;
 
     // 单价
     private BigDecimal unitPrice;
@@ -65,13 +67,20 @@ public class Product {
     // 您将得到...
     private String whatObtain;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    @PrimaryKeyJoinColumn
-    private List<ProductProcess> process;
+    // 流程...
+    private String process;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    @PrimaryKeyJoinColumn
-    private List<ProductInfo> infoList;
+    // 详细信息（Q&A形式）
+    private String info;
+
+    // 评分
+    private Double rate = 0.0;
+
+    // 购买人次
+    private Integer purchaseNumber = 0;
+
+    // 备注
+    private String comment;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
