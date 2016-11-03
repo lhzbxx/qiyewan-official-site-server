@@ -6,6 +6,7 @@ import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.service.CaptchaService;
+import com.qiyewan.service.LoginHistoryService;
 import com.qiyewan.service.TokenService;
 import com.qiyewan.service.UserService;
 import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
@@ -40,10 +41,18 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginHistoryService loginHistoryService;
+
     @RequestMapping(value = "/auth", method = RequestMethod.GET)
     public ErrorDto<?> login(@RequestParam String phone,
                              @RequestParam String password) {
         User user = userService.getUserByAuth(new AuthDto(phone, password));
+        String ip = request.getHeader("X-FORWARDED-FOR");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        loginHistoryService.record(user.getId(), ip, new Ip2RegionUtil(ip).toRegion());
         return new ErrorDto<>(tokenService.setToken(user.getId()));
     }
 

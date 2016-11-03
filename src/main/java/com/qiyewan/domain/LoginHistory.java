@@ -1,10 +1,9 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -30,6 +29,16 @@ public class LoginHistory {
     private String address;
 
     // 登录时间
-    private Date createAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createAt = new Date();
+
+    public LoginHistory() {}
+
+    public LoginHistory(Long userId, String ip, String address) {
+        this.userId = userId;
+        this.ip = ip;
+        this.address = address;
+    }
 
 }

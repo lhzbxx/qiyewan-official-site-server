@@ -33,4 +33,6 @@ public class ReviewTag {
     // 标签内容
     private String content;
 
+    public ReviewTag() {}
+
 }

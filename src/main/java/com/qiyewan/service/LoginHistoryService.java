@@ -7,4 +7,7 @@ package com.qiyewan.service;
  */
 
 public interface LoginHistoryService {
+
+    void record(Long userId, String ip, String region);
+
 }

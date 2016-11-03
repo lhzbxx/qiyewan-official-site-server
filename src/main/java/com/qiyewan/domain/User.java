@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -25,6 +26,9 @@ public class User {
 
     // 头像
     private String avatar;
+
+    // UUID
+    private String uuid = UUID.randomUUID().toString();
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

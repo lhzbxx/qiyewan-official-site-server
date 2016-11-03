@@ -46,12 +46,14 @@ public class Review {
     @Max(5)
     private Integer star = 5;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "review_id")
     private List<ReviewTag> tags;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
+
+    public Review() {}
 
 }
