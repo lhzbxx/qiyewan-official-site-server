@@ -67,18 +67,20 @@ public class OrderApi {
         String subject = order.getName();
         String body = order.getProductSerialId() + "*" + order.getAmount();
         orderService.saveOrder(userId, order);
+        BigDecimal total_fee = BigDecimal.ZERO;
+        total_fee = orderService.fee(total_fee, order);
         for (Order o: orders) {
             subject += " + " + o.getName();
             body += " + " + o.getProductSerialId() + "*" + order.getAmount();
             o.setSerialId(order.getSerialId());
+            total_fee = orderService.fee(total_fee, o);
         }
         orderService.saveOrders(orders);
-        BigDecimal total_fee = BigDecimal.ONE;
-        // TODO: 2016/11/2 总费用的计算
+        rabbitTemplate.convertAndSend("order-queue", order);
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
     }
 
-    @RequestMapping(value = "/orders/{serialId}", method = RequestMethod.POST)
+    @PostMapping("/orders/{serialId}")
     public void pay(@PathVariable String serialId) {
     }
 

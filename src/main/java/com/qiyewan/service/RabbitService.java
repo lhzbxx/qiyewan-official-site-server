@@ -38,7 +38,7 @@ public class RabbitService {
             case Unpaid:
                 try {
                     SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
-                            "您已下了订单号为" + order.getSerialId().toString() + "，请及时支付。");
+                            "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -46,7 +46,7 @@ public class RabbitService {
             case Paid:
                 try {
                     SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
-                            "您已支付成功，订单号为" + order.getSerialId().toString() + "。满意请给好评，感谢您的使用！");
+                            "您已支付成功，订单号为" + order.getSerialId() + "。满意请给好评，感谢您的使用！");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

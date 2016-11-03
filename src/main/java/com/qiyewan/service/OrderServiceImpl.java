@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -43,6 +44,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrders(List<Order> orderList) {
         orderRepository.save(orderList);
+    }
+
+    @Override
+    public BigDecimal fee(BigDecimal totalFee, Order order) {
+        if (order.getProductSerialId().substring(4).equals("XXXX")) {
+            // TODO: 2016/11/3 特殊的计算方式！
+            return BigDecimal.ONE;
+        }
+        return totalFee.add(order.getUnitPrice().multiply(BigDecimal.valueOf(order.getAmount())));
     }
 
 }

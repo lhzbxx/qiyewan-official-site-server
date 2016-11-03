@@ -30,6 +30,7 @@ public class Article {
     private String summary;
 
     // 内容
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     // 分类
