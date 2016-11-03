@@ -22,7 +22,9 @@ public interface OrderService {
 
     Order getOrderBySerialId(Long userId, String serialId);
 
-    Order saveOrder(Long userId, Order order);
+    Order finishOrderBySerialId(String serialId);
+
+    Order createAndSaveOrder(Long userId, Order order);
 
     BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail);
 

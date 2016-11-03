@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/28.
@@ -43,7 +44,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order saveOrder(Long userId, Order order) {
+    public Order finishOrderBySerialId(String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
+        order.setOrderState(OrderState.Paid);
+        order.setUpdateAt(new Date());
+        orderRepository.save(order);
+        return order;
+    }
+
+    @Override
+    public Order createAndSaveOrder(Long userId, Order order) {
         orderRepository.saveAndFlush(order);
         order.generateSerial();
         orderRepository.saveAndFlush(order);

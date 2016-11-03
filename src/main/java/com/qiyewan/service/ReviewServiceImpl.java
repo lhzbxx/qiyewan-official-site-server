@@ -1,7 +1,10 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
+import com.qiyewan.domain.Product;
 import com.qiyewan.domain.Review;
+import com.qiyewan.domain.ReviewTag;
+import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/28.
@@ -37,21 +42,22 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review addReview(Long userId, Review review) {
-//        Order order = orderRepository.findBySerialId(review.getSerialId());
-//        checkOrder(userId, order);
-//        if (order.getOrderState() != OrderState.Paid)
-//            throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
-//        order.setOrderState(OrderState.Reviewed);
-//        Product product = productRepository.findFirstBySerialId(order.getProductSerialId());
-//        int num = product.getPurchaseNumber();
-//        product.setPurchaseNumber(num + 1);
-//        product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
-//        review.setProductSerialId(product.getSerialId());
-//        orderRepository.save(order);
-//        productRepository.save(product);
-//        for (ReviewTag tag: review.getTags()) {
-//            tag.setProductSerialId(product.getSerialId());
-//        }
+        Order order = orderRepository.findBySerialId(review.getSerialId());
+        checkOrder(userId, order);
+        if (order.getOrderState() != OrderState.Paid)
+            throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
+        order.setOrderState(OrderState.Reviewed);
+        order.setUpdateAt(new Date());
+        Product product = productRepository.findBySerialId(review.getProductSerialId());
+        int num = product.getPurchaseNumber();
+        product.setPurchaseNumber(num + 1);
+        product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
+        review.setProductSerialId(product.getSerialId());
+        for (ReviewTag tag: review.getTags()) {
+            tag.setProductSerialId(product.getSerialId());
+        }
+        orderRepository.save(order);
+        productRepository.save(product);
         return reviewRepository.save(review);
     }
 

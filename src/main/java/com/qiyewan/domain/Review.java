@@ -28,6 +28,7 @@ public class Review {
     private Long userId;
 
     // 产品编号
+    @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String productSerialId;
 

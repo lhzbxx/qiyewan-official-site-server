@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart saveCart(Long userId, Cart cart) {
         cart.setUserId(userId);
-        Product product = productRepository.findFirstBySerialId(cart.getSerialId());
+        Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
             throw new NotFoundException("Error.Product.NOT_EXIST");
         cart.setProduct(product);

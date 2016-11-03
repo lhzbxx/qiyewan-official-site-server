@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(String serialId) {
-        return productRepository.findFirstBySerialId(serialId);
+        return productRepository.findBySerialId(serialId);
     }
 
     @Override

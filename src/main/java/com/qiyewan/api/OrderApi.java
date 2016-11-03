@@ -1,5 +1,6 @@
 package com.qiyewan.api;
 
+import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -64,7 +66,7 @@ public class OrderApi {
         }
         order.setDetails(details);
         cartService.deleteCarts(userId, carts);
-        orderService.saveOrder(userId, order);
+        orderService.createAndSaveOrder(userId, order);
         String out_trade_no = order.getSerialId();
         OrderDetail detail = details.get(0);
         String subject = detail.getName();
@@ -86,8 +88,11 @@ public class OrderApi {
         return orderService.getOrderBySerialId(userId, serialId);
     }
 
-    @PostMapping("/orders/{serialId}")
-    public void pay(@PathVariable String serialId) {
+    @PostMapping("/orders/alipay/redirect")
+    public void pay(@RequestParam Map<String, String> sParaTemp) {
+        if (AlipayNotify.verify(sParaTemp)) {
+            orderService.finishOrderBySerialId(sParaTemp.get("out_trade_no"));
+        }
     }
 
 }

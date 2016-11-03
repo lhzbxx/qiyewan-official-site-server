@@ -17,6 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByClassificationName(String classificationName, Pageable pageable);
 
-    Product findFirstBySerialId(String serialId);
+    Product findBySerialId(String serialId);
 
 }
