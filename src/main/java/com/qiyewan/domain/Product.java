@@ -23,6 +23,7 @@ public class Product {
     private Long id;
 
     // 产品编号
+    @Column(unique = true)
     private String serialId;
 
     // 产品名称

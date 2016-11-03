@@ -8,9 +8,12 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +65,33 @@ public class AlipaySubmit {
         sPara.put("sign_type", AlipayConfig.sign_type);
 
         return sPara;
+    }
+
+    public static String buildLink(String out_trade_no, String subject, String body, String total_fee) {
+        Map<String, String> sParaTemp = new HashMap<>();
+        sParaTemp.put("service", AlipayConfig.service);
+        sParaTemp.put("partner", AlipayConfig.partner);
+        sParaTemp.put("seller_id", AlipayConfig.seller_id);
+        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+        sParaTemp.put("payment_type", AlipayConfig.payment_type);
+        sParaTemp.put("notify_url", AlipayConfig.notify_url);
+        sParaTemp.put("return_url", AlipayConfig.return_url);
+        sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
+        sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
+        sParaTemp.put("show_url", AlipayConfig.show_url);
+        sParaTemp.put("out_trade_no", out_trade_no);
+        sParaTemp.put("subject", subject);
+        sParaTemp.put("body", body);
+        sParaTemp.put("total_fee", total_fee);
+        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        try {
+            sPara.put("sign", URLEncoder.encode(sPara.get("sign"), "UTF-8"));
+            sPara.put("subject", URLEncoder.encode(sPara.get("subject"), "UTF-8"));
+            sPara.put("body", URLEncoder.encode(sPara.get("body"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ALIPAY_GATEWAY_NEW + AlipayCore.createLinkString(sPara);
     }
 
     /**

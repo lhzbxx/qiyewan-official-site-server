@@ -29,15 +29,20 @@ public class Order {
     // 用户ID
     private Long userId;
 
-    // 区域ID
-    private Long regionId;
+    // 区域编号
+    private String regionCode;
 
     // 订单编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(unique = true)
     private String serialId;
 
-    // 产品ID
-    private Long productId;
+    // 产品编号
+    private String productSerialId;
+
+    // 产品名称
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String name;
 
     // 数量
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -70,6 +75,21 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
+
+    public Order() {}
+
+    public Order(Long userId, Cart cart) {
+        this.userId = userId;
+        this.regionCode = cart.getRegionCode();
+        this.amount = cart.getAmount();
+        Product product = cart.getProduct();
+        this.name = product.getName();
+        this.productSerialId = product.getSerialId();
+        this.unitPrice = product.getUnitPrice();
+        this.unit = product.getUnit();
+        this.summary = product.getSummary();
+        this.cover = product.getCover();
+    }
 
     public void generateSerial() {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
