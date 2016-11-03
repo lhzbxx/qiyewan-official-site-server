@@ -37,8 +37,7 @@ public class RabbitService {
     }
 
     @RabbitListener(queues = "order-queue")
-    public void sendNotification(String serialId) {
-        Order order = orderRepository.findBySerialId(serialId);
+    public void sendNotification(Order order) {
         switch (order.getOrderState()) {
             case Unpaid:
                 try {

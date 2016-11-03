@@ -47,6 +47,7 @@ public class Review {
     private Integer star = 5;
 
     @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "review_id")
     private List<ReviewTag> tags;
 
     @Temporal(TemporalType.TIMESTAMP)

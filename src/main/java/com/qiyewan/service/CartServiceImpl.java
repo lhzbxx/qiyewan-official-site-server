@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Cart;
-import com.qiyewan.domain.Order;
+import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.domain.Product;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
@@ -53,10 +53,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Order convertToOrder(Long userId, Long cartId) {
+    public OrderDetail convertToOrderDetail(Long userId, Long cartId) {
         Cart cart = cartRepository.findOne(cartId);
         checkCart(userId, cart);
-        return new Order(userId, cart);
+        return new OrderDetail(cart);
     }
 
     @Override

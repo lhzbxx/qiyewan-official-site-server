@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Cart;
-import com.qiyewan.domain.Order;
+import com.qiyewan.domain.OrderDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +21,7 @@ public interface CartService {
 
     Cart updateCart(Long userId, Cart cart);
 
-    Order convertToOrder(Long userId, Long cartId);
+    OrderDetail convertToOrderDetail(Long userId, Long cartId);
 
     void deleteCart(Long userId, Long id);
 

@@ -2,6 +2,7 @@ package com.qiyewan.api;
 
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
+import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
@@ -55,27 +56,27 @@ public class OrderApi {
         Long userId = (Long) request.getAttribute("userId");
         if (carts.isEmpty())
             throw new IllegalActionException("Error.Cart.EMPTY_CARTS");
-        List<Order> orders = new ArrayList<>();
+        Order order = new Order(userId);
+        List<OrderDetail> details = new ArrayList<>();
         for (Long cartId: carts) {
-            Order order = cartService.convertToOrder(userId, cartId);
-            orders.add(order);
+            OrderDetail detail = cartService.convertToOrderDetail(userId, cartId);
+            details.add(detail);
         }
+        order.setDetails(details);
         cartService.deleteCarts(userId, carts);
-        Order order = orders.remove(0);
         orderService.saveOrder(userId, order);
         String out_trade_no = order.getSerialId();
-        String subject = order.getName();
-        String body = order.getProductSerialId() + "*" + order.getAmount();
+        OrderDetail detail = details.get(0);
+        String subject = detail.getName();
+        String body = detail.getProductSerialId() + "*" + detail.getAmount();
         BigDecimal total_fee = BigDecimal.ZERO;
-        total_fee = orderService.fee(total_fee, order);
-        for (Order o: orders) {
+        total_fee = orderService.fee(total_fee, detail);
+        for (OrderDetail o: details) {
             subject += " + " + o.getName();
-            body += " + " + o.getProductSerialId() + "*" + order.getAmount();
-            o.setSerialId(order.getSerialId());
+            body += " + " + o.getProductSerialId() + "*" + o.getAmount();
             total_fee = orderService.fee(total_fee, o);
         }
-        orderService.saveOrders(orders);
-        rabbitTemplate.convertAndSend("order-queue", out_trade_no);
+        rabbitTemplate.convertAndSend("order-queue", order);
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
     }
 

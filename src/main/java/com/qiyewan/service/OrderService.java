@@ -1,12 +1,12 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
+import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.enums.OrderState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -24,8 +24,6 @@ public interface OrderService {
 
     Order saveOrder(Long userId, Order order);
 
-    void saveOrders(List<Order> orderList);
-
-    BigDecimal fee(BigDecimal totalFee, Order order);
+    BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail);
 
 }

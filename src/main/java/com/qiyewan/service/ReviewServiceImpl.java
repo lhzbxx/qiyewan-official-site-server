@@ -49,6 +49,9 @@ public class ReviewServiceImpl implements ReviewService {
 //        review.setProductSerialId(product.getSerialId());
 //        orderRepository.save(order);
 //        productRepository.save(product);
+//        for (ReviewTag tag: review.getTags()) {
+//            tag.setProductSerialId(product.getSerialId());
+//        }
         return reviewRepository.save(review);
     }
 
