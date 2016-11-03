@@ -1,9 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
-import com.qiyewan.domain.Product;
 import com.qiyewan.domain.Review;
-import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
@@ -39,15 +37,18 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review addReview(Long userId, Review review) {
-        Order order = orderRepository.findBySerialId(review.getSerialId());
-        checkOrder(userId, order);
-        order.setOrderState(OrderState.Reviewed);
-        orderRepository.save(order);
-        Product product = productRepository.findFirstBySerialId(order.getProductSerialId());
-        int num = product.getPurchaseNumber();
-        product.setPurchaseNumber(num + 1);
-        product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
-        productRepository.save(product);
+//        Order order = orderRepository.findBySerialId(review.getSerialId());
+//        checkOrder(userId, order);
+//        if (order.getOrderState() != OrderState.Paid)
+//            throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
+//        order.setOrderState(OrderState.Reviewed);
+//        Product product = productRepository.findFirstBySerialId(order.getProductSerialId());
+//        int num = product.getPurchaseNumber();
+//        product.setPurchaseNumber(num + 1);
+//        product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
+//        review.setProductSerialId(product.getSerialId());
+//        orderRepository.save(order);
+//        productRepository.save(product);
         return reviewRepository.save(review);
     }
 

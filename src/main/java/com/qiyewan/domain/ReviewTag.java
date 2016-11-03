@@ -1,12 +1,12 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -22,9 +22,9 @@ public class ReviewTag {
     @GeneratedValue
     private Long id;
 
-    // 产品ID
-    @NotNull
-    private Long productSerialId;
+    // 产品编号
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String productSerialId;
 
     // 评论ID
     @ManyToOne

@@ -33,6 +33,9 @@ public class Article {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
+    // 作者
+    private String author;
+
     // 分类
     private String category;
 

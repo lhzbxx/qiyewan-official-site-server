@@ -7,7 +7,6 @@ import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
 import com.qiyewan.service.OrderService;
-import com.sun.istack.internal.Nullable;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +43,7 @@ public class OrderApi {
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                @RequestParam @Nullable OrderState state) {
+                                @RequestParam OrderState state) {
         Long userId = (Long) request.getAttribute("userId");
         if (state == null)
             return orderService.getOrdersByUser(userId, pageable);

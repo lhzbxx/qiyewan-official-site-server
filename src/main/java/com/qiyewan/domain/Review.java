@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +24,11 @@ public class Review {
     @GeneratedValue
     private Long id;
 
+    // 用户ID
     private Long userId;
 
     // 产品编号
-    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String productSerialId;
 
     // 订单编号
@@ -40,10 +42,11 @@ public class Review {
 
     // 评分
     @NotNull
-    @Size(min = 1, max = 5)
+    @Min(1)
+    @Max(5)
     private Integer star = 5;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<ReviewTag> tags;
 
     @Temporal(TemporalType.TIMESTAMP)

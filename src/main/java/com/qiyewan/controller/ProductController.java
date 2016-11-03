@@ -64,7 +64,7 @@ public class ProductController {
         return faqService.getFaqs(serialId, pageable);
     }
 
-    @GetMapping("/products/{serialId}/review")
+    @GetMapping("/products/{serialId}/reviews")
     public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                @PathVariable String serialId) {
         return reviewService.getReviewsBySerialId(serialId, pageable);
