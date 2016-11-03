@@ -78,6 +78,11 @@ public class Order {
 
     public Order() {}
 
+    public Order(Long userId, String serialId) {
+        this.userId = userId;
+        this.serialId = serialId;
+    }
+
     public Order(Long userId, Cart cart) {
         this.userId = userId;
         this.regionCode = cart.getRegionCode();

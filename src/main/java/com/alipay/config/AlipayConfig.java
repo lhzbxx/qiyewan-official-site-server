@@ -36,7 +36,7 @@ public class AlipayConfig {
 	public static String return_url = "";
 
 	// TODO: 2016/11/3 需要填写！
-	public static String show_url = "http://127.0.0.1:8080/#/person";
+	public static String show_url = "http://127.0.0.1:8080/#/order";
 
 	// 签名方式
 	public static String sign_type = "RSA";

@@ -20,6 +20,8 @@ public interface OrderService {
 
     Page<Order> getOrdersByUserAndState(Long userId, OrderState orderState, Pageable pageable);
 
+    Order getOrderBySerialId(Long userId, String serialId);
+
     Order saveOrder(Long userId, Order order);
 
     void saveOrders(List<Order> orderList);

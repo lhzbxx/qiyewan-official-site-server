@@ -2,6 +2,7 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
 import com.qiyewan.dto.AuthDto;
+import com.qiyewan.repository.OrderRepository;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class RabbitService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     // 注意！
     // 生产环境使用打印验证码的形式方便测试。
     // 正式环境中要解除这部分注释。
@@ -33,7 +37,8 @@ public class RabbitService {
     }
 
     @RabbitListener(queues = "order-queue")
-    public void sendNotification(Order order) {
+    public void sendNotification(String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
         switch (order.getOrderState()) {
             case Unpaid:
                 try {

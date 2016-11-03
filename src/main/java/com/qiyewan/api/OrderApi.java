@@ -7,6 +7,7 @@ import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
 import com.qiyewan.service.OrderService;
+import com.sun.istack.internal.Nullable;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,8 +43,8 @@ public class OrderApi {
     private RabbitTemplate rabbitTemplate;
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public Page<Order> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                            @RequestParam OrderState state) {
+    public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                @RequestParam @Nullable OrderState state) {
         Long userId = (Long) request.getAttribute("userId");
         if (state == null)
             return orderService.getOrdersByUser(userId, pageable);
@@ -66,7 +67,6 @@ public class OrderApi {
         String out_trade_no = order.getSerialId();
         String subject = order.getName();
         String body = order.getProductSerialId() + "*" + order.getAmount();
-        orderService.saveOrder(userId, order);
         BigDecimal total_fee = BigDecimal.ZERO;
         total_fee = orderService.fee(total_fee, order);
         for (Order o: orders) {
@@ -76,8 +76,14 @@ public class OrderApi {
             total_fee = orderService.fee(total_fee, o);
         }
         orderService.saveOrders(orders);
-        rabbitTemplate.convertAndSend("order-queue", order);
+        rabbitTemplate.convertAndSend("order-queue", out_trade_no);
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+    }
+
+    @GetMapping("/orders/{serialId")
+    public Order show(@PathVariable String serialId) {
+        Long userId = (Long) request.getAttribute("userId");
+        return orderService.getOrderBySerialId(userId, serialId);
     }
 
     @PostMapping("/orders/{serialId}")

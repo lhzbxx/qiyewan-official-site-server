@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -21,10 +23,12 @@ public class ReviewTag {
     private Long id;
 
     // 产品ID
-    private Long productId;
+    @NotNull
+    private Long productSerialId;
 
     // 评论ID
-    private Long reviewId;
+    @ManyToOne
+    private Review review;
 
     // 标签内容
     private String content;

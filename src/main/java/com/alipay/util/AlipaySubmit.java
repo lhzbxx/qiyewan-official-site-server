@@ -88,6 +88,9 @@ public class AlipaySubmit {
             sPara.put("sign", URLEncoder.encode(sPara.get("sign"), "UTF-8"));
             sPara.put("subject", URLEncoder.encode(sPara.get("subject"), "UTF-8"));
             sPara.put("body", URLEncoder.encode(sPara.get("body"), "UTF-8"));
+//            sPara.put("notify_url", URLEncoder.encode(sPara.get("notify_url"), "UTF-8"));
+//            sPara.put("return_url", URLEncoder.encode(sPara.get("return_url"), "UTF-8"));
+            sPara.put("show_url", URLEncoder.encode(sPara.get("show_url"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

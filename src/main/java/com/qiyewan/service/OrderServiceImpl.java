@@ -2,6 +2,8 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
 import com.qiyewan.enums.OrderState;
+import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,10 +36,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order getOrderBySerialId(Long userId, String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
+        checkOrder(userId, order);
+        return order;
+    }
+
+    @Override
     public Order saveOrder(Long userId, Order order) {
         orderRepository.saveAndFlush(order);
         order.generateSerial();
-        orderRepository.save(order);
+        orderRepository.saveAndFlush(order);
         return order;
     }
 
@@ -53,6 +62,13 @@ public class OrderServiceImpl implements OrderService {
             return BigDecimal.ONE;
         }
         return totalFee.add(order.getUnitPrice().multiply(BigDecimal.valueOf(order.getAmount())));
+    }
+
+    private void checkOrder(Long userId, Order order) {
+        if (order == null)
+            throw new NotFoundException("Error.Order.NOT_EXIST");
+        if ( ! userId.equals(order.getUserId()))
+            throw new IllegalActionException("Error.Order.NOT_YOUR_ORDER");
     }
 
 }

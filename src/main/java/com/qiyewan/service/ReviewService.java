@@ -14,4 +14,6 @@ public interface ReviewService {
 
     Page<Review> getReviewsBySerialId(String serialId, Pageable pageable);
 
+    Review addReview(Long userId, Review review);
+
 }
