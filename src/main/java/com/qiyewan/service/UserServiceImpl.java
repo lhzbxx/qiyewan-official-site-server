@@ -1,10 +1,12 @@
 package com.qiyewan.service;
 
+import com.qiyewan.domain.Company;
 import com.qiyewan.domain.User;
 import com.qiyewan.domain.UserAuth;
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.exceptions.DuplicatedException;
 import com.qiyewan.exceptions.NoAuthException;
+import com.qiyewan.repository.CompanyRepository;
 import com.qiyewan.repository.UserAuthRepository;
 import com.qiyewan.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserAuthRepository userAuthRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Override
     public User getUserById(Long id) {
@@ -52,6 +57,7 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
         UserAuth userAuth = new UserAuth(user.getId(), authDto.getPhone(), authDto.getPassword());
         this.userAuthRepository.save(userAuth);
+        this.companyRepository.save(new Company(user.getId()));
         return user.getId();
     }
 
@@ -66,6 +72,11 @@ public class UserServiceImpl implements UserService {
         }
         userAuth.setIdentifier(authDto.getPhone());
         userAuthRepository.saveAndFlush(userAuth);
-        return userAuth.getUserId();
+        return userId;
+    }
+
+    @Override
+    public Long updateUserPassword(Long userId, AuthDto authDto) {
+        return userId;
     }
 }

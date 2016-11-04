@@ -23,6 +23,7 @@ public class Company {
 
     // 用户ID
     @JsonIgnore
+    @Column(unique = true)
     private Long userId;
 
     // 公司名称
@@ -53,5 +54,11 @@ public class Company {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
+
+    public Company() {}
+
+    public Company(Long userId) {
+        this.userId = userId;
+    }
 
 }

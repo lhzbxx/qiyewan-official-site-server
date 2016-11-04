@@ -1,5 +1,6 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -18,8 +19,10 @@ public class LoginHistory {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
+    @JsonIgnore
     private Long userId;
 
     // IP
@@ -28,6 +31,9 @@ public class LoginHistory {
     // 登录地点
     private String address;
 
+    @JsonIgnore
+    private String token;
+
     // 登录时间
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -35,10 +41,11 @@ public class LoginHistory {
 
     public LoginHistory() {}
 
-    public LoginHistory(Long userId, String ip, String address) {
+    public LoginHistory(Long userId, String ip, String address, String token) {
         this.userId = userId;
         this.ip = ip;
         this.address = address;
+        this.token = token;
     }
 
 }

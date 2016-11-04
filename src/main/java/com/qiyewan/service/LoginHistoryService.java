@@ -1,5 +1,9 @@
 package com.qiyewan.service;
 
+import com.qiyewan.domain.LoginHistory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 /**
  * Created by lhzbxx on 2016/10/19.
  *
@@ -8,6 +12,8 @@ package com.qiyewan.service;
 
 public interface LoginHistoryService {
 
-    void record(Long userId, String ip, String region);
+    Page<LoginHistory> show(Long userId, Pageable pageable);
+
+    void record(Long userId, String ip, String region, String token);
 
 }

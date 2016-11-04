@@ -52,8 +52,9 @@ public class AuthController {
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
-        loginHistoryService.record(user.getId(), ip, new Ip2RegionUtil(ip).toRegion());
-        return new ErrorDto<>(tokenService.setToken(user.getId()));
+        String token = tokenService.setToken(user.getId());
+        loginHistoryService.record(user.getId(), ip, new Ip2RegionUtil(ip).toRegion(), token);
+        return new ErrorDto<>(token);
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
@@ -66,6 +67,12 @@ public class AuthController {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
         userService.createAndSaveUser(authDto);
+        return new ErrorDto<>();
+    }
+
+    @PatchMapping("/auth")
+    public ErrorDto<?> resetPassword(@Validated @RequestBody AuthDto authDto) {
+        // TODO: 2016/11/4 重置密码/修改手机
         return new ErrorDto<>();
     }
 

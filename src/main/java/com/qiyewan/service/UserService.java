@@ -19,4 +19,6 @@ public interface UserService {
 
     Long updateUserPhone(Long userId, AuthDto authDto);
 
+    Long updateUserPassword(Long userId, AuthDto authDto);
+
 }
