@@ -44,7 +44,8 @@ public class AuthController {
     @Autowired
     private LoginHistoryService loginHistoryService;
 
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:8080")
+    @GetMapping(value = "/auth")
     public ErrorDto<?> login(@RequestParam String phone,
                              @RequestParam String password) {
         User user = userService.getUserByAuth(new AuthDto(phone, password));
@@ -57,7 +58,8 @@ public class AuthController {
         return new ErrorDto<>(token);
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:8080")
+    @PostMapping(value = "/auth")
     public ErrorDto<?> register(@Validated @RequestBody AuthDto authDto) {
         if (authDto.getCaptcha().isEmpty()) {
             throw new InvalidParamException("Error.Param.NO_CAPTCHA");

@@ -35,11 +35,13 @@ public class ProductController {
     @Autowired
     private ReviewService reviewService;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/products/{serialId}")
     public Product show(@PathVariable String serialId) {
         return productService.getProduct(serialId);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/products")
     public Page<Product> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                   @NotNull @RequestParam String classificationName) {
@@ -58,12 +60,14 @@ public class ProductController {
         return new ErrorDto<>();
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/products/{serialId}/faq")
     public Page<Faq> faq(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                          @PathVariable String serialId) {
         return faqService.getFaqs(serialId, pageable);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/products/{serialId}/reviews")
     public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                @PathVariable String serialId) {

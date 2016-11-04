@@ -28,25 +28,28 @@ public class CartApi {
     @Autowired
     private CartService cartService;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/carts")
     public Page<Cart> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.getCartsByUser(userId, pageable);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/carts")
     public Cart add(@RequestBody @Validated Cart cart) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.saveCart(userId, cart);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PatchMapping("/carts")
     public Cart update(@RequestBody @Validated Cart cart) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.updateCart(userId, cart);
     }
 
-
+    @CrossOrigin(origins = "http://localhost:8080")
     @DeleteMapping("/carts/{cartId}")
     public ErrorDto<?> remove(@PathVariable Long cartId) {
         Long userId = (Long) request.getAttribute("userId");

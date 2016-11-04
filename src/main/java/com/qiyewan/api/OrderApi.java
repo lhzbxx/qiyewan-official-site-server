@@ -44,6 +44,7 @@ public class OrderApi {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam OrderState state) {
@@ -53,6 +54,7 @@ public class OrderApi {
         return orderService.getOrdersByUserAndState(userId, state, pageable);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public ErrorDto<String> add(@RequestBody List<Long> carts) {
         Long userId = (Long) request.getAttribute("userId");
@@ -86,12 +88,14 @@ public class OrderApi {
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/orders/{serialId}")
     public Order show(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrderBySerialId(userId, serialId);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/orders/alipay/redirect")
     public void pay(@RequestParam Map<String, String> sParaTemp) {
         if (AlipayNotify.verify(sParaTemp)) {
