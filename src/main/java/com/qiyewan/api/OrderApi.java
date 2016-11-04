@@ -86,7 +86,7 @@ public class OrderApi {
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
     }
 
-    @GetMapping("/orders/{serialId")
+    @GetMapping("/orders/{serialId}")
     public Order show(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrderBySerialId(userId, serialId);

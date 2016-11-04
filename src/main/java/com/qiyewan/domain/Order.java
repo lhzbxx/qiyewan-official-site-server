@@ -28,7 +28,7 @@ public class Order {
 
     // 订单编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(unique = true)
+    @Column(unique = true, length = 30)
     private String serialId;
 
     @OneToMany(cascade = CascadeType.ALL)

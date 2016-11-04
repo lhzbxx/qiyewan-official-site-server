@@ -1,5 +1,6 @@
 package com.qiyewan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class OrderDetail {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private Order order;
 
