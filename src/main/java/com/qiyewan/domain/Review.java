@@ -24,8 +24,8 @@ public class Review {
     @GeneratedValue
     private Long id;
 
-    // 用户ID
-    private Long userId;
+    @ManyToOne
+    private User user;
 
     // 产品编号
     @NotNull

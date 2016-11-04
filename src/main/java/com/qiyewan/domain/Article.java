@@ -39,6 +39,9 @@ public class Article {
     // 分类
     private String category;
 
+    // 浏览量
+    private Integer viewers = 0;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();

@@ -1,6 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Article;
+import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Override
+    public Article getArticle(Long id) {
+        Article article = articleRepository.findOne(id);
+        if (article == null)
+            throw new NotFoundException("Error.Article.NOT_EXIST");
+        article.setViewers(article.getViewers() + 1);
+        articleRepository.save(article);
+        return article;
+    }
 
     @Override
     public Page<Article> getArticlesByCategory(String category, Pageable pageable) {

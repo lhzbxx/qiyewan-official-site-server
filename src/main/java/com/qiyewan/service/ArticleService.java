@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArticleService {
 
+    Article getArticle(Long id);
+
     Page<Article> getArticlesByCategory(String category, Pageable pageable);
 
 }

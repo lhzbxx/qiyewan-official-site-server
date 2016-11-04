@@ -10,6 +10,7 @@ import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
 import com.qiyewan.repository.ProductRepository;
 import com.qiyewan.repository.ReviewRepository;
+import com.qiyewan.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,9 @@ import java.util.Date;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -53,6 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
         product.setPurchaseNumber(num + 1);
         product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
         review.setProductSerialId(product.getSerialId());
+        review.setUser(userRepository.findOne(userId));
         for (ReviewTag tag: review.getTags()) {
             tag.setProductSerialId(product.getSerialId());
         }
