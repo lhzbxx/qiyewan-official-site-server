@@ -78,7 +78,11 @@ public class OrderApi {
             body += " + " + o.getProductSerialId() + "*" + o.getAmount();
             total_fee = orderService.fee(total_fee, o);
         }
-        rabbitTemplate.convertAndSend("order-queue", order);
+        rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
+        rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
+            message.getMessageProperties().setDelay(3600000);
+            return message;
+        });
         return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
     }
 

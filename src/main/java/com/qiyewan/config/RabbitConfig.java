@@ -1,12 +1,15 @@
 package com.qiyewan.config;
 
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -38,6 +41,21 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue orderQueue() { return new Queue("order-queue"); }
+    public Queue orderNotifyQueue() { return new Queue("order-notify-queue"); }
+
+    @Bean
+    public Queue orderTimeoutQueue() { return new Queue("order-timeout-queue"); }
+
+    @Bean
+    CustomExchange delayExchange() {
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-delayed-type", "direct");
+        return new CustomExchange("order-timeout-exchange", "x-delayed-message", true, false, args);
+    }
+
+    @Bean
+    Binding binding(Queue orderTimeoutQueue, Exchange delayExchange) {
+        return BindingBuilder.bind(orderTimeoutQueue).to(delayExchange).with("order-timeout-queue").noargs();
+    }
 
 }

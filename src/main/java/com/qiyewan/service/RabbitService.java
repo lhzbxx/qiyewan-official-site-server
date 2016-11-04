@@ -2,11 +2,14 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
 import com.qiyewan.dto.AuthDto;
+import com.qiyewan.enums.OrderState;
 import com.qiyewan.repository.OrderRepository;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -36,8 +39,9 @@ public class RabbitService {
 //        }
     }
 
-    @RabbitListener(queues = "order-queue")
-    public void sendNotification(Order order) {
+    @RabbitListener(queues = "order-notify-queue")
+    public void sendNotification(String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
         switch (order.getOrderState()) {
             case Unpaid:
                 try {
@@ -57,6 +61,16 @@ public class RabbitService {
                 break;
             default:
                 break;
+        }
+    }
+
+    @RabbitListener(queues = "order-timeout-queue")
+    public void setTimeout(String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
+        if (order.getOrderState() == OrderState.Unpaid) {
+            order.setOrderState(OrderState.Timeout);
+            order.setUpdateAt(new Date());
+            orderRepository.save(order);
         }
     }
 
