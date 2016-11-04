@@ -4,6 +4,7 @@ import com.qiyewan.domain.Cart;
 import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.domain.Product;
 import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.CartRepository;
 import com.qiyewan.repository.ProductRepository;
@@ -47,7 +48,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart updateCart(Long userId, Cart cart) {
-        checkCart(userId, cart);
+        if (cart.getId() == null)
+            throw new InvalidParamException("Error.Cart.NO_CART_ID");
+        Cart c = cartRepository.findOne(cart.getId());
+        checkCart(userId, c);
         cartRepository.save(cart);
         return cart;
     }
