@@ -26,6 +26,12 @@ public class Order {
     // 用户ID
     private Long userId;
 
+    // 区域
+    private String region;
+
+    // 区域编码
+    private String regionCode;
+
     // 订单编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(unique = true, length = 30)

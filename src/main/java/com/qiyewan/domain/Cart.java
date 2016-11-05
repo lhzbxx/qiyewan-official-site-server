@@ -37,6 +37,10 @@ public class Cart {
     @NotNull
     private String regionCode;
 
+    // 区域名称
+    @NotNull
+    private String region;
+
     // 数量
     @NotNull
     private Integer amount = 1;
