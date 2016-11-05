@@ -4,7 +4,6 @@ import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
-import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
@@ -56,7 +55,7 @@ public class OrderApi {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public ErrorDto<String> add(@RequestBody List<Long> carts) {
+    public Order add(@RequestBody List<Long> carts) {
         Long userId = (Long) request.getAttribute("userId");
         if (carts.isEmpty())
             throw new IllegalActionException("Error.Cart.EMPTY_CARTS");
@@ -85,7 +84,8 @@ public class OrderApi {
             message.getMessageProperties().setDelay(3600000);
             return message;
         });
-        return new ErrorDto<>(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+        order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+        return order;
     }
 
     @CrossOrigin(origins = "http://localhost:8080")

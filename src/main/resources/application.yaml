@@ -11,7 +11,7 @@ spring:
   jpa:
     database: mysql
     database-platform: MYSQL
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
       naming:

@@ -47,6 +47,9 @@ public class Order {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String payUrl;
+
     public Order() {}
 
     public Order(Long userId) {
