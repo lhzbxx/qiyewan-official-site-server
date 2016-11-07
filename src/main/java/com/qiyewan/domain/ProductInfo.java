@@ -20,6 +20,10 @@ public class ProductInfo {
     @GeneratedValue
     private Long id;
 
+    private String title;
+
+    private String content;
+
     public ProductInfo() {}
 
 }

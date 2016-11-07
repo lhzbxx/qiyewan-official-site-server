@@ -85,6 +85,7 @@ public class OrderApi {
             return message;
         });
         order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+        orderService.saveOrder(order);
         return order;
     }
 

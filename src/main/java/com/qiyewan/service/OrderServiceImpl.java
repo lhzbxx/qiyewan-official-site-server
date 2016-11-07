@@ -61,6 +61,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order saveOrder(Order order) {
+        orderRepository.save(order);
+        return order;
+    }
+
+    @Override
     public BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail) {
         if (orderDetail.getProductSerialId().substring(4).equals("XXXX")) {
             // TODO: 2016/11/3 特殊的计算方式！

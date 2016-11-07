@@ -26,6 +26,8 @@ public interface OrderService {
 
     Order createAndSaveOrder(Long userId, Order order);
 
+    Order saveOrder(Order order);
+
     BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail);
 
 }

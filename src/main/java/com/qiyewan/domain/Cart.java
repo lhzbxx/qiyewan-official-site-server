@@ -2,6 +2,10 @@ package com.qiyewan.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.qiyewan.dto.Base64ToLongDeserializer;
+import com.qiyewan.dto.LongToBase64Serializer;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +24,8 @@ public class Cart {
 
     @Id
     @GeneratedValue
+    @JsonSerialize(using = LongToBase64Serializer.class)
+    @JsonDeserialize(using = Base64ToLongDeserializer.class)
     private Long id;
 
     // 用户ID
@@ -49,6 +55,16 @@ public class Cart {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updateAt = new Date();
+
     public Cart() {}
+
+    public Cart copy(Cart cart) {
+        this.updateAt = new Date();
+        this.amount = cart.amount;
+        return this;
+    }
 
 }

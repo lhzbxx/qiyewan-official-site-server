@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
             throw new InvalidParamException("Error.Cart.NO_CART_ID");
         Cart c = cartRepository.findOne(cart.getId());
         checkCart(userId, c);
-        cartRepository.save(cart);
+        cartRepository.save(c.copy(cart));
         return cart;
     }
 

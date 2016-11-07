@@ -50,10 +50,10 @@ public class CartApi {
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
-    @DeleteMapping("/carts/{cartId}")
-    public ErrorDto<?> remove(@PathVariable Long cartId) {
+    @DeleteMapping("/carts")
+    public ErrorDto<?> remove(@RequestBody @Validated Cart cart) {
         Long userId = (Long) request.getAttribute("userId");
-        cartService.deleteCart(userId, cartId);
+        cartService.deleteCart(userId, cart.getId());
         return new ErrorDto<>();
     }
 
