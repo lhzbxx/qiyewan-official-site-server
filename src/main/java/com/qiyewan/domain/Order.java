@@ -1,13 +1,16 @@
 package com.qiyewan.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qiyewan.enums.OrderState;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by lhzbxx on 2016/10/18.
@@ -36,8 +39,12 @@ public class Order {
     private List<OrderDetail> details;
 
     // 订单状态
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OrderState orderState = OrderState.Unpaid;
+
+    // 总价
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

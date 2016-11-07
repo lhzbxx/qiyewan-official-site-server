@@ -28,6 +28,8 @@ public interface OrderService {
 
     Order saveOrder(Order order);
 
+    void deleteOrder(Long userId, String serialId);
+
     BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail);
 
 }

@@ -4,6 +4,7 @@ import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
+import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
@@ -46,7 +47,7 @@ public class OrderApi {
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                @RequestParam OrderState state) {
+                                @RequestParam(required = false) OrderState state) {
         Long userId = (Long) request.getAttribute("userId");
         if (state == null)
             return orderService.getOrdersByUser(userId, pageable);
@@ -85,6 +86,7 @@ public class OrderApi {
             return message;
         });
         order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+        order.setTotalPrice(total_fee);
         orderService.saveOrder(order);
         return order;
     }
@@ -94,6 +96,14 @@ public class OrderApi {
     public Order show(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrderBySerialId(userId, serialId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @DeleteMapping("/orders/{serialId}")
+    public ErrorDto remove(@PathVariable String serialId) {
+        Long userId = (Long) request.getAttribute("userId");
+        orderService.deleteOrder(userId, serialId);
+        return new ErrorDto();
     }
 
     @CrossOrigin(origins = "http://localhost:8080")

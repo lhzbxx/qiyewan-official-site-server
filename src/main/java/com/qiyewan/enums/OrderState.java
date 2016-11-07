@@ -15,6 +15,8 @@ public enum OrderState {
     // 已付款 - 完成评价
     Reviewed,
     // 超时
-    Timeout
+    Timeout,
+    // 被取消
+    Canceled
 
 }
