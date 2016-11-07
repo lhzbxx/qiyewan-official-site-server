@@ -2,6 +2,7 @@ package com.qiyewan.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.Payment;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -37,6 +38,10 @@ public class Order {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<OrderDetail> details;
+
+    // 支付方式
+    // （默认为支付宝）
+    private Payment payment = Payment.Alipay;
 
     // 订单状态
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
