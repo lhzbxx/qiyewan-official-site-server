@@ -6,7 +6,6 @@ import com.qiyewan.dto.ArticleDto;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.ArticleRepository;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto findArticleNode(Long id) {
+    public ArticleDto findArticleNode(Long id) throws NotFoundException{
         String currHQL = "from Article where id = " + id;
         String preHQL = "from Article where id < " + id + " order by id desc";
         String nextHQL = "from Article where id > " + id + " order by id asc";
@@ -68,6 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         Query currQuery = session.createQuery(currHQL);
         List<Article> currList = currQuery.list();
+        if(currList.isEmpty()) throw new NotFoundException("该文章不存在");
 
         Query preQuery = session.createQuery(preHQL).setMaxResults(1);
         List<Article> preList = preQuery.list();
