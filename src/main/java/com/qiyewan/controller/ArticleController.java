@@ -6,6 +6,7 @@ import com.qiyewan.dto.ArticleDto;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.service.ArticleService;
 import com.qiyewan.utils.ArticleGenerator;
+import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -46,7 +48,7 @@ public class ArticleController {
     }
 
     @CrossOrigin
-    @GetMapping("/articlesCount")
+    @GetMapping("/articles/count")
     public String countAuthorArticles(String author){
         return "{ \"count\": " + articleService.countAuthorArticles(author) + "}";
     }
@@ -105,6 +107,22 @@ public class ArticleController {
         json.put("sideNewsList", sideNewsJson);
 
         return json.toString();
+    }
+    //endregion
+
+
+    //region 生成推荐文章列表
+    private String recommendCategory1 = ArticleGenerator.getPropertyValue("recommend.category1");
+    private String recommendCategory2 = ArticleGenerator.getPropertyValue("recommend.category2");
+    @GetMapping("/recommendNewsList")
+    public String generateRecommendNewsList(){
+        JSONArray jsonArray = new JSONArray();
+        Page<Article> articles1 = articleService.getArticlesByCategory(recommendCategory1, new PageRequest(0, 5));
+        Page<Article> articles2 = articleService.getArticlesByCategory(recommendCategory2, new PageRequest(0, 5));
+        jsonArray.put(ArticleGenerator.generateNews(articles1.getContent()));
+        jsonArray.put(ArticleGenerator.generateNews(articles2.getContent()));
+
+        return new JSONObject().put("recommendNewsList", jsonArray).toString();
     }
     //endregion
 }

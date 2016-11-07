@@ -75,8 +75,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         Query nextQuery = session.createQuery(nextHQL).setMaxResults(1);
         List<Article> nextList = nextQuery.list();
-        System.out.println("[size]" + nextList.size());
-        System.out.println("[empty]" + nextList.isEmpty());
         nextList = nextList.isEmpty() ? session.createQuery(firstHQL).setMaxResults(1).list() : nextList;
 
         transaction.commit();
