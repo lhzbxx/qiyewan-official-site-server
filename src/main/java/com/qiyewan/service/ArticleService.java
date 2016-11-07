@@ -3,6 +3,9 @@ package com.qiyewan.service;
 import com.qiyewan.domain.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/11/3.
@@ -16,4 +19,5 @@ public interface ArticleService {
 
     Page<Article> getArticlesByCategory(String category, Pageable pageable);
 
+    Article save(Article article);
 }

@@ -1,12 +1,17 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Article;
+import com.qiyewan.domain.Category;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.ArticleRepository;
+import com.qiyewan.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * Created by lhzbxx on 2016/11/3.
@@ -35,4 +40,8 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findByCategory(category, pageable);
     }
 
+    @Override
+    public Article save(Article article){
+        return articleRepository.save(article);
+    }
 }
