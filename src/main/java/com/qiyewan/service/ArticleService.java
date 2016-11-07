@@ -1,6 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Article;
+import com.qiyewan.dto.ArticleDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,4 +21,6 @@ public interface ArticleService {
     Page<Article> getArticlesByCategory(String category, Pageable pageable);
 
     Article save(Article article);
+
+    ArticleDto findArticleNode(Long id);
 }

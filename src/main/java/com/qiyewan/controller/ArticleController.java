@@ -2,6 +2,7 @@ package com.qiyewan.controller;
 
 import com.github.javafaker.Faker;
 import com.qiyewan.domain.Article;
+import com.qiyewan.dto.ArticleDto;
 import com.qiyewan.service.ArticleService;
 import com.qiyewan.utils.ArticleGenerator;
 import org.json.JSONArray;
@@ -14,10 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Random;
@@ -40,9 +38,10 @@ public class ArticleController {
         return articleService.getArticlesByCategory(category, pageable);
     }
 
+    @CrossOrigin
     @GetMapping("/articles/{id}")
-    public Article show(@PathVariable Long id) {
-        return articleService.getArticle(id);
+    public ArticleDto show(@PathVariable Long id) {
+        return articleService.findArticleNode(id);
     }
 
     /**

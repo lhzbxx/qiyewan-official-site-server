@@ -1,6 +1,7 @@
 package com.qiyewan.repository;
 
 import com.qiyewan.domain.Article;
+import com.qiyewan.dto.ArticleDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,4 @@ import org.springframework.stereotype.Repository;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findByCategory(String category, Pageable pageable);
-
 }

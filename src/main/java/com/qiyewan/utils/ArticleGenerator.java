@@ -70,6 +70,7 @@ public class ArticleGenerator {
             properties.load(ArticleGenerator.class.getClassLoader().getResourceAsStream(PROP_FILE));
         } catch (IOException e) {
             System.err.println("Could not find " + PROP_FILE);
+            System.exit(-1);
         }
         return (String) properties.get(key);
     }
