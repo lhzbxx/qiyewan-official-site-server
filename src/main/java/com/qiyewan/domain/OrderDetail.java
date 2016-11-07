@@ -25,6 +25,9 @@ public class OrderDetail {
     @ManyToOne
     private Order order;
 
+    // 区域名称
+    private String region;
+
     // 区域编号
     private String regionCode;
 
@@ -59,6 +62,7 @@ public class OrderDetail {
     public OrderDetail() {}
 
     public OrderDetail(Cart cart) {
+        this.region = cart.getRegion();
         this.regionCode = cart.getRegionCode();
         this.amount = cart.getAmount();
         Product product = cart.getProduct();

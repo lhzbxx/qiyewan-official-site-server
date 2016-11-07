@@ -1,6 +1,7 @@
 package com.qiyewan.api;
 
 import com.qiyewan.domain.LoginHistory;
+import com.qiyewan.service.CompanyService;
 import com.qiyewan.service.LoginHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,9 +29,12 @@ public class AuthApi {
     @Autowired
     private LoginHistoryService loginHistoryService;
 
+    @Autowired
+    private CompanyService companyService;
+
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/login-history")
-    public Page<LoginHistory> show(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<LoginHistory> showLoginHistory(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Long userId = (Long) request.getAttribute("userId");
         return loginHistoryService.show(userId, pageable);
     }

@@ -44,12 +44,12 @@ public class RabbitService {
         Order order = orderRepository.findBySerialId(serialId);
         switch (order.getOrderState()) {
             case Unpaid:
-                try {
-                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
-                            "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
+//                            "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case Paid:
                 try {
