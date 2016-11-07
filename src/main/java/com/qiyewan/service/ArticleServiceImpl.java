@@ -89,4 +89,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         return articleDto;
     }
+
+    @Override
+    public Integer countAuthorArticles(String author) {
+       List<Article> articles = articleRepository.findAllByAuthor(author);
+        return articles.size();
+    }
 }

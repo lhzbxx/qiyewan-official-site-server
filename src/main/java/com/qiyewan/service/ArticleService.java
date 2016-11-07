@@ -23,4 +23,5 @@ public interface ArticleService {
     Article save(Article article);
 
     ArticleDto findArticleNode(Long id);
+    Integer countAuthorArticles(String author);
 }

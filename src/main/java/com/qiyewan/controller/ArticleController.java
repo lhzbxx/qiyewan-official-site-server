@@ -3,6 +3,7 @@ package com.qiyewan.controller;
 import com.github.javafaker.Faker;
 import com.qiyewan.domain.Article;
 import com.qiyewan.dto.ArticleDto;
+import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.service.ArticleService;
 import com.qiyewan.utils.ArticleGenerator;
 import org.json.JSONArray;
@@ -40,8 +41,14 @@ public class ArticleController {
 
     @CrossOrigin
     @GetMapping("/articles/{id}")
-    public ArticleDto show(@PathVariable Long id) {
+    public ArticleDto show(@PathVariable Long id) throws NotFoundException{
         return articleService.findArticleNode(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/articlesCount")
+    public String countAuthorArticles(String author){
+        return "{ \"count\": " + articleService.countAuthorArticles(author) + "}";
     }
 
     /**
