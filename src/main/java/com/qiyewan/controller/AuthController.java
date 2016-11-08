@@ -7,6 +7,7 @@ import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.service.CaptchaService;
+import com.qiyewan.service.LoginHistoryService;
 import com.qiyewan.service.TokenService;
 import com.qiyewan.service.UserService;
 import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
@@ -41,6 +42,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginHistoryService loginHistoryService;
+
     @CrossOrigin
     @GetMapping(value = "/auth")
     public ErrorDto<?> login(@RequestParam String phone,
@@ -53,7 +57,7 @@ public class AuthController {
         }
         String token = tokenService.setToken(user.getId());
         rabbitTemplate.convertAndSend("login-history-record-queue",
-                new LoginHistory(user.getId(), ip, token, mode));
+                loginHistoryService.record(new LoginHistory(user.getId(), ip, token, mode)));
         return new ErrorDto<>(token);
     }
 

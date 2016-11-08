@@ -4,6 +4,7 @@ import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.Order;
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.enums.OrderState;
+import com.qiyewan.repository.LoginHistoryRepository;
 import com.qiyewan.repository.OrderRepository;
 import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
@@ -29,7 +30,7 @@ public class RabbitService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private LoginHistoryService loginHistoryService;
+    private LoginHistoryRepository loginHistoryRepository;
 
     // 注意！
     // 生产环境使用打印验证码的形式方便测试。
@@ -80,9 +81,10 @@ public class RabbitService {
     }
 
     @RabbitListener(queues = "login-history-record-queue")
-    public void recordLogin(LoginHistory loginHistory) {
+    public void recordLogin(Long recordId) {
+        LoginHistory loginHistory = loginHistoryRepository.getOne(recordId);
         loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
-        loginHistoryService.record(loginHistory);
+        loginHistoryRepository.save(loginHistory);
     }
 
 }

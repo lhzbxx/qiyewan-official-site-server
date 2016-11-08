@@ -46,6 +46,8 @@ public class LoginHistory {
     public LoginHistory() {}
 
     public LoginHistory(Long userId, String ip, String token, String mode) {
+        System.out.println(userId);
+        System.out.println(token);
         this.userId = userId;
         this.ip = ip;
         this.token = token;

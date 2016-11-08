@@ -14,6 +14,6 @@ public interface LoginHistoryService {
 
     Page<LoginHistory> show(Long userId, Pageable pageable);
 
-    void record(LoginHistory loginHistory);
+    Long record(LoginHistory loginHistory);
 
 }

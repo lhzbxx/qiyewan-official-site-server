@@ -25,7 +25,8 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
     }
 
     @Override
-    public void record(LoginHistory loginHistory) {
-        loginHistoryRepository.save(loginHistory);
+    public Long record(LoginHistory loginHistory) {
+        loginHistoryRepository.saveAndFlush(loginHistory);
+        return loginHistory.getId();
     }
 }
