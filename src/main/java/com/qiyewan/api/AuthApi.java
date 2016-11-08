@@ -32,7 +32,7 @@ public class AuthApi {
     @Autowired
     private CompanyService companyService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/login-history")
     public Page<LoginHistory> showLoginHistory(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Long userId = (Long) request.getAttribute("userId");

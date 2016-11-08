@@ -45,7 +45,7 @@ public class OrderApi {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(required = false) OrderState state) {
@@ -55,7 +55,7 @@ public class OrderApi {
         return orderService.getOrdersByUserAndState(userId, state, pageable);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public Order add(@RequestBody PayDto payDto) {
         Long userId = (Long) request.getAttribute("userId");
@@ -93,14 +93,14 @@ public class OrderApi {
         return order;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/orders/{serialId}")
     public Order show(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrderBySerialId(userId, serialId);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @DeleteMapping("/orders/{serialId}")
     public ErrorDto remove(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
@@ -108,7 +108,7 @@ public class OrderApi {
         return new ErrorDto();
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PostMapping("/orders/alipay/redirect")
     public void pay(@RequestParam Map<String, String> sParaTemp) {
         if (AlipayNotify.verify(sParaTemp)) {

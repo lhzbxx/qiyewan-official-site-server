@@ -29,11 +29,11 @@ public class AlipayConfig {
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	// TODO: 2016/11/1 需要填写！ 
-	public static String notify_url = "";
+	public static String notify_url = "http://127.0.0.1:8090/orders/alipay/redirect";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	// TODO: 2016/11/1 需要填写！
-	public static String return_url = "";
+	public static String return_url = "http://127.0.0.1:8080/#/order";
 
 	// TODO: 2016/11/3 需要填写！
 	public static String show_url = "http://127.0.0.1:8080/#/order";

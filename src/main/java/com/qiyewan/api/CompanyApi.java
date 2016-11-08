@@ -23,14 +23,14 @@ public class CompanyApi {
     @Autowired
     private CompanyService companyService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/company")
     public Company show() {
         Long userId = (Long) request.getAttribute("userId");
         return companyService.show(userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PutMapping("/company")
     public Company update(@Validated @RequestBody Company company) {
         Long userId = (Long) request.getAttribute("userId");

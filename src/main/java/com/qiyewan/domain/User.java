@@ -27,6 +27,9 @@ public class User {
     // 头像
     private String avatar;
 
+    // 会员名
+    private String nickname = "企业湾-会员";
+
     // UUID
     private String uuid = UUID.randomUUID().toString();
 

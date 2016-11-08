@@ -44,21 +44,22 @@ public class AuthController {
     @Autowired
     private LoginHistoryService loginHistoryService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping(value = "/auth")
     public ErrorDto<?> login(@RequestParam String phone,
-                             @RequestParam String password) {
+                             @RequestParam String password,
+                             @RequestParam(defaultValue = "PC") String mode) {
         User user = userService.getUserByAuth(new AuthDto(phone, password));
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
         String token = tokenService.setToken(user.getId());
-        loginHistoryService.record(user.getId(), ip, new Ip2RegionUtil(ip).toRegion(), token);
+        loginHistoryService.record(user.getId(), ip, new Ip2RegionUtil(ip).toRegion(), token, mode);
         return new ErrorDto<>(token);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PostMapping(value = "/auth")
     public ErrorDto<?> register(@Validated @RequestBody AuthDto authDto) {
         if (authDto.getCaptcha().isEmpty()) {
@@ -68,8 +69,9 @@ public class AuthController {
         if (!auth.isEqual(authDto)) {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
-        userService.createAndSaveUser(authDto);
-        return new ErrorDto<>();
+        Long userId = userService.createAndSaveUser(authDto);
+        String token = tokenService.setToken(userId);
+        return new ErrorDto<>(token);
     }
 
     @PatchMapping("/auth")
@@ -78,6 +80,7 @@ public class AuthController {
         return new ErrorDto<>();
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/captcha/{phone}", method = RequestMethod.POST)
     public ErrorDto<?> requestCaptcha(@PathVariable String phone) {
         AuthDto authDto = captchaService.setCaptcha(phone);

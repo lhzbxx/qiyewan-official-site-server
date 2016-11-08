@@ -2,6 +2,7 @@ package com.qiyewan.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.qiyewan.enums.LoginMode;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,6 +35,9 @@ public class LoginHistory {
     @JsonIgnore
     private String token;
 
+    // 登录方式
+    private LoginMode mode;
+
     // 登录时间
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -41,11 +45,12 @@ public class LoginHistory {
 
     public LoginHistory() {}
 
-    public LoginHistory(Long userId, String ip, String address, String token) {
+    public LoginHistory(Long userId, String ip, String address, String token, String mode) {
         this.userId = userId;
         this.ip = ip;
         this.address = address;
         this.token = token;
+        this.mode = LoginMode.valueOf(mode);
     }
 
 }

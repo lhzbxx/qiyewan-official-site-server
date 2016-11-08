@@ -26,7 +26,7 @@ public class ReviewApi {
     @Autowired
     private ReviewService reviewService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PostMapping("/reviews")
     public Review add(@Validated @RequestBody Review review) {
         Long userId = (Long) request.getAttribute("userId");

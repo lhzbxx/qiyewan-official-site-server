@@ -14,6 +14,6 @@ public interface LoginHistoryService {
 
     Page<LoginHistory> show(Long userId, Pageable pageable);
 
-    void record(Long userId, String ip, String region, String token);
+    void record(Long userId, String ip, String region, String token, String mode);
 
 }

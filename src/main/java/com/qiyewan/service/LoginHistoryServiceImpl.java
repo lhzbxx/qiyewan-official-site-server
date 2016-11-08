@@ -25,7 +25,7 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
     }
 
     @Override
-    public void record(Long userId, String ip, String region, String token) {
-        loginHistoryRepository.save(new LoginHistory(userId, ip, region, token));
+    public void record(Long userId, String ip, String region, String token, String mode) {
+        loginHistoryRepository.save(new LoginHistory(userId, ip, region, token, mode));
     }
 }
