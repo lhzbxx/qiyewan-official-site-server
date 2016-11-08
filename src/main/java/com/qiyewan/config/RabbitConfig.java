@@ -47,6 +47,9 @@ public class RabbitConfig {
     public Queue orderTimeoutQueue() { return new Queue("order-timeout-queue"); }
 
     @Bean
+    public Queue loginHistoryRecord() { return new Queue("login-history-record-queue"); }
+
+    @Bean
     CustomExchange delayExchange() {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("x-delayed-type", "direct");

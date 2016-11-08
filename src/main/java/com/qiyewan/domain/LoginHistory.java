@@ -45,10 +45,9 @@ public class LoginHistory {
 
     public LoginHistory() {}
 
-    public LoginHistory(Long userId, String ip, String address, String token, String mode) {
+    public LoginHistory(Long userId, String ip, String token, String mode) {
         this.userId = userId;
         this.ip = ip;
-        this.address = address;
         this.token = token;
         this.mode = LoginMode.valueOf(mode);
     }

@@ -1,9 +1,11 @@
 package com.qiyewan.service;
 
+import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.Order;
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.repository.OrderRepository;
+import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class RabbitService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private LoginHistoryService loginHistoryService;
 
     // 注意！
     // 生产环境使用打印验证码的形式方便测试。
@@ -72,6 +77,12 @@ public class RabbitService {
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }
+    }
+
+    @RabbitListener(queues = "login-history-record-queue")
+    public void recordLogin(LoginHistory loginHistory) {
+        loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
+        loginHistoryService.record(loginHistory);
     }
 
 }
