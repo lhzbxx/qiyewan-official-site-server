@@ -2,10 +2,13 @@ package com.qiyewan.controller;
 
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.service.CaptchaService;
+import com.qiyewan.utils.FileUtils;
 import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,4 +59,8 @@ public class TestController {
         return captchaService.getAuthDtoWithPhone("123456");
     }
 
+    @GetMapping("/webroot")
+    public String webroot(HttpServletRequest request){
+        return FileUtils.getWebRootPath(request);
+    }
 }

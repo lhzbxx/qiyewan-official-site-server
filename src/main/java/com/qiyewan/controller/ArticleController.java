@@ -1,16 +1,31 @@
 package com.qiyewan.controller;
 
+import com.github.javafaker.Faker;
+import com.qiyewan.config.Constants;
 import com.qiyewan.domain.Article;
+import com.qiyewan.dto.ArticleDto;
+import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.service.ArticleService;
+import com.qiyewan.utils.ArticleGenerator;
+import com.qiyewan.utils.FileUtils;
+import lombok.Getter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -23,6 +38,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping("/articles")
     public Page<Article> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
@@ -30,9 +47,95 @@ public class ArticleController {
         return articleService.getArticlesByCategory(category, pageable);
     }
 
+    @CrossOrigin
     @GetMapping("/articles/{id}")
-    public Article show(@PathVariable Long id) {
-        return articleService.getArticle(id);
+    public ArticleDto show(@PathVariable Long id) throws NotFoundException{
+        return articleService.findArticleNode(id);
     }
 
+    @CrossOrigin
+    @GetMapping("/articles/count")
+    public String countAuthorArticles(String author){
+        return "{ \"count\": " + articleService.countAuthorArticles(author) + "}";
+    }
+
+    /**
+     * 测试后请删除
+     */
+    @GetMapping("/articles/fake")
+    public String fake() {
+
+        Faker faker = new Faker();
+        Random rd = new Random();
+
+        for (int i = 0; i < 50; i++) {
+            Article article = new Article();
+            article.setAuthor(faker.name().firstName());
+            article.setCategory("cate_" + (rd.nextInt(4) + 1));
+            article.setContent(faker.lorem().paragraph());
+            article.setTitle(faker.book().title());
+            article.setCreateAt(new Date());
+            article.setViewers(faker.number().numberBetween(0, 3000));
+            articleService.save(article);
+        }
+        return "faked";
+    }
+
+
+    //region 生成新闻json
+    private String topCategory = ArticleGenerator.getPropertyValue("top.category");
+    private String centerCategory1 = ArticleGenerator.getPropertyValue("center.category1");
+    private String centerCategory2 = ArticleGenerator.getPropertyValue("center.category2");
+    private String bottomCategory1 = ArticleGenerator.getPropertyValue("bottom.category1");
+    private String bottomCategory2 = ArticleGenerator.getPropertyValue("bottom.category2");
+    private String sideCategory1 = ArticleGenerator.getPropertyValue("side.category1");
+    private String sideCategory2 = ArticleGenerator.getPropertyValue("side.category2");
+    private String sideCategory3 = ArticleGenerator.getPropertyValue("side.category3");
+    @GetMapping("/newsList")
+    public String generateNewsList(){
+        Page<Article> topNews = articleService.getArticlesByCategory(topCategory, new PageRequest(0, 5));
+        Page<Article> centerNews1 = articleService.getArticlesByCategory(centerCategory1, new PageRequest(0, 6));
+        Page<Article> centerNews2 = articleService.getArticlesByCategory(centerCategory2, new PageRequest(0, 6));
+        Page<Article> bottomNews1 = articleService.getArticlesByCategory(bottomCategory1, new PageRequest(0, 6));
+        Page<Article> bottomNews2 = articleService.getArticlesByCategory(bottomCategory2, new PageRequest(0, 6));
+        Page<Article> sideNews1 = articleService.getArticlesByCategory(sideCategory1, new PageRequest(0, 3));
+        Page<Article> sideNews2 = articleService.getArticlesByCategory(sideCategory2, new PageRequest(0, 2));
+        Page<Article> sideNews3 = articleService.getArticlesByCategory(sideCategory3, new PageRequest(0, 2));
+
+        JSONObject json = new JSONObject();
+        json.put("topNews", ArticleGenerator.generateTopNews(topNews.getContent()));
+        json.put("centerNewsList", ArticleGenerator.generateNewsList(centerNews1.getContent(), centerNews2.getContent()));
+        json.put("bottomNewsList", ArticleGenerator.generateNewsList(bottomNews1.getContent(), bottomNews2.getContent()));
+        JSONArray sideNewsJson = new JSONArray();
+        sideNewsJson.put(ArticleGenerator.generateNews(sideNews1.getContent()));
+        sideNewsJson.put(ArticleGenerator.generateNews(sideNews2.getContent()));
+        sideNewsJson.put(ArticleGenerator.generateNews(sideNews3.getContent()));
+        json.put("sideNewsList", sideNewsJson);
+
+        FileUtils.writeString2File(FileUtils.getResourcesRootPath() +
+                Constants.API_CACHE_DIR + File.separator + "/" +
+                 "newsList.json", json.toString());
+        return json.toString();
+    }
+    //endregion
+
+
+    //region 生成推荐文章列表
+    private String recommendCategory1 = ArticleGenerator.getPropertyValue("recommend.category1");
+    private String recommendCategory2 = ArticleGenerator.getPropertyValue("recommend.category2");
+    @GetMapping("/recommendNewsList")
+    public String generateRecommendNewsList(){
+        JSONObject jo = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        Page<Article> articles1 = articleService.getArticlesByCategory(recommendCategory1, new PageRequest(0, 5));
+        Page<Article> articles2 = articleService.getArticlesByCategory(recommendCategory2, new PageRequest(0, 5));
+        jsonArray.put(ArticleGenerator.generateNews(articles1.getContent()));
+        jsonArray.put(ArticleGenerator.generateNews(articles2.getContent()));
+        jo.put("recommendNewsList", jsonArray);
+        FileUtils.writeString2File(FileUtils.getResourcesRootPath() +
+                Constants.API_CACHE_DIR + File.separator + "/" +
+                "recommendNewsList.json", jo.toString());
+        return jo.toString();
+    }
+    //endregion
 }
