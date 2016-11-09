@@ -6,6 +6,7 @@ import com.qiyewan.dto.AuthDto;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.repository.LoginHistoryRepository;
 import com.qiyewan.repository.OrderRepository;
+import com.qiyewan.repository.UserRepository;
 import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -24,7 +25,7 @@ import java.util.Date;
 public class RabbitService {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -52,7 +53,7 @@ public class RabbitService {
         switch (order.getOrderState()) {
             case Unpaid:
                 try {
-                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
+                    SmsUtil.send(userRepository.findOne(order.getUserId()).getPhone(),
                             "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -60,7 +61,7 @@ public class RabbitService {
                 break;
             case Paid:
                 try {
-                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
+                    SmsUtil.send(userRepository.findOne(order.getUserId()).getPhone(),
                             "您已支付成功，订单号为" + order.getSerialId() + "。满意请给好评，感谢您的使用！");
                 } catch (Exception e) {
                     e.printStackTrace();
