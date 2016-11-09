@@ -41,9 +41,16 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
             throw new NotFoundException("Error.Product.NOT_EXIST");
-        cart.setProduct(product);
-        cartRepository.saveAndFlush(cart);
-        return cart;
+        Cart c = cartRepository.findFirstByProductId(product.getSerialId());
+        if (c != null) {
+            c.setAmount(c.getAmount() + 1);
+            cartRepository.saveAndFlush(c);
+            return c;
+        } else {
+            cart.setProduct(product);
+            cartRepository.saveAndFlush(cart);
+            return cart;
+        }
     }
 
     @Override

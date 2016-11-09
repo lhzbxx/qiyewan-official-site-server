@@ -59,6 +59,10 @@ public class OrderDetail {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String cover;
 
+    // 是否已评价
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean isReviewed = false;
+
     public OrderDetail() {}
 
     public OrderDetail(Cart cart) {

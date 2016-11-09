@@ -1,9 +1,6 @@
 package com.qiyewan.service;
 
-import com.qiyewan.domain.Order;
-import com.qiyewan.domain.Product;
-import com.qiyewan.domain.Review;
-import com.qiyewan.domain.ReviewTag;
+import com.qiyewan.domain.*;
 import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
@@ -20,7 +17,7 @@ import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/28.
- *
+ * <p>
  * 评论
  */
 
@@ -48,20 +45,36 @@ public class ReviewServiceImpl implements ReviewService {
     public Review addReview(Long userId, Review review) {
         Order order = orderRepository.findBySerialId(review.getSerialId());
         checkOrder(userId, order);
+        OrderDetail orderDetail = null;
         if (order.getOrderState() != OrderState.Paid)
             throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
-        order.setOrderState(OrderState.Reviewed);
-        order.setUpdateAt(new Date());
+        for (OrderDetail detail : order.getDetails()) {
+            if (detail.getProductSerialId().equals(review.getProductSerialId())) {
+                detail.setIsReviewed(true);
+                break;
+            }
+        }
+        int count = 0;
+        for (OrderDetail detail : order.getDetails()) {
+            if (!detail.getIsReviewed()) {
+                break;
+            }
+            count += 1;
+        }
+        if (count == order.getDetails().size()) {
+            order.setOrderState(OrderState.Reviewed);
+            order.setUpdateAt(new Date());
+            orderRepository.save(order);
+        }
         Product product = productRepository.findBySerialId(review.getProductSerialId());
         int num = product.getPurchaseNumber();
         product.setPurchaseNumber(num + 1);
         product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
         review.setProductSerialId(product.getSerialId());
         review.setUser(userRepository.findOne(userId));
-        for (ReviewTag tag: review.getTags()) {
+        for (ReviewTag tag : review.getTags()) {
             tag.setProductSerialId(product.getSerialId());
         }
-        orderRepository.save(order);
         productRepository.save(product);
         return reviewRepository.save(review);
     }
@@ -69,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
     private void checkOrder(Long userId, Order order) {
         if (order == null)
             throw new NotFoundException("Error.Order.NOT_EXIST");
-        if ( ! userId.equals(order.getUserId()))
+        if (!userId.equals(order.getUserId()))
             throw new IllegalActionException("Error.Review.NOT_YOUR_ORDER");
     }
 
