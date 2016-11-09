@@ -25,7 +25,6 @@ public class PayController {
     @CrossOrigin
     @PostMapping("/orders/alipay/redirect")
     public String pay(@RequestParam Map<String, String> sParaTemp) {
-        System.out.println(sParaTemp);
         if (AlipayNotify.verify(sParaTemp)) {
             orderService.finishOrderBySerialId(sParaTemp.get("out_trade_no"));
         }
