@@ -72,13 +72,17 @@ public class OrderApi {
         cartService.deleteCarts(userId, carts);
         orderService.createAndSaveOrder(userId, order);
         String out_trade_no = order.getSerialId();
-        String subject = "";
-        String body = "";
+        OrderDetail detail = details.get(0);
+        String subject = detail.getName();
+        String body = detail.getProductSerialId() + "*" + detail.getAmount();
         BigDecimal total_fee = BigDecimal.ZERO;
-        for (OrderDetail o: details) {
-            subject += " + " + o.getName();
-            body += " + " + o.getProductSerialId() + "*" + o.getAmount();
-            total_fee = orderService.fee(total_fee, o);
+        total_fee = orderService.fee(total_fee, detail);
+        if (details.size() > 1) {
+            for (OrderDetail o: details.subList(1, details.size() - 1)) {
+                subject += " + " + o.getName();
+                body += " + " + o.getProductSerialId() + "*" + o.getAmount();
+                total_fee = orderService.fee(total_fee, o);
+            }
         }
         rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
         rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
