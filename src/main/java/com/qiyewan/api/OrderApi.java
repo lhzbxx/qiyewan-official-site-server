@@ -72,11 +72,9 @@ public class OrderApi {
         cartService.deleteCarts(userId, carts);
         orderService.createAndSaveOrder(userId, order);
         String out_trade_no = order.getSerialId();
-        OrderDetail detail = details.remove(0);
-        String subject = detail.getName();
-        String body = detail.getProductSerialId() + "*" + detail.getAmount();
+        String subject = "";
+        String body = "";
         BigDecimal total_fee = BigDecimal.ZERO;
-        total_fee = orderService.fee(total_fee, detail);
         for (OrderDetail o: details) {
             subject += " + " + o.getName();
             body += " + " + o.getProductSerialId() + "*" + o.getAmount();

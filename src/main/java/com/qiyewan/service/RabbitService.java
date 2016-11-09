@@ -38,11 +38,11 @@ public class RabbitService {
     @RabbitListener(queues = "sms-queue")
     public void sendCaptcha(AuthDto authDto) {
         System.out.println(authDto.getCaptcha());
-//        try {
-//            SmsUtil.send(authDto.getPhone(), "您的验证码是" + authDto.getCaptcha() + ", 15分钟内有效。");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            SmsUtil.send(authDto.getPhone(), "您的验证码是" + authDto.getCaptcha() + ", 15分钟内有效。");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @RabbitListener(queues = "order-notify-queue")
@@ -50,12 +50,12 @@ public class RabbitService {
         Order order = orderRepository.findBySerialId(serialId);
         switch (order.getOrderState()) {
             case Unpaid:
-//                try {
-//                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
-//                            "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    SmsUtil.send(userService.getUserById(order.getUserId()).getPhone(),
+                            "您已下了订单号为" + order.getSerialId() + "，请及时支付。");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case Paid:
                 try {
@@ -82,7 +82,7 @@ public class RabbitService {
 
     @RabbitListener(queues = "login-history-record-queue")
     public void recordLogin(Long recordId) {
-        LoginHistory loginHistory = loginHistoryRepository.getOne(recordId);
+        LoginHistory loginHistory = loginHistoryRepository.findOne(recordId);
         loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
         loginHistoryRepository.save(loginHistory);
     }

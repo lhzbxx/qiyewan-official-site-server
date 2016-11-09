@@ -70,7 +70,8 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(Long userId, String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         checkOrder(userId, order);
-        orderRepository.delete(order);
+        order.setOrderState(OrderState.Canceled);
+        orderRepository.save(order);
     }
 
     @Override
