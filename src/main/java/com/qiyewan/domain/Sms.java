@@ -34,4 +34,9 @@ public class Sms {
 
     public Sms() {}
 
+    public Sms(String phone, String content) {
+        this.phone = phone;
+        this.content = content;
+    }
+
 }

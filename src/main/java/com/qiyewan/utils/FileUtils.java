@@ -1,8 +1,10 @@
 package com.qiyewan.utils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 /**
  * Created by atom on 2016/11/7.
@@ -27,8 +29,8 @@ public class FileUtils {
         return FileUtils.class.getClassLoader().getResource("application.yaml").getPath().replace("application.yaml", "");
     }
 
-    public static void main(String[] args) {
-        System.out.println(getResourcesRootPath());
-        writeString2File(getResourcesRootPath() + "cache/bug.txt", "hello");
-    }
+//    public static void main(String[] args) {
+//        System.out.println(getResourcesRootPath());
+//        writeString2File(getResourcesRootPath() + "cache/bug.txt", "hello");
+//    }
 }

@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: site-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/db
+    username: lhzbxx
+    password: 5120309188
+    driver-class-name: org.mariadb.jdbc.Driver
+    data: classpath:/data.sql
+    initialize: true
+  jpa:
+    database: mysql
+    database-platform: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  redis:
+    host: 127.0.0.1
+  rabbitmq:
+    addresses: 127.0.0.1:5672
+    username: guest
+    password: guest
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 8081
+com:
+  qiyewan:
+    env: dev
+
+## SSL
+##server.port=8443
+##server.ssl.key-store=.keystore
+##server.ssl.key-store-password=199513
+##server.ssl.keyStoreType=JKS
+##server.ssl.key-alias=qiyewan-official-site
