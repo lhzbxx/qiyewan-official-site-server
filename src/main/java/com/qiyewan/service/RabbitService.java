@@ -48,6 +48,7 @@ public class RabbitService {
     @RabbitListener(queues = "order-notify-queue")
     public void sendNotification(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
+        if (order == null) return;
         switch (order.getOrderState()) {
             case Unpaid:
                 try {
@@ -73,6 +74,7 @@ public class RabbitService {
     @RabbitListener(queues = "order-timeout-queue")
     public void setTimeout(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
+        if (order == null) return;
         if (order.getOrderState() == OrderState.Unpaid) {
             order.setOrderState(OrderState.Timeout);
             order.setUpdateAt(new Date());
@@ -83,6 +85,7 @@ public class RabbitService {
     @RabbitListener(queues = "login-history-record-queue")
     public void recordLogin(Long recordId) {
         LoginHistory loginHistory = loginHistoryRepository.findOne(recordId);
+        if (loginHistory == null) return;
         loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
         loginHistoryRepository.save(loginHistory);
     }
