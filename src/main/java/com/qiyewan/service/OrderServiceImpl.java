@@ -46,9 +46,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order finishOrderBySerialId(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
-        order.setOrderState(OrderState.Paid);
-        order.setUpdateAt(new Date());
-        orderRepository.save(order);
+        if (order.getOrderState().equals(OrderState.Unpaid)) {
+            order.setOrderState(OrderState.Paid);
+            order.setUpdateAt(new Date());
+            orderRepository.save(order);
+        }
         return order;
     }
 

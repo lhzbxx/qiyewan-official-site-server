@@ -90,6 +90,7 @@ public class AuthController {
         return new ErrorDto<>();
     }
 
+    @CrossOrigin
     @GetMapping(value = "/region")
     public String getRegion() {
         String ip = request.getHeader("X-FORWARDED-FOR");

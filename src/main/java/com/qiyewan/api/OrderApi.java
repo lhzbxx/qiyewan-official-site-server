@@ -110,13 +110,4 @@ public class OrderApi {
         return new ErrorDto();
     }
 
-    @CrossOrigin
-    @PostMapping("/orders/alipay/redirect")
-    public void pay(@RequestParam Map<String, String> sParaTemp) {
-        System.out.println(sParaTemp);
-        if (AlipayNotify.verify(sParaTemp)) {
-            orderService.finishOrderBySerialId(sParaTemp.get("out_trade_no"));
-        }
-    }
-
 }
