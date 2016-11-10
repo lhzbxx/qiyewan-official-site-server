@@ -1,8 +1,9 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Product;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.qiyewan.dto.SimpleProductDto;
+
+import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-    Page<Product> getProductsWithClassification(String classificationName, Pageable pageable);
+    List<SimpleProductDto> getProducts(String regionCode);
+
+    List<SimpleProductDto> getProductsWithClassification(String regionCode, String classificationName);
 
     Product getProduct(String serialId);
 

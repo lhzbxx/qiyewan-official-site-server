@@ -4,6 +4,7 @@ import com.qiyewan.domain.Faq;
 import com.qiyewan.domain.Product;
 import com.qiyewan.domain.Review;
 import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.dto.SimpleProductDto;
 import com.qiyewan.service.FaqService;
 import com.qiyewan.service.ProductService;
 import com.qiyewan.service.ReviewService;
@@ -15,7 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -43,9 +44,10 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping("/products")
-    public Page<Product> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                  @NotNull @RequestParam String classificationName) {
-        return productService.getProductsWithClassification(classificationName, pageable);
+    public List<SimpleProductDto> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                           @RequestParam String regionCode,
+                                           @RequestParam(required = false) String classificationName) {
+        return productService.getProductsWithClassification(regionCode, classificationName);
     }
 
     @PostMapping("/products")

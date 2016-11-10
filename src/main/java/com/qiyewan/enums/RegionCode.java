@@ -8,13 +8,13 @@ package com.qiyewan.enums;
 
 public enum RegionCode {
 
-    上海("SHSH"),
     北京("BJBJ"),
-    深圳("GDSZ"),
+    上海("SHSH"),
     南京("JSNJ"),
     苏州("JSSZ"),
-    成都("SCCD"),
-    镇江("JSZJ");
+    镇江("JSZJ"),
+    深圳("GDSZ"),
+    成都("SCCD");
 
     private final String code;
 

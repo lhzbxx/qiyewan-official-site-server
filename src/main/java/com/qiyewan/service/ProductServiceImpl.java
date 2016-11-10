@@ -1,11 +1,13 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Product;
+import com.qiyewan.dto.SimpleProductDto;
 import com.qiyewan.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/28.
@@ -19,14 +21,22 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private RedisTemplate<String, List<SimpleProductDto>> redisTemplate;
+
     @Override
-    public Product getProduct(String serialId) {
-        return productRepository.findBySerialId(serialId);
+    public List<SimpleProductDto> getProducts(String regionCode) {
+        return null;
     }
 
     @Override
-    public Page<Product> getProductsWithClassification(String classificationName, Pageable pageable) {
-        return productRepository.findByClassificationName(classificationName, pageable);
+    public List<SimpleProductDto> getProductsWithClassification(String regionCode, String classificationName) {
+        return null;
+    }
+
+    @Override
+    public Product getProduct(String serialId) {
+        return productRepository.findBySerialId(serialId);
     }
 
     @Override
