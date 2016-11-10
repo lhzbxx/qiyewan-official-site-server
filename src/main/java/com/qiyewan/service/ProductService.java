@@ -1,7 +1,8 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Product;
-import com.qiyewan.dto.SimpleProductDto;
+import com.qiyewan.dto.Simple1ProductDto;
+import com.qiyewan.dto.Simple2ProductDto;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<SimpleProductDto> getProducts(String regionCode);
+    List<Simple1ProductDto> getProducts(String regionCode);
 
-    List<SimpleProductDto> getProductsWithClassification(String regionCode, String classificationName);
+    List<Simple2ProductDto> getProductsWithClassification(String regionCode, String classificationName);
 
     Product getProduct(String serialId);
 

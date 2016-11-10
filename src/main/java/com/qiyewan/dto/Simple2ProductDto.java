@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 /**
  * Created by lhzbxx on 2016/11/10.
  *
- * 产品的简要信息
+ * （产品列表）产品的简要信息
  */
 
 @Data
-public class SimpleProductDto {
+public class Simple2ProductDto {
 
     private String name;
 
@@ -24,9 +24,9 @@ public class SimpleProductDto {
 
     private BigDecimal price;
 
-    public SimpleProductDto() {}
+    public Simple2ProductDto() {}
 
-    public SimpleProductDto(Product product) {
+    public Simple2ProductDto(Product product) {
         this.name = product.getName();
         this.serialId = product.getSerialId();
         this.cover = product.getSerialId();

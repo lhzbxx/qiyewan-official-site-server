@@ -1,7 +1,9 @@
 package com.qiyewan.service;
 
+import com.qiyewan.config.Constants;
 import com.qiyewan.domain.Product;
-import com.qiyewan.dto.SimpleProductDto;
+import com.qiyewan.dto.Simple1ProductDto;
+import com.qiyewan.dto.Simple2ProductDto;
 import com.qiyewan.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,16 +24,19 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private RedisTemplate<String, List<SimpleProductDto>> redisTemplate;
+    private RedisTemplate<String, List<Simple1ProductDto>> redis1Template;
+
+    @Autowired
+    private RedisTemplate<String, List<Simple2ProductDto>> redis2Template;
 
     @Override
-    public List<SimpleProductDto> getProducts(String regionCode) {
-        return null;
+    public List<Simple1ProductDto> getProducts(String regionCode) {
+        return redis1Template.opsForValue().get(Constants.REDIS_PREFIX_PRODUCTS + regionCode);
     }
 
     @Override
-    public List<SimpleProductDto> getProductsWithClassification(String regionCode, String classificationName) {
-        return null;
+    public List<Simple2ProductDto> getProductsWithClassification(String regionCode, String classificationName) {
+        return redis2Template.opsForValue().get(Constants.REDIS_PREFIX_PRODUCTS + regionCode + ":" + classificationName);
     }
 
     @Override

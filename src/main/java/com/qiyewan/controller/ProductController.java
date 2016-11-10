@@ -4,7 +4,6 @@ import com.qiyewan.domain.Faq;
 import com.qiyewan.domain.Product;
 import com.qiyewan.domain.Review;
 import com.qiyewan.dto.ErrorDto;
-import com.qiyewan.dto.SimpleProductDto;
 import com.qiyewan.service.FaqService;
 import com.qiyewan.service.ProductService;
 import com.qiyewan.service.ReviewService;
@@ -44,10 +43,13 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping("/products")
-    public List<SimpleProductDto> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public List<?> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                            @RequestParam String regionCode,
                                            @RequestParam(required = false) String classificationName) {
-        return productService.getProductsWithClassification(regionCode, classificationName);
+        if (classificationName != null) {
+            return productService.getProductsWithClassification(regionCode, classificationName);
+        }
+        return productService.getProducts(regionCode);
     }
 
     @PostMapping("/products")
