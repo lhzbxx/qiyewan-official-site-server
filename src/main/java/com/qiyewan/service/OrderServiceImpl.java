@@ -78,9 +78,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail) {
-        if (orderDetail.getProductSerialId().substring(4).equals("XXXX")) {
-            // TODO: 2016/11/3 特殊的计算方式！
-            return BigDecimal.ONE;
+        if (orderDetail.getProductSerialId().substring(4).equals("HR0003")) {
+            if (orderDetail.getAmount() > 3) {
+                return totalFee.add(new BigDecimal(98.8)
+                        .add(new BigDecimal(18.8).multiply(new BigDecimal(orderDetail.getAmount() - 3))));
+            } else {
+                return totalFee.add(new BigDecimal(98.8));
+            }
         }
         return totalFee.add(orderDetail.getUnitPrice().multiply(BigDecimal.valueOf(orderDetail.getAmount())));
     }

@@ -4,6 +4,7 @@ import com.qiyewan.domain.Company;
 import com.qiyewan.domain.User;
 import com.qiyewan.domain.UserAuth;
 import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.UserDto;
 import com.qiyewan.exceptions.DuplicatedException;
 import com.qiyewan.exceptions.NoAuthException;
 import com.qiyewan.repository.CompanyRepository;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByAuth(AuthDto authDto) {
-        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(authDto.getPhone());
+        UserAuth userAuth = this.userAuthRepository.findFirstByPhone(authDto.getPhone());
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long createAndSaveUser(AuthDto authDto) {
-        if (userAuthRepository.findFirstByIdentifier(authDto.getPhone()) != null) {
+        if (userAuthRepository.findFirstByPhone(authDto.getPhone()) != null) {
             throw new DuplicatedException("Error.Duplicated.USER_EXISTS");
         }
         User user = new User(authDto.getPhone());
@@ -67,16 +68,28 @@ public class UserServiceImpl implements UserService {
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
-        if ( ! userAuth.isValid(authDto.getPassword())) {
-            throw new NoAuthException("Error.Auth.WRONG_PASSWORD");
-        }
-        userAuth.setIdentifier(authDto.getPhone());
-        userAuthRepository.saveAndFlush(userAuth);
+        User user = userRepository.findOne(userId);
+        user.setPhone(authDto.getPhone());
+        userAuth.setPhone(authDto.getPhone());
+        userAuth.setPassword(authDto.getPassword());
+        userRepository.save(user);
+        userAuthRepository.save(userAuth);
         return userId;
     }
 
     @Override
-    public Long updateUserPassword(Long userId, AuthDto authDto) {
-        return userId;
+    public Long updateUserPassword(AuthDto authDto) {
+        UserAuth userAuth = userAuthRepository.findFirstByPhone(authDto.getPhone());
+        userAuth.setPassword(authDto.getPassword());
+        userAuthRepository.save(userAuth);
+        return userAuth.getUserId();
+    }
+
+    @Override
+    public User updateUserInfo(Long userId, UserDto userDto) {
+        User user = userRepository.findOne(userId);
+        user.resetInfo(userDto);
+        userRepository.save(user);
+        return user;
     }
 }

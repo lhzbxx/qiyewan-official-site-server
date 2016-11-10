@@ -1,6 +1,6 @@
 package com.qiyewan.domain;
 
-import com.qiyewan.utils.Md5Util;
+import com.qiyewan.utils.Crypto.Md5Util;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -24,23 +24,27 @@ public class UserAuth {
 
     private Long userId;
 
-    private String identifier;
+    private String phone;
 
-    private String credential;
+    private String password;
 
     private String salt;
 
     public UserAuth() {}
 
-    public UserAuth(Long userId, String identifier, String credential) {
+    public UserAuth(Long userId, String phone, String password) {
         this.salt = UUID.randomUUID().toString();
         this.userId = userId;
-        this.identifier = identifier;
-        this.credential = Md5Util.genMd5(credential + this.salt);
+        this.phone = phone;
+        this.password = Md5Util.genMd5(password);
     }
 
-    public boolean isValid(String credential) {
-        return this.credential.equals(Md5Util.genMd5(credential + this.salt));
+    public void resetPassword(String password) {
+        this.password = Md5Util.genMd5(password);
+    }
+
+    public boolean isValid(String password) {
+        return this.password.equals(Md5Util.genMd5(password));
     }
 
 }

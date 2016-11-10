@@ -76,9 +76,18 @@ public class AuthController {
         return new ErrorDto<>(token);
     }
 
+    // 修改密码
+    @CrossOrigin
     @PatchMapping("/auth")
     public ErrorDto<?> resetPassword(@Validated @RequestBody AuthDto authDto) {
-        // TODO: 2016/11/4 重置密码/修改手机
+        if (authDto.getCaptcha().isEmpty()) {
+            throw new InvalidParamException("Error.Param.NO_CAPTCHA");
+        }
+        AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
+        if (!auth.isEqual(authDto)) {
+            throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
+        }
+        userService.updateUserPassword(auth);
         return new ErrorDto<>();
     }
 
