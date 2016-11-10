@@ -1,6 +1,5 @@
 package com.qiyewan.api;
 
-import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -78,7 +76,7 @@ public class OrderApi {
         BigDecimal total_fee = BigDecimal.ZERO;
         total_fee = orderService.fee(total_fee, detail);
         if (details.size() > 1) {
-            for (OrderDetail o: details.subList(1, details.size() - 1)) {
+            for (OrderDetail o: details.subList(1, details.size())) {
                 subject += " + " + o.getName();
                 body += " + " + o.getProductSerialId() + "*" + o.getAmount();
                 total_fee = orderService.fee(total_fee, o);
