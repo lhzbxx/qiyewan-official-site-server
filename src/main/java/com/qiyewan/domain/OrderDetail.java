@@ -63,6 +63,9 @@ public class OrderDetail {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isReviewed = false;
 
+    // 参与人数
+    private Integer member = 1;
+
     public OrderDetail() {}
 
     public OrderDetail(Cart cart) {

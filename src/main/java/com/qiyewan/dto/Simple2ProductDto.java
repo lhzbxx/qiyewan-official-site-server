@@ -29,7 +29,7 @@ public class Simple2ProductDto {
     public Simple2ProductDto(Product product) {
         this.name = product.getName();
         this.serialId = product.getSerialId();
-        this.cover = product.getSerialId();
+        this.cover = product.getCover();
         this.summary = product.getSummary();
         this.price = product.getUnitPrice();
     }

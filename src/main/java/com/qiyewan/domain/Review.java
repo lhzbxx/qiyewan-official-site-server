@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,6 @@ public class Review {
 
     // 产品编号
     @NotNull
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String productSerialId;
 
     // 订单编号
@@ -49,7 +49,7 @@ public class Review {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "review_id")
-    private List<ReviewTag> tags;
+    private List<ReviewTag> tags = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

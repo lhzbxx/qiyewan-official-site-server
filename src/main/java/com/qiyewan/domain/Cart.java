@@ -51,6 +51,9 @@ public class Cart {
     @NotNull
     private Integer amount = 1;
 
+    // 参与人数
+    private Integer member = 1;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
