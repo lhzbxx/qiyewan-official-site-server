@@ -82,6 +82,7 @@ public class OrderApi {
                 total_fee = orderService.fee(total_fee, o);
             }
         }
+        ;
         rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
         rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
             message.getMessageProperties().setDelay(3600000);

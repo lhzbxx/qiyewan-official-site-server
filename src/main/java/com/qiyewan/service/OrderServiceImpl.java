@@ -84,12 +84,15 @@ public class OrderServiceImpl implements OrderService {
                 return totalFee.add((new BigDecimal(98.8)
                         .add(new BigDecimal(18.8)
                                 .multiply(new BigDecimal(orderDetail.getMember() - 3))))
-                        .multiply(amount));
+                        .multiply(amount))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP);
             } else {
-                return totalFee.add(new BigDecimal(98.8).multiply(amount));
+                return totalFee.add(new BigDecimal(98.8).multiply(amount))
+                        .setScale(2, BigDecimal.ROUND_HALF_UP);
             }
         }
-        return totalFee.add(orderDetail.getUnitPrice().multiply(amount));
+        return totalFee.add(orderDetail.getUnitPrice().multiply(amount))
+                .setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     private void checkOrder(Long userId, Order order) {

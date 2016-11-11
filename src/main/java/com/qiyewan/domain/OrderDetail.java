@@ -72,6 +72,7 @@ public class OrderDetail {
         this.region = cart.getRegion();
         this.regionCode = cart.getRegionCode();
         this.amount = cart.getAmount();
+        this.member = cart.getMember();
         Product product = cart.getProduct();
         this.name = product.getName();
         this.productSerialId = product.getSerialId();
