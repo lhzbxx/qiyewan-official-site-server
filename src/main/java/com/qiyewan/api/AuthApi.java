@@ -1,6 +1,7 @@
 package com.qiyewan.api;
 
 import com.qiyewan.domain.LoginHistory;
+import com.qiyewan.domain.User;
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.dto.UserDto;
@@ -61,6 +62,13 @@ public class AuthApi {
         }
         userService.updateUserPhone(userId, authDto);
         return new ErrorDto<>();
+    }
+
+    @CrossOrigin
+    @GetMapping("/users")
+    public User showInfo() {
+        Long userId = (Long) request.getAttribute("userId");
+        return userService.getUserById(userId);
     }
 
     // 修改头像或昵称
