@@ -21,6 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByClassificationNameAndRegionCode(String classificationName,
                                                            String regionCode);
 
+    List<Product> findAllByClassificationCodeAndRegionCode(String classificationCode,
+                                                           String regionCode);
+
     @Query("SELECT DISTINCT classificationName FROM Product")
     List<String> findDistinctClassificationName();
 
