@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ReviewService {
 
-    Page<Review> getReviewsBySerialId(String serialId, Pageable pageable);
+    Page<Review> getReviewsByProductSerialId(String serialId, Pageable pageable);
 
     Review addReview(Long userId, Review review);
 

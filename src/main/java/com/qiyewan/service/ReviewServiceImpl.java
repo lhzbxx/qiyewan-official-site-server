@@ -37,8 +37,8 @@ public class ReviewServiceImpl implements ReviewService {
     private OrderRepository orderRepository;
 
     @Override
-    public Page<Review> getReviewsBySerialId(String serialId, Pageable pageable) {
-        return reviewRepository.findBySerialId(serialId, pageable);
+    public Page<Review> getReviewsByProductSerialId(String serialId, Pageable pageable) {
+        return reviewRepository.findByProductSerialId(serialId, pageable);
     }
 
     @Override
