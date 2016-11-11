@@ -54,7 +54,7 @@ public class Product {
     private Boolean isHot;
 
     // 是否立即交付
-    private Boolean isInstant = false;
+    private Boolean isInstant;
 
     // 描述
     private String summary;
