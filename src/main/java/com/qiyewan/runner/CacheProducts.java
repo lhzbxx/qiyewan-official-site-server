@@ -45,7 +45,7 @@ public class CacheProducts implements CommandLineRunner {
                                 .stream().map(Simple2ProductDto::new).collect(Collectors.toList()));
             }
             for (BigClassification c : BigClassification.values()) {
-                redis2Template.opsForValue().set(Constants.REDIS_PRODUCTS_CITY_CLASSIFICATION(code.getCode(), c.getName()),
+                redis2Template.opsForValue().set(Constants.REDIS_PRODUCTS_CITY_CLASSIFICATION(code.getCode(), c.name()),
                         productRepository.findAllByClassificationCodeAndRegionCode(c.name(), code.getCode())
                                 .stream().map(Simple2ProductDto::new).collect(Collectors.toList()));
             }
