@@ -25,3 +25,27 @@ ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (code, province, city, district);
+
+LOAD DATA LOCAL INFILE  'classpath:/data/users.csv'
+INTO TABLE user
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+ESCAPED BY '"'
+LINES TERMINATED BY '\n'
+(id, phone, uuid, nickname, create_at, update_at);
+
+LOAD DATA LOCAL INFILE  'classpath:/data/user_auth.csv'
+INTO TABLE user_auth
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+ESCAPED BY '"'
+LINES TERMINATED BY '\n'
+(phone, password, user_id);
+
+LOAD DATA LOCAL INFILE  'classpath:/data/company.csv'
+INTO TABLE company
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+ESCAPED BY '"'
+LINES TERMINATED BY '\n'
+(user_id, create_at, update_at);
