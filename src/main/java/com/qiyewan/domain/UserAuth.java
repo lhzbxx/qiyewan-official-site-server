@@ -3,6 +3,7 @@ package com.qiyewan.domain;
 import com.qiyewan.utils.Crypto.Md5Util;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ public class UserAuth {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private Long userId;
 
     private String phone;
