@@ -87,7 +87,7 @@ public class AuthController {
         if (!auth.isEqual(authDto)) {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
-        userService.updateUserPassword(auth);
+        userService.updateUserPassword(authDto);
         return new ErrorDto<>();
     }
 

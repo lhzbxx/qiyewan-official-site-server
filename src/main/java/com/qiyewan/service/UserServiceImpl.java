@@ -80,6 +80,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long updateUserPassword(AuthDto authDto) {
         UserAuth userAuth = userAuthRepository.findFirstByPhone(authDto.getPhone());
+        if (userAuth == null) {
+            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
+        }
         userAuth.setPassword(authDto.getPassword());
         userAuthRepository.save(userAuth);
         return userAuth.getUserId();
