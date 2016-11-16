@@ -87,12 +87,13 @@ public class AuthController {
         if (!auth.isEqual(authDto)) {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
-        userService.updateUserPassword(authDto);
-        return new ErrorDto<>();
+        Long userId = userService.updateUserPassword(authDto);
+        String token = tokenService.setToken(userId);
+        return new ErrorDto<>(token);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/captcha/{phone}", method = RequestMethod.POST)
+    @PostMapping("/captcha/{phone}")
     public ErrorDto<?> requestCaptcha(@PathVariable String phone) {
         AuthDto authDto = captchaService.setCaptcha(phone);
         rabbitTemplate.convertAndSend("sms-queue", authDto);

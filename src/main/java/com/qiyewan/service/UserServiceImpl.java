@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findOne(userId);
         user.setPhone(authDto.getPhone());
         userAuth.setPhone(authDto.getPhone());
-        userAuth.setPassword(authDto.getPassword());
+        userAuth.resetPassword(authDto.getPassword());
         userRepository.save(user);
         userAuthRepository.save(userAuth);
         return userId;
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
-        userAuth.setPassword(authDto.getPassword());
+        userAuth.resetPassword(authDto.getPassword());
         userAuthRepository.save(userAuth);
         return userAuth.getUserId();
     }
