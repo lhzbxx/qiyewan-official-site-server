@@ -51,6 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
         for (OrderDetail detail : order.getDetails()) {
             if (detail.getProductSerialId().equals(review.getProductSerialId())) {
                 detail.setIsReviewed(true);
+                review.setAmount(detail.getAmount());
                 break;
             }
         }

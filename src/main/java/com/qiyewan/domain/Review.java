@@ -47,6 +47,10 @@ public class Review {
     @Max(5)
     private Integer star = 5;
 
+    // 购买数量
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer amount = 1;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "review_id")
     private List<ReviewTag> tags = new ArrayList<>();
