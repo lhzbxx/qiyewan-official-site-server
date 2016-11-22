@@ -24,6 +24,8 @@ public class Simple2ProductDto {
 
     private BigDecimal price;
 
+    private String classificationName;
+
     public Simple2ProductDto() {}
 
     public Simple2ProductDto(Product product) {
@@ -32,6 +34,7 @@ public class Simple2ProductDto {
         this.cover = product.getCover();
         this.summary = product.getSummary();
         this.price = product.getUnitPrice();
+        this.classificationName = product.getClassificationName();
     }
 
 }
