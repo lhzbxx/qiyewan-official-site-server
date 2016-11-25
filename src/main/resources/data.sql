@@ -50,3 +50,7 @@ OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 (user_id, create_at, update_at);
+
+# 更新产品的评论个数：
+# UPDATE product SET purchase_number = (SELECT count(product_serial_id) FROM review T WHERE T.product_serial_id = product.serial_id GROUP BY product_serial_id);
+# UPDATE product SET purchase_number = 0 WHERE purchase_number IS NULL;
