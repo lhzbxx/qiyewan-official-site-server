@@ -32,6 +32,7 @@ public class Brand {
     private Integer allRecords;
 
     // 查询结果
+    @Column(columnDefinition = "TEXT")
     private String results;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,7 +47,9 @@ public class Brand {
     public Brand(String keyword, int page, BrandDto brandDto) {
         this.keyword = keyword;
         this.page = page;
-        this.results = brandDto.getResults();
+        this.allRecords = Integer.parseInt(brandDto.getAllRecords());
+        System.out.println(brandDto.getResults());
+        this.results = brandDto.getResults().toString();
     }
 
 }

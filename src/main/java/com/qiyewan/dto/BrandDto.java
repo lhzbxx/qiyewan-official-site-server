@@ -1,5 +1,8 @@
 package com.qiyewan.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 /**
@@ -9,16 +12,28 @@ import lombok.Data;
  */
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BrandDto {
 
-    private Integer allRecords;
+    private String allRecords;
+
+    private String logId;
 
     private String msg;
 
-    private Integer remainCount;
+    private String remainCount;
 
-    private String results;
+    @JsonRawValue
+    private Object results;
 
     private Integer ret;
+
+    public String getResults() {
+        return this.results == null ? null : this.results.toString();
+    }
+
+    public void setResults(JsonNode node) {
+        this.results = node;
+    }
 
 }
