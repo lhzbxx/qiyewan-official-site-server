@@ -68,6 +68,12 @@ public class Product {
     // 您将得到...
     private String whatObtain;
 
+    // 您需要提供...（文字版）
+    private String tWhatNeed;
+
+    // 您将得到...（文字版）
+    private String tWhatObtain;
+
     // 流程...
     private String process;
 
