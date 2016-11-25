@@ -40,6 +40,8 @@ public class BrandServiceImpl implements BrandService {
             }
             return null;
         } else {
+            brand.setCount(brand.getCount() + 1);
+            brandRepository.save(brand);
             return brand;
         }
     }
