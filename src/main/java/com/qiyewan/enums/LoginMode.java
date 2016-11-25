@@ -11,7 +11,7 @@ public enum LoginMode {
     // PC
     PC,
 
-    // WeChat
-    WeChat
+    // 移动端
+    Mobile 
 
 }
