@@ -12,6 +12,8 @@ import com.qiyewan.dto.UserDto;
 
 public interface UserService {
 
+    boolean isRegistered(String phone);
+
     User getUserById(Long id);
 
     User getUserByAuth(AuthDto authDto);

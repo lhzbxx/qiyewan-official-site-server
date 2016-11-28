@@ -46,6 +46,12 @@ public class AuthController {
     private LoginHistoryService loginHistoryService;
 
     @CrossOrigin
+    @GetMapping(value = "/auth/{phone}")
+    public boolean checkPhone(@PathVariable String phone) {
+        return userService.isRegistered(phone);
+    }
+
+    @CrossOrigin
     @GetMapping(value = "/auth")
     public ErrorDto<?> login(@RequestParam String phone,
                              @RequestParam String password,

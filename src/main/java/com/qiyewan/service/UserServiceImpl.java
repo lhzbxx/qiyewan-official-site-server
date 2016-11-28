@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     private CompanyRepository companyRepository;
 
     @Override
+    public boolean isRegistered(String phone) {
+        return userAuthRepository.findFirstByPhone(phone) != null;
+    }
+
+    @Override
     public User getUserById(Long id) {
         return this.userRepository.findOne(id);
     }
