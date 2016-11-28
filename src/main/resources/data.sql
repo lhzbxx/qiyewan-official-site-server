@@ -16,7 +16,7 @@ OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(answer, question, serial_id);
+(answer, question, serial_id, id);
 
 LOAD DATA LOCAL INFILE  'classpath:/data/region.csv'
 INTO TABLE region
@@ -25,7 +25,7 @@ OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(code, province, city, district);
+(code, province, city, district, id);
 
 LOAD DATA LOCAL INFILE  'classpath:/data/users.csv'
 INTO TABLE user
