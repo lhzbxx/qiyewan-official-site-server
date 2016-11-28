@@ -41,7 +41,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
-(phone, password, user_id);
+(phone, password, user_id, id);
 
 LOAD DATA LOCAL INFILE  'classpath:/data/company.csv'
 INTO TABLE company
