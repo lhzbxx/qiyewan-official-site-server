@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/28.
- *
+ * <p>
  * 购物车
  */
 
@@ -36,21 +36,22 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart saveCart(Long userId, Cart cart) {
+    public Cart saveCart(Long userId, Cart cart, boolean isOverride) {
         cart.setUserId(userId);
         Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
             throw new NotFoundException("Error.Product.NOT_EXIST");
-        Cart c = cartRepository.findFirstByUserIdAndSerialId(userId, product.getSerialId());
-        if (c != null) {
-            c.setAmount(c.getAmount() + 1);
-            cartRepository.saveAndFlush(c);
-            return c;
-        } else {
-            cart.setProduct(product);
-            cartRepository.saveAndFlush(cart);
-            return cart;
+        if (!isOverride) {
+            Cart c = cartRepository.findFirstByUserIdAndSerialId(userId, product.getSerialId());
+            if (c != null) {
+                c.setAmount(c.getAmount() + cart.getAmount());
+                cartRepository.saveAndFlush(c);
+                return c;
+            }
         }
+        cart.setProduct(product);
+        cartRepository.saveAndFlush(cart);
+        return cart;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void deleteCarts(Long userId, List<Long> cartIds) {
-        for (Long cartId: cartIds) {
+        for (Long cartId : cartIds) {
             cartRepository.delete(cartId);
         }
     }
@@ -87,7 +88,7 @@ public class CartServiceImpl implements CartService {
     private void checkCart(Long userId, Cart cart) {
         if (cart == null)
             throw new NotFoundException("Error.Cart.NOT_EXIST");
-        if ( ! cart.getUserId().equals(userId))
+        if (!cart.getUserId().equals(userId))
             throw new IllegalActionException("Error.Cart.NOT_YOUR_CART");
     }
 

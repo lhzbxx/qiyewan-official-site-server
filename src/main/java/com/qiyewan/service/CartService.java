@@ -17,7 +17,7 @@ public interface CartService {
 
     Page<Cart> getCartsByUser(Long userId, Pageable pageable);
 
-    Cart saveCart(Long userId, Cart cart);
+    Cart saveCart(Long userId, Cart cart, boolean isOverride);
 
     Cart updateCart(Long userId, Cart cart);
 

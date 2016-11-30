@@ -40,9 +40,10 @@ public class CartApi {
 
     @CrossOrigin
     @PostMapping("/carts")
-    public Cart add(@RequestBody @Validated Cart cart) {
+    public Cart add(@RequestBody @Validated Cart cart,
+                    @RequestParam(defaultValue = "false", required = false) boolean isOverride) {
         Long userId = (Long) request.getAttribute("userId");
-        return cartService.saveCart(userId, cart);
+        return cartService.saveCart(userId, cart, isOverride);
     }
 
     @CrossOrigin
