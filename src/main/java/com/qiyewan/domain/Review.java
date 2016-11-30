@@ -59,6 +59,10 @@ public class Review {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date buyAt = new Date();
+
     public Review() {}
 
 }
