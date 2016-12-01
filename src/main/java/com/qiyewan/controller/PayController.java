@@ -24,11 +24,20 @@ public class PayController {
 
     @CrossOrigin
     @PostMapping("/orders/alipay/redirect")
-    public String pay(@RequestParam Map<String, String> sParaTemp) {
+    public String alipay(@RequestParam Map<String, String> sParaTemp) {
         if (AlipayNotify.verify(sParaTemp)) {
             orderService.finishOrderBySerialId(sParaTemp.get("out_trade_no"));
         }
         return "success";
+    }
+
+    @CrossOrigin
+    @PostMapping("/orders/wechat/redirect")
+    public String wechat(@RequestParam Map<String, String> sParaTemp) {
+        return "<xml>\n" +
+                "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "  <return_msg><![CDATA[OK]]></return_msg>\n" +
+                "</xml>";
     }
 
 }

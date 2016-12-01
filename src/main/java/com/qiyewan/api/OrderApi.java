@@ -9,6 +9,8 @@ import com.qiyewan.enums.OrderState;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
 import com.qiyewan.service.OrderService;
+import com.tencent.WXPay;
+import com.tencent.protocol.pay_protocol.WebPayReqData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class OrderApi {
 
     @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public Order add(@RequestBody PayDto payDto) {
+    public Order add(@RequestBody PayDto payDto) throws Exception {
         Long userId = (Long) request.getAttribute("userId");
         List<Long> carts = payDto.getCarts();
         if (carts == null || carts.isEmpty())
@@ -82,13 +85,23 @@ public class OrderApi {
                 total_fee = orderService.fee(total_fee, o);
             }
         }
-        ;
         rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
         rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
             message.getMessageProperties().setDelay(3600000);
             return message;
         });
-        order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+        switch (payDto.getPayment()) {
+            case Alipay:
+                order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
+                break;
+            case WeChat_Mobile:
+                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(body, out_trade_no,
+                        Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
+                break;
+            case WeChat_PC:
+                order.setPayUrl("");
+                break;
+        }
         order.setTotalPrice(total_fee);
         orderService.saveOrder(order);
         return order;
