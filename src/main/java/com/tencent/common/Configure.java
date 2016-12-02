@@ -11,13 +11,13 @@ public class Configure {
 	// 每次自己Post数据给API的时候都要用这个key来对所有字段进行签名，生成的签名会放在Sign这个字段，API收到Post数据的时候也会用同样的签名算法对Post过来的数据进行签名和验证
 	// 收到API的返回的时候也要用这个key来对返回的数据算下签名，跟API的Sign数据进行比较，如果值不一致，有可能数据被第三方给篡改
 
-	private static String key = "";
+	private static String key = "5120309188";
 
 	//微信分配的公众号ID（开通公众号之后可以获取到）
 	private static String appID = "";
 
 	//微信支付分配的商户号ID（开通公众号的微信支付功能之后可以获取到）
-	private static String mchID = "";
+	private static String mchID = "1345143201";
 
 	//受理模式下给子商户分配的子商户号
 	private static String subMchID = "";
@@ -26,7 +26,7 @@ public class Configure {
 	private static String certLocalPath = "";
 
 	//HTTPS证书密码，默认密码等于商户号MCHID
-	private static String certPassword = "";
+	private static String certPassword = "1345143201";
 
 	//是否使用异步线程的方式来上报API测速，默认为异步模式
 	private static boolean useThreadToDoReport = true;
