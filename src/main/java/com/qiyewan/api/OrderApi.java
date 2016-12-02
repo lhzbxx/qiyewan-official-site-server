@@ -95,13 +95,15 @@ public class OrderApi {
                 order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
                 break;
             case WeChat_Mobile:
-                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(body, out_trade_no,
+                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(subject, "JSAPI", out_trade_no,
                         Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
                 break;
             case WeChat_PC:
-                order.setPayUrl("");
+                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(subject, "NATIVE", out_trade_no,
+                        Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
                 break;
         }
+        order.setPayment(payDto.getPayment());
         order.setTotalPrice(total_fee);
         orderService.saveOrder(order);
         return order;

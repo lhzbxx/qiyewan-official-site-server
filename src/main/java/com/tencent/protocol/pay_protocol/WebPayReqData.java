@@ -19,10 +19,13 @@ public class WebPayReqData {
     private String mch_id = "";
     private String device_info = "WEB";
     private String nonce_str = "";
-    private String sign = "";
+    private String sign;
     private String body = "";
     private String out_trade_no = "";
     private int total_fee = 0;
+    private String trade_type = "";
+    private String notify_url = "http://106.75.11.210:8081/orders/wechat/redirect";
+    private String product_id = "";
     private String spbill_create_ip = "106.75.11.210";
 
     /**
@@ -30,15 +33,22 @@ public class WebPayReqData {
      * @param outTradeNo 商户系统内部的订单号，32个字符内可包含字母, 确保在商户系统唯一
      * @param totalFee   订单总金额，单位为“分”
      */
-    public WebPayReqData(String body, String outTradeNo, int totalFee) {
+    public WebPayReqData(String body, String trade_type, String outTradeNo, int totalFee) {
         //微信分配的公众号ID（开通公众号之后可以获取到）
         setAppid(Configure.getAppid());
 
         //微信支付分配的商户号ID（开通公众号的微信支付功能之后可以获取到）
         setMch_id(Configure.getMchid());
 
+        // 交易类型，取值如下：JSAPI，NATIVE，APP
+        setTrade_type(trade_type);
+
         //要支付的商品的描述信息，用户会在支付成功页面里看到这个信息
         setBody(body);
+
+        // trade_type=NATIVE，此参数必传
+        // 此id为二维码中包含的商品ID，商户自行定义
+        setProduct_id(outTradeNo);
 
         //商户系统内部的订单号,32个字符内可包含字母, 确保在商户系统唯一
         setOut_trade_no(outTradeNo);
