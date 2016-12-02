@@ -23,7 +23,7 @@ public class Configure {
 	private static String subMchID = "";
 
 	//HTTPS证书的本地路径
-	private static String certLocalPath = "";
+	private static String certLocalPath = "./main/resources/data/rootca.pem";
 
 	//HTTPS证书密码，默认密码等于商户号MCHID
 	private static String certPassword = "1345143201";
@@ -32,7 +32,7 @@ public class Configure {
 	private static boolean useThreadToDoReport = true;
 
 	//机器IP
-	private static String ip = "";
+	private static String ip = "106.75.11.210";
 
 	//以下是几个API的路径：
 	//1）被扫支付API

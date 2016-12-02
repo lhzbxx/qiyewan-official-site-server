@@ -17,11 +17,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 
 import javax.net.ssl.SSLContext;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketTimeoutException;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -32,6 +33,9 @@ import java.security.cert.CertificateException;
  * Time: 14:36
  */
 public class HttpsRequest implements IServiceRequest {
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     public interface ResultListener {
 
@@ -64,7 +68,7 @@ public class HttpsRequest implements IServiceRequest {
     private void init() throws IOException, KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File(Configure.getCertLocalPath()));//加载本地的证书进行https加密传输
+        InputStream instream = resourceLoader.getResource("classpath:/data/rootca.pem").getInputStream();//加载本地的证书进行https加密传输
         try {
             keyStore.load(instream, Configure.getCertPassword().toCharArray());//设置证书密码
         } catch (CertificateException e) {
