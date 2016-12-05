@@ -2,12 +2,14 @@ package com.qiyewan.controller;
 
 import com.alipay.util.AlipayNotify;
 import com.qiyewan.service.OrderService;
+import com.tencent.common.Signature;
+import com.tencent.common.XMLParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -33,7 +35,14 @@ public class PayController {
 
     @CrossOrigin
     @PostMapping("/orders/wechat/redirect")
-    public String wechat(@RequestParam Map<String, String> sParaTemp) {
+    public String wechat(@RequestBody String xml) {
+        try {
+            if (Signature.checkIsSignValidFromResponseString(xml)) {
+                orderService.finishOrderBySerialId((String) XMLParser.getMapFromXML(xml).get("out_trade_no"));
+            }
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            e.printStackTrace();
+        }
         return "<xml>\n" +
                 "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "  <return_msg><![CDATA[OK]]></return_msg>\n" +
