@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.*;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
         Order order = orderRepository.findBySerialId(review.getSerialId());
         checkOrder(userId, order);
         OrderDetail orderDetail = null;
-        if (order.getOrderState() != OrderState.Paid)
+        if (order.getOrderStage() != OrderStage.Paid)
             throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
         for (OrderDetail detail : order.getDetails()) {
             if (detail.getProductSerialId().equals(review.getProductSerialId())) {
@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
             count += 1;
         }
         if (count == order.getDetails().size()) {
-            order.setOrderState(OrderState.Reviewed);
+            order.setOrderStage(OrderStage.Reviewed);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }

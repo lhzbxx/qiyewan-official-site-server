@@ -1,7 +1,7 @@
 package com.qiyewan.repository;
 
 import com.qiyewan.domain.Order;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Page<Order> findByUserId(Long userId, Pageable pageable);
 
-    Page<Order> findByUserIdAndOrderState(Long userId, OrderState orderState, Pageable pageable);
+    Page<Order> findByUserIdAndOrderState(Long userId, OrderStage orderStage, Pageable pageable);
 
     Order findBySerialId(String serialId);
 

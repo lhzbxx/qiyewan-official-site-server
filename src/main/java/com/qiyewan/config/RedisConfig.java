@@ -21,7 +21,6 @@ import java.util.List;
 
 @Configuration
 public class RedisConfig {
-
     @Autowired
     private JedisConnectionFactory jedisConnectionFactory;
 
@@ -43,7 +42,6 @@ public class RedisConfig {
         return template;
     }
 
-
     @Bean
     public RedisTemplate<String, List<Simple2ProductDto>> products2RedisTemplate() {
         RedisTemplate<String, List<Simple2ProductDto>> template = new RedisTemplate<>();
@@ -52,5 +50,4 @@ public class RedisConfig {
         template.setValueSerializer(new Jackson2JsonRedisSerializer<>(List.class));
         return template;
     }
-
 }

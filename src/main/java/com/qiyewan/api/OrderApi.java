@@ -5,7 +5,7 @@ import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.dto.PayDto;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.service.CartService;
 import com.qiyewan.service.OrderService;
@@ -49,7 +49,7 @@ public class OrderApi {
     @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                @RequestParam(required = false) OrderState state) {
+                                @RequestParam(required = false) OrderStage state) {
         Long userId = (Long) request.getAttribute("userId");
         if (state == null)
             return orderService.getOrdersByUser(userId, pageable);

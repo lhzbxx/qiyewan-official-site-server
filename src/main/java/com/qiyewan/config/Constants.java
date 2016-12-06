@@ -7,7 +7,6 @@ package com.qiyewan.config;
  */
 
 public class Constants {
-
     public static final String API_CACHE_DIR = "cache";
 
     public static final String REDIS_PREFIX_PRODUCTS = "products:";
@@ -19,5 +18,4 @@ public class Constants {
     public static String REDIS_PRODUCTS_CITY_CLASSIFICATION(String regionCode, String classificationName) {
         return "products:" + regionCode + ":" + classificationName;
     }
-
 }

@@ -1,7 +1,7 @@
 package com.qiyewan.utils.Ip2Region;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qiyewan.enums.RegionCode;
+import com.qiyewan.enums.CityCode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class Ip2RegionUtil {
         try {
             response = sendPost();
             result = parseResponse(response);
-            return RegionCode.valueOf(result.getCity()).getCode();
+            return CityCode.valueOf(result.getCity()).getCode();
         } catch (IOException e) {
             e.printStackTrace();
         }

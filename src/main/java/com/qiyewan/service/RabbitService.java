@@ -4,7 +4,7 @@ import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.Sms;
 import com.qiyewan.dto.AuthDto;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import com.qiyewan.repository.LoginHistoryRepository;
 import com.qiyewan.repository.OrderRepository;
 import com.qiyewan.repository.SmsRepository;
@@ -65,7 +65,7 @@ public class RabbitService {
         if (env.equals("dev")) return;
         Order order = orderRepository.findBySerialId(serialId);
         if (order == null) return;
-        switch (order.getOrderState()) {
+        switch (order.getOrderStage()) {
             case Unpaid:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
@@ -95,8 +95,8 @@ public class RabbitService {
     public void setTimeout(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         if (order == null) return;
-        if (order.getOrderState() == OrderState.Unpaid) {
-            order.setOrderState(OrderState.Timeout);
+        if (order.getOrderStage() == OrderStage.Unpaid) {
+            order.setOrderStage(OrderStage.Timeout);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }

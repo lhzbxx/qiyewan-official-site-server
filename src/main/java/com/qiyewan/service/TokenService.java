@@ -7,11 +7,9 @@ package com.qiyewan.service;
  */
 
 public interface TokenService {
-
     // 64位
     // 长度
     int tokenLength = 64;
-
     // 15天
     // 过期时间
     long expire = 15;
@@ -19,5 +17,4 @@ public interface TokenService {
     Long getUserIdWithToken(String token);
 
     String setToken(Long userId);
-
 }

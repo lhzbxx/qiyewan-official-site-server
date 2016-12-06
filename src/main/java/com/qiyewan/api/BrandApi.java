@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by lhzbxx on 2016/11/25.
- * <p>
+ *
  * 商标查询
  */
 
 @RestController
 public class BrandApi {
-
     @Autowired
     private BrandService brandService;
 
@@ -26,5 +25,4 @@ public class BrandApi {
                             @RequestParam int page) {
         return brandService.fuzzyQuery(keyword, page);
     }
-
 }

@@ -15,25 +15,20 @@ import javax.persistence.Id;
 @Entity
 @Data
 public class Region {
-
     @Id
     @GeneratedValue
     private Long id;
-
     // 省
     private String province;
-
     // 城市
     private String city;
-
+    // 城市编号
+    private String cityCode;
     // 区
     private String district;
 
-    // 地区编号
-    private String code;
-
-    public String address() {
+    @Override
+    public String toString() {
         return this.province + this.city + this.district;
     }
-
 }

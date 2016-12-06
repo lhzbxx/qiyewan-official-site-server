@@ -9,7 +9,5 @@ import com.qiyewan.domain.Brand;
  */
 
 public interface BrandService {
-
     Brand fuzzyQuery(String keyword, int page);
-
 }

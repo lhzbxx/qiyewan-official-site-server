@@ -33,10 +33,10 @@ public class Handler {
         return new ErrorDto<>(ErrorType.InvalidParamError, e.getMessage());
     }
 
-    @ExceptionHandler(DuplicatedException.class)
+    @ExceptionHandler(ExistedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto<String> processDuplicatedError(DuplicatedException e) throws Exception {
+    public ErrorDto<String> processDuplicatedError(ExistedException e) throws Exception {
         return new ErrorDto<>(ErrorType.DuplicatedError, e.getMessage());
     }
 

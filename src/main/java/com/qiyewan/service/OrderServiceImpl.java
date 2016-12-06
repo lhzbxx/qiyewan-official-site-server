@@ -2,7 +2,7 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import com.qiyewan.exceptions.IllegalActionException;
 import com.qiyewan.exceptions.NotFoundException;
 import com.qiyewan.repository.OrderRepository;
@@ -32,8 +32,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> getOrdersByUserAndState(Long userId, OrderState orderState, Pageable pageable) {
-        return orderRepository.findByUserIdAndOrderState(userId, orderState, pageable);
+    public Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable) {
+        return orderRepository.findByUserIdAndOrderState(userId, orderStage, pageable);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order finishOrderBySerialId(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
-        if (order.getOrderState().equals(OrderState.Unpaid)) {
-            order.setOrderState(OrderState.Paid);
+        if (order.getOrderStage().equals(OrderStage.Unpaid)) {
+            order.setOrderStage(OrderStage.Paid);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(Long userId, String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         checkOrder(userId, order);
-        order.setOrderState(OrderState.Canceled);
+        order.setOrderStage(OrderStage.Canceled);
         orderRepository.save(order);
     }
 

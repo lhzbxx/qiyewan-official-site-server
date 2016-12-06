@@ -7,11 +7,8 @@ package com.qiyewan.enums;
  */
 
 public enum LoginMode {
-
     // PC
-    PC,
-
+    WEB_PC,
     // 移动端
-    Mobile 
-
+    WEB_MOBILE
 }

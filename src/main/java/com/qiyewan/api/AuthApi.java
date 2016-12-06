@@ -28,16 +28,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class AuthApi {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private LoginHistoryService loginHistoryService;
-
     @Autowired
     private CaptchaService captchaService;
-
     @Autowired
     private UserService userService;
 

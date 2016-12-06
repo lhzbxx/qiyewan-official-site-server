@@ -1,7 +1,7 @@
 package com.qiyewan.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qiyewan.enums.OrderState;
+import com.qiyewan.enums.OrderStage;
 import com.qiyewan.enums.Payment;
 import lombok.Data;
 
@@ -22,7 +22,6 @@ import java.util.TimeZone;
 @Entity(name = "orders")
 @Data
 public class Order {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -45,7 +44,7 @@ public class Order {
 
     // 订单状态
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private OrderState orderState = OrderState.Unpaid;
+    private OrderStage orderStage = OrderStage.Unpaid;
 
     // 总价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

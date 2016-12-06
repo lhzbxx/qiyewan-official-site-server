@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class TokenServiceImpl implements TokenService {
-
     @Autowired
     private StringRedisTemplate template;
 
@@ -43,5 +42,4 @@ public class TokenServiceImpl implements TokenService {
     private String generateToken() {
         return UUID.randomUUID().toString();
     }
-
 }

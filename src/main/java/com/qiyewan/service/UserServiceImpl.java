@@ -5,7 +5,7 @@ import com.qiyewan.domain.User;
 import com.qiyewan.domain.UserAuth;
 import com.qiyewan.dto.AuthDto;
 import com.qiyewan.dto.UserDto;
-import com.qiyewan.exceptions.DuplicatedException;
+import com.qiyewan.exceptions.ExistedException;
 import com.qiyewan.exceptions.NoAuthException;
 import com.qiyewan.repository.CompanyRepository;
 import com.qiyewan.repository.UserAuthRepository;
@@ -21,13 +21,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserAuthRepository userAuthRepository;
-
     @Autowired
     private CompanyRepository companyRepository;
 
@@ -47,7 +44,7 @@ public class UserServiceImpl implements UserService {
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
-        if ( ! userAuth.isValid(authDto.getPassword())) {
+        if (!userAuth.isValid(authDto.getPassword())) {
             throw new NoAuthException("Error.Auth.WRONG_PASSWORD");
         }
         Long userId = userAuth.getUserId();
@@ -57,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long createAndSaveUser(AuthDto authDto) {
         if (userAuthRepository.findFirstByPhone(authDto.getPhone()) != null) {
-            throw new DuplicatedException("Error.Duplicated.USER_EXISTS");
+            throw new ExistedException("Error.Duplicated.USER_EXISTS");
         }
         User user = new User(authDto.getPhone());
         userRepository.saveAndFlush(user);

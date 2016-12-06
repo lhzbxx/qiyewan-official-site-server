@@ -17,7 +17,6 @@ import java.util.Date;
 @Entity
 @Data
 public class Product {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -42,7 +41,7 @@ public class Product {
     private Integer heat = 0;
 
     // 状态
-    private ProductState productState = ProductState.PutAway;
+    private ProductState productState = ProductState.OnOffer;
 
     // 单价
     private BigDecimal unitPrice;
@@ -98,5 +97,4 @@ public class Product {
     private Date updateAt = new Date();
 
     public Product() {}
-
 }
