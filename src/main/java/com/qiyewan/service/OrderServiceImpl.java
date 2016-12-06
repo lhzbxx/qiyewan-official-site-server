@@ -16,13 +16,12 @@ import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/28.
- * <p>
+ *
  * 订单
  */
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
     @Autowired
     private OrderRepository orderRepository;
 
@@ -101,5 +100,4 @@ public class OrderServiceImpl implements OrderService {
         if (!userId.equals(order.getUserId()))
             throw new IllegalActionException("Error.Order.NOT_YOUR_ORDER");
     }
-
 }

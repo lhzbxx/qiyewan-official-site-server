@@ -14,10 +14,8 @@ import java.util.concurrent.TimeUnit;
  *
  * 手机验证码-管理
  */
-
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
-
     @Autowired
     private RedisTemplate<String, AuthDto> template;
 
@@ -52,5 +50,4 @@ public class CaptchaServiceImpl implements CaptchaService {
             stringBuilder.append(numberChars.charAt(random.nextInt(numberChars.length())));
         return stringBuilder.toString();
     }
-
 }

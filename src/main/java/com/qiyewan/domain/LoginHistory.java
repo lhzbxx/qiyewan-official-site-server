@@ -13,37 +13,30 @@ import java.util.Date;
  *
  * 登录-历史记录
  */
-
 @Entity
 @Data
 public class LoginHistory {
-
     @Id
     @GeneratedValue
     @JsonIgnore
     private Long id;
-
     @JsonIgnore
     private Long userId;
-
     // IP
     private String ip;
-
     // 登录地点
     private String address;
-
     @JsonIgnore
     private String token;
-
     // 登录方式
     private LoginMode mode;
-
     // 登录时间
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
 
-    public LoginHistory() {}
+    public LoginHistory() {
+    }
 
     public LoginHistory(Long userId, String ip, String token, String mode) {
         System.out.println(userId);
@@ -53,5 +46,4 @@ public class LoginHistory {
         this.token = token;
         this.mode = LoginMode.valueOf(mode);
     }
-
 }

@@ -11,9 +11,7 @@ import java.util.List;
  *
  * 产品
  */
-
 public interface ProductService {
-
     List<Simple1ProductDto> getProducts(String regionCode);
 
     List<Simple2ProductDto> getProductsWithClassification(String regionCode, String classificationName);
@@ -23,5 +21,4 @@ public interface ProductService {
     Product saveProduct(Product product);
 
     Product updateProduct(Product product);
-
 }

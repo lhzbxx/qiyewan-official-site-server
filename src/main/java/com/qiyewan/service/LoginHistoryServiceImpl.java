@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
  *
  * 用户-登录记录
  */
-
 @Service
 public class LoginHistoryServiceImpl implements LoginHistoryService {
-
     @Autowired
     private LoginHistoryRepository loginHistoryRepository;
 

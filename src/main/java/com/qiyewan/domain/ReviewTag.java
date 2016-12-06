@@ -13,26 +13,20 @@ import javax.persistence.ManyToOne;
  *
  * 评论-标签
  */
-
 @Entity
 @Data
 public class ReviewTag {
-
     @Id
     @GeneratedValue
     private Long id;
-
     // 产品编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String productSerialId;
-
     // 评论ID
     @ManyToOne
     private Review review;
-
     // 标签内容
     private String content;
 
     public ReviewTag() {}
-
 }

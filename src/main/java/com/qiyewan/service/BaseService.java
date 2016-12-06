@@ -5,6 +5,5 @@ package com.qiyewan.service;
  *
  * 基础类
  */
-
 public class BaseService {
 }

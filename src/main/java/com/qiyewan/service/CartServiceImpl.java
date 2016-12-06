@@ -18,16 +18,13 @@ import java.util.List;
 
 /**
  * Created by lhzbxx on 2016/10/28.
- * <p>
+ *
  * 购物车
  */
-
 @Service
 public class CartServiceImpl implements CartService {
-
     @Autowired
     private CartRepository cartRepository;
-
     @Autowired
     private ProductRepository productRepository;
 
@@ -97,5 +94,4 @@ public class CartServiceImpl implements CartService {
         if (!cart.getUserId().equals(userId))
             throw new IllegalActionException("Error.Cart.NOT_YOUR_CART");
     }
-
 }

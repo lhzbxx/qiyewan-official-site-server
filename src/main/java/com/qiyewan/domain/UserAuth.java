@@ -14,7 +14,6 @@ import java.util.UUID;
  *
  * 用户-认证
  */
-
 @Entity
 @Data
 public class UserAuth {
@@ -40,12 +39,11 @@ public class UserAuth {
         this.credential = Md5Util.genMd5(credential);
     }
 
-    public void resetPassword(String password) {
-        this.credential = Md5Util.genMd5(password);
+    public void resetCredential(String credential) {
+        this.credential = Md5Util.genMd5(credential);
     }
 
-    public boolean isValid(String password) {
-        return this.credential.equals(Md5Util.genMd5(password));
+    public boolean isValid(String credential) {
+        return this.credential.equals(Md5Util.genMd5(credential));
     }
-
 }

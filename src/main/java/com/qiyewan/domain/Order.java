@@ -18,51 +18,42 @@ import java.util.TimeZone;
  *
  * 订单
  */
-
 @Entity(name = "orders")
 @Data
 public class Order {
     @Id
     @GeneratedValue
     private Long id;
-
     // 用户ID
     private Long userId;
-
     // 订单编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(unique = true, length = 30)
     private String serialId;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<OrderDetail> details;
-
     // 支付方式
     // （默认为支付宝）
     private Payment payment = Payment.Alipay;
-
     // 订单状态
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OrderStage orderStage = OrderStage.Unpaid;
-
     // 总价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal totalPrice = BigDecimal.ZERO;
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
-
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(columnDefinition = "TEXT")
     private String payUrl;
 
-    public Order() {}
+    public Order() {
+    }
 
     public Order(Long userId) {
         this.userId = userId;
@@ -76,5 +67,4 @@ public class Order {
                 + this.id
                 + (int) (Math.random() * 1000);
     }
-
 }

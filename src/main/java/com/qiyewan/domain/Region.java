@@ -11,7 +11,6 @@ import javax.persistence.Id;
  *
  * 区域
  */
-
 @Entity
 @Data
 public class Region {

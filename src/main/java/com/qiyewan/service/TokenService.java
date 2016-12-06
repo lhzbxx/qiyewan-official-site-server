@@ -5,7 +5,6 @@ package com.qiyewan.service;
  *
  * 认证的令牌-管理
  */
-
 public interface TokenService {
     // 64位
     // 长度

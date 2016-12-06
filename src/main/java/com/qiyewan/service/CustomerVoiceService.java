@@ -5,6 +5,5 @@ package com.qiyewan.service;
  *
  * 客户之声
  */
-
 public interface CustomerVoiceService {
 }

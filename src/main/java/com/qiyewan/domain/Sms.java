@@ -11,23 +11,17 @@ import java.util.Date;
  *
  * 短信记录
  */
-
 @Entity
 @Data
 public class Sms {
-
     @Id
     @GeneratedValue
     private Long id;
-
     private String phone;
-
     private String content;
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
@@ -38,5 +32,4 @@ public class Sms {
         this.phone = phone;
         this.content = content;
     }
-
 }

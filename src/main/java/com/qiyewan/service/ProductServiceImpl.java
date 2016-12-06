@@ -16,16 +16,12 @@ import java.util.List;
  *
  * 产品
  */
-
 @Service
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private RedisTemplate<String, List<Simple1ProductDto>> redis1Template;
-
     @Autowired
     private RedisTemplate<String, List<Simple2ProductDto>> redis2Template;
 
@@ -55,5 +51,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
         return product;
     }
-
 }

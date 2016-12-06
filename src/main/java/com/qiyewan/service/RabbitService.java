@@ -23,22 +23,16 @@ import java.util.Date;
  *
  * 消息队列-服务
  */
-
 @Component
 public class RabbitService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private LoginHistoryRepository loginHistoryRepository;
-
     @Autowired
     private SmsRepository smsRepository;
-
     @Value("${com.qiyewan.env}")
     private String env;
 
@@ -110,5 +104,4 @@ public class RabbitService {
         loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
         loginHistoryRepository.save(loginHistory);
     }
-
 }

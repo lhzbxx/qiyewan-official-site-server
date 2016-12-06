@@ -9,11 +9,8 @@ import org.springframework.data.domain.Pageable;
  *
  * 用户-登录记录
  */
-
 public interface LoginHistoryService {
-
     Page<LoginHistory> show(Long userId, Pageable pageable);
 
     Long record(LoginHistory loginHistory);
-
 }

@@ -9,9 +9,6 @@ import org.springframework.data.domain.Pageable;
  *
  * 常见问题
  */
-
 public interface FaqService {
-
     Page<Faq> getFaqs(String serialId, Pageable pageable);
-
 }

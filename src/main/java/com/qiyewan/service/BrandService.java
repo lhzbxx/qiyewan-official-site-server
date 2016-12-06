@@ -7,7 +7,6 @@ import com.qiyewan.domain.Brand;
  *
  * 商标查询-缓存。
  */
-
 public interface BrandService {
     Brand fuzzyQuery(String keyword, int page);
 }

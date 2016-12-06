@@ -11,22 +11,16 @@ import javax.persistence.Id;
  *
  * 常见问题
  */
-
 @Entity
 @Data
 public class Faq {
-
     @Id
     @GeneratedValue
     private Long id;
-
     // 产品编号
     private String serialId;
-
     // 问题
     private String question;
-
     // 回答
     private String answer;
-
 }

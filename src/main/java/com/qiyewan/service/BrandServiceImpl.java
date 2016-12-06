@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
  *
  * 手机验证码-管理
  */
-
 @Service
 public class BrandServiceImpl implements BrandService {
     @Autowired

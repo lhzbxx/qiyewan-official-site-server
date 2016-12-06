@@ -7,7 +7,6 @@ import com.qiyewan.domain.Company;
  *
  * 公司/企业
  */
-
 public interface CompanyService {
     Company show(Long userId);
 

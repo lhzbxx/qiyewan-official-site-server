@@ -12,61 +12,48 @@ import java.math.BigDecimal;
  *
  * 订单-详情
  */
-
 @Entity
 @Data
 public class OrderDetail {
-
     @Id
     @GeneratedValue
     private Long id;
-
     @JsonIgnore
     @ManyToOne
     private Order order;
-
     // 区域名称
     private String region;
-
     // 区域编号
     private String regionCode;
-
     // 产品编号
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String productSerialId;
-
     // 产品名称
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String name;
-
     // 数量
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer amount;
-
     // 单价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal unitPrice;
-
     // 数量量词
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String unit;
-
     // 描述
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String summary;
-
     // 封面
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String cover;
-
     // 是否已评价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isReviewed = false;
-
     // 参与人数
     private Integer member = 1;
 
-    public OrderDetail() {}
+    public OrderDetail() {
+    }
 
     public OrderDetail(Cart cart) {
         this.region = cart.getRegion();
@@ -81,5 +68,4 @@ public class OrderDetail {
         this.summary = product.getSummary();
         this.cover = product.getCover();
     }
-
 }

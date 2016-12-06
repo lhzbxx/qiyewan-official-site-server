@@ -20,16 +20,12 @@ import java.util.stream.Collectors;
  * 将SimpleProductDto置入Cache中
  * List<Simple1ProductDto> -> Redis
  */
-
 @Configuration
 public class CacheProducts implements CommandLineRunner {
-
     @Autowired
     private RedisTemplate<String, List<Simple1ProductDto>> redis1Template;
-
     @Autowired
     private RedisTemplate<String, List<Simple2ProductDto>> redis2Template;
-
     @Autowired
     private ProductRepository productRepository;
 

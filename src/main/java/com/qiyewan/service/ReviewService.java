@@ -9,11 +9,8 @@ import org.springframework.data.domain.Pageable;
  *
  * 评论
  */
-
 public interface ReviewService {
-
     Page<Review> getReviewsByProductSerialId(String serialId, Pageable pageable);
 
     Review addReview(Long userId, Review review);
-
 }

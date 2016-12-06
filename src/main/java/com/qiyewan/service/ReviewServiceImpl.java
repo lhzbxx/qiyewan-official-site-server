@@ -17,22 +17,17 @@ import java.util.Date;
 
 /**
  * Created by lhzbxx on 2016/10/28.
- * <p>
+ *
  * 评论
  */
-
 @Service
 public class ReviewServiceImpl implements ReviewService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ReviewRepository reviewRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private OrderRepository orderRepository;
 
@@ -87,5 +82,4 @@ public class ReviewServiceImpl implements ReviewService {
         if (!userId.equals(order.getUserId()))
             throw new IllegalActionException("Error.Review.NOT_YOUR_ORDER");
     }
-
 }

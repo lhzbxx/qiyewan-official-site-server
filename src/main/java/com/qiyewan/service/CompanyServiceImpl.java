@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  *
  * 公司/企业
  */
-
 @Service
 public class CompanyServiceImpl implements CompanyService {
     @Autowired

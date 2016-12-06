@@ -13,9 +13,7 @@ import java.math.BigDecimal;
  *
  * 订单
  */
-
 public interface OrderService {
-
     Page<Order> getOrdersByUser(Long userId, Pageable pageable);
 
     Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable);
@@ -31,5 +29,4 @@ public interface OrderService {
     void deleteOrder(Long userId, String serialId);
 
     BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail);
-
 }

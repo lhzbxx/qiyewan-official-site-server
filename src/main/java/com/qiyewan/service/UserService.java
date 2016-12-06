@@ -9,7 +9,6 @@ import com.qiyewan.dto.UserDto;
  *
  * 用户和用户认证
  */
-
 public interface UserService {
     boolean isRegistered(String phone);
 

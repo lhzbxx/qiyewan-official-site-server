@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
  *
  * 常见问题
  */
-
 @Service
 public class FaqServiceImpl implements FaqService {
-
     @Autowired
     private FaqRepository faqRepository;
 
@@ -23,5 +21,4 @@ public class FaqServiceImpl implements FaqService {
     public Page<Faq> getFaqs(String serialId, Pageable pageable) {
         return faqRepository.findBySerialId(serialId, pageable);
     }
-
 }

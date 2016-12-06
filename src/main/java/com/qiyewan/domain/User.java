@@ -13,7 +13,6 @@ import java.util.UUID;
  *
  * 用户
  */
-
 @Entity
 @Data
 public class User {

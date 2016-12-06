@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
  *
  * 认证的令牌-管理
  */
-
 @Service
 public class TokenServiceImpl implements TokenService {
     @Autowired
