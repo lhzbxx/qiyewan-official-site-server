@@ -55,7 +55,7 @@ public class CartApi {
 
     @CrossOrigin
     @DeleteMapping("/carts/{id}")
-    public ErrorDto<?> remove(@PathVariable String id) {
+    public ErrorDto remove(@PathVariable String id) {
         Long userId = (Long) request.getAttribute("userId");
         BASE64Decoder decoder = new BASE64Decoder();
         try {
@@ -63,7 +63,7 @@ public class CartApi {
         } catch (IOException e) {
             throw new InvalidParamException("Error.Cart.INVALID_ID");
         }
-        return new ErrorDto<>();
+        return new ErrorDto();
     }
 
 }

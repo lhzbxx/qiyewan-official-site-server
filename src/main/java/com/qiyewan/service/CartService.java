@@ -14,7 +14,6 @@ import java.util.List;
  */
 
 public interface CartService {
-
     Page<Cart> getCartsByUser(Long userId, Pageable pageable);
 
     Cart saveCart(Long userId, Cart cart, boolean isOverride);
@@ -26,5 +25,4 @@ public interface CartService {
     void deleteCart(Long userId, Long id);
 
     void deleteCarts(Long userId, List<Long> cartIds);
-
 }

@@ -3,7 +3,6 @@ package com.qiyewan.controller;
 import com.qiyewan.domain.Faq;
 import com.qiyewan.domain.Product;
 import com.qiyewan.domain.Review;
-import com.qiyewan.dto.ErrorDto;
 import com.qiyewan.service.FaqService;
 import com.qiyewan.service.ProductService;
 import com.qiyewan.service.ReviewService;
@@ -53,15 +52,13 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ErrorDto<?> add(@Validated @RequestBody Product product) {
-        productService.saveProduct(product);
-        return new ErrorDto<>();
+    public Product add(@Validated @RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 
     @PutMapping("/products")
-    public ErrorDto<?> update(@Validated @RequestBody Product product) {
-        productService.updateProduct(product);
-        return new ErrorDto<>();
+    public Product update(@Validated @RequestBody Product product) {
+        return productService.updateProduct(product);
     }
 
     @CrossOrigin

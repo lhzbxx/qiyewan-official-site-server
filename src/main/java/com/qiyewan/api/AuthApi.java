@@ -47,7 +47,7 @@ public class AuthApi {
     // 重新绑定手机
     @CrossOrigin
     @PutMapping("/auth")
-    public ErrorDto<?> resetPhone(@Validated @RequestBody AuthDto authDto) {
+    public ErrorDto resetPhone(@Validated @RequestBody AuthDto authDto) {
         Long userId = (Long) request.getAttribute("userId");
         if (authDto.getCaptcha().isEmpty()) {
             throw new InvalidParamException("Error.Param.NO_CAPTCHA");
@@ -57,7 +57,7 @@ public class AuthApi {
             throw new IllegalActionException("Error.Action.WRONG_CAPTCHA");
         }
         userService.updateUserPhone(userId, authDto);
-        return new ErrorDto<>();
+        return new ErrorDto();
     }
 
     @CrossOrigin
@@ -70,10 +70,10 @@ public class AuthApi {
     // 修改头像或昵称
     @CrossOrigin
     @PatchMapping("/users")
-    public ErrorDto<?> resetInfo(@Validated @RequestBody UserDto userDto) {
+    public ErrorDto resetInfo(@Validated @RequestBody UserDto userDto) {
         Long userId = (Long) request.getAttribute("userId");
         userService.updateUserInfo(userId, userDto);
-        return new ErrorDto<>();
+        return new ErrorDto();
     }
 
 }

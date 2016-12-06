@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
-
     @Autowired
     private CompanyRepository companyRepository;
 
@@ -29,5 +28,4 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
         return company;
     }
-
 }

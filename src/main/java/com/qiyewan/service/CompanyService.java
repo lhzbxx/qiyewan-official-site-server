@@ -9,9 +9,7 @@ import com.qiyewan.domain.Company;
  */
 
 public interface CompanyService {
-
     Company show(Long userId);
 
     Company save(Long userId, Company company);
-
 }

@@ -25,7 +25,7 @@ OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(code, province, city, district, id);
+(city_code, province, city, district, id);
 
 LOAD DATA LOCAL INFILE  'classpath:/data/users.csv'
 INTO TABLE user
@@ -41,7 +41,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
-(phone, password, user_id, id);
+(identifier, credential, user_id, id);
 
 LOAD DATA LOCAL INFILE  'classpath:/data/company.csv'
 INTO TABLE company

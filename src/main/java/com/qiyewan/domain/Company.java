@@ -16,7 +16,6 @@ import java.util.Date;
 @Entity
 @Data
 public class Company {
-
     @Id
     @GeneratedValue
     private Long id;

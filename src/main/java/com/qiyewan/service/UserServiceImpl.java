@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isRegistered(String phone) {
-        return userAuthRepository.findFirstByPhone(phone) != null;
+        return userAuthRepository.findFirstByIdentifier(phone) != null;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByAuth(AuthDto authDto) {
-        UserAuth userAuth = this.userAuthRepository.findFirstByPhone(authDto.getPhone());
+        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(authDto.getPhone());
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long createAndSaveUser(AuthDto authDto) {
-        if (userAuthRepository.findFirstByPhone(authDto.getPhone()) != null) {
+        if (userAuthRepository.findFirstByIdentifier(authDto.getPhone()) != null) {
             throw new ExistedException("Error.Duplicated.USER_EXISTS");
         }
         User user = new User(authDto.getPhone());
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = userRepository.findOne(userId);
         user.setPhone(authDto.getPhone());
-        userAuth.setPhone(authDto.getPhone());
+        userAuth.setIdentifier(authDto.getPhone());
         userAuth.resetPassword(authDto.getPassword());
         userRepository.save(user);
         userAuthRepository.save(userAuth);
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long updateUserPassword(AuthDto authDto) {
-        UserAuth userAuth = userAuthRepository.findFirstByPhone(authDto.getPhone());
+        UserAuth userAuth = userAuthRepository.findFirstByIdentifier(authDto.getPhone());
         if (userAuth == null) {
             throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
         }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUserInfo(Long userId, UserDto userDto) {
         User user = userRepository.findOne(userId);
-        user.resetInfo(userDto);
+        user.reset(userDto);
         userRepository.save(user);
         return user;
     }

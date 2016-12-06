@@ -17,27 +17,20 @@ import java.util.UUID;
 @Entity
 @Data
 public class User {
-
     @Id
     @GeneratedValue
     private Long id;
-
     // 手机号
     private String phone;
-
     // 头像
     private String avatar;
-
     // 会员名
     private String nickname = "企业湾-会员";
-
     // UUID
     private String uuid = UUID.randomUUID().toString();
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
@@ -48,9 +41,8 @@ public class User {
         this.phone = phone;
     }
 
-    public void resetInfo(UserDto userDto) {
+    public void reset(UserDto userDto) {
         this.avatar = userDto.getAvatar();
         this.nickname = userDto.getNickname();
     }
-
 }

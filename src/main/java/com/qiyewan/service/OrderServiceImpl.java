@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable) {
-        return orderRepository.findByUserIdAndOrderState(userId, orderStage, pageable);
+        return orderRepository.findByUserIdAndOrderStage(userId, orderStage, pageable);
     }
 
     @Override

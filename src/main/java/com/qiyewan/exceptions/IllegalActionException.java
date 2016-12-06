@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class IllegalActionException extends RuntimeException {
-
     public IllegalActionException(String message) {
         super(message);
     }
-
 }

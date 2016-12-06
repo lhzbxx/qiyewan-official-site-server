@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public Cart saveCart(Long userId, Cart cart, boolean isOverride) {
         cart.setUserId(userId);
         Product product = productRepository.findBySerialId(cart.getSerialId());
@@ -55,6 +57,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public Cart updateCart(Long userId, Cart cart) {
         if (cart.getId() == null)
             throw new InvalidParamException("Error.Cart.NO_CART_ID");
@@ -65,6 +68,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public OrderDetail convertToOrderDetail(Long userId, Long cartId) {
         Cart cart = cartRepository.findOne(cartId);
         checkCart(userId, cart);
@@ -72,6 +76,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public void deleteCart(Long userId, Long id) {
         Cart cart = cartRepository.findOne(id);
         checkCart(userId, cart);
@@ -79,6 +84,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public void deleteCarts(Long userId, List<Long> cartIds) {
         for (Long cartId : cartIds) {
             cartRepository.delete(cartId);

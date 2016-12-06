@@ -10,52 +10,54 @@ import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.LoginHistoryService;
 import com.qiyewan.service.TokenService;
 import com.qiyewan.service.UserService;
-import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by lhzbxx on 2016/10/20.
- * <p>
+ *
  * 用户-身份认证
  */
 
 @RestController
 public class AuthController {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private TokenService tokenService;
-
     @Autowired
     private CaptchaService captchaService;
-
     @Autowired
     private RabbitTemplate rabbitTemplate;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private LoginHistoryService loginHistoryService;
 
     @CrossOrigin
-    @GetMapping(value = "/auth/{phone}")
-    public boolean checkPhone(@PathVariable String phone) {
+    @PostMapping("/captcha.do")
+    public ErrorDto captcha(@RequestParam @NotNull String phone) {
+        AuthDto authDto = captchaService.setCaptcha(phone);
+        rabbitTemplate.convertAndSend("sms-queue", authDto);
+        return new ErrorDto();
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/check-phone.do")
+    public boolean checkPhone(@RequestParam @NotNull String phone) {
         return userService.isRegistered(phone);
     }
 
     @CrossOrigin
     @GetMapping(value = "/auth")
-    public ErrorDto<?> login(@RequestParam String phone,
-                             @RequestParam String password,
-                             @RequestParam(defaultValue = "PC") String mode) {
+    public ErrorDto login(@RequestParam String phone,
+                          @RequestParam String password,
+                          @RequestParam(defaultValue = "PC") String mode) {
         User user = userService.getUserByAuth(new AuthDto(phone, password));
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
@@ -64,12 +66,12 @@ public class AuthController {
         String token = tokenService.setToken(user.getId());
         rabbitTemplate.convertAndSend("login-history-record-queue",
                 loginHistoryService.record(new LoginHistory(user.getId(), ip, token, mode)));
-        return new ErrorDto<>(token);
+        return new ErrorDto(token);
     }
 
     @CrossOrigin
     @PostMapping(value = "/auth")
-    public ErrorDto<?> register(@Validated @RequestBody AuthDto authDto) {
+    public ErrorDto register(@Validated @RequestBody AuthDto authDto) {
         if (authDto.getCaptcha().isEmpty()) {
             throw new InvalidParamException("Error.Param.NO_CAPTCHA");
         }
@@ -79,13 +81,13 @@ public class AuthController {
         }
         Long userId = userService.createAndSaveUser(authDto);
         String token = tokenService.setToken(userId);
-        return new ErrorDto<>(token);
+        return new ErrorDto(token);
     }
 
     // 修改密码
     @CrossOrigin
     @PatchMapping("/auth")
-    public ErrorDto<?> resetPassword(@Validated @RequestBody AuthDto authDto) {
+    public ErrorDto resetPassword(@Validated @RequestBody AuthDto authDto) {
         if (authDto.getCaptcha().isEmpty()) {
             throw new InvalidParamException("Error.Param.NO_CAPTCHA");
         }
@@ -95,25 +97,6 @@ public class AuthController {
         }
         Long userId = userService.updateUserPassword(authDto);
         String token = tokenService.setToken(userId);
-        return new ErrorDto<>(token);
+        return new ErrorDto(token);
     }
-
-    @CrossOrigin
-    @PostMapping("/captcha/{phone}")
-    public ErrorDto<?> requestCaptcha(@PathVariable String phone) {
-        AuthDto authDto = captchaService.setCaptcha(phone);
-        rabbitTemplate.convertAndSend("sms-queue", authDto);
-        return new ErrorDto<>();
-    }
-
-    @CrossOrigin
-    @GetMapping(value = "/region")
-    public String getRegion() {
-        String ip = request.getHeader("X-FORWARDED-FOR");
-        if (ip == null) {
-            ip = request.getRemoteAddr();
-        }
-        return new Ip2RegionUtil(ip).toRegionCode();
-    }
-
 }

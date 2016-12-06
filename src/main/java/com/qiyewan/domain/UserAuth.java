@@ -1,9 +1,9 @@
 package com.qiyewan.domain;
 
+import com.qiyewan.enums.AuthType;
 import com.qiyewan.utils.Crypto.Md5Util;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,35 +18,34 @@ import java.util.UUID;
 @Entity
 @Data
 public class UserAuth {
-
     @Id
     @GeneratedValue
     private Long id;
-
-    @Column(unique = true)
     private Long userId;
-
-    private String phone;
-
-    private String password;
-
+    // 标识符
+    private String identifier;
+    // 认证码
+    private String credential;
+    // 类型
+    private AuthType origin = AuthType.Phone;
+    // 加密盐
     private String salt;
 
     public UserAuth() {}
 
-    public UserAuth(Long userId, String phone, String password) {
+    public UserAuth(Long userId, String identifier, String credential) {
         this.salt = UUID.randomUUID().toString();
         this.userId = userId;
-        this.phone = phone;
-        this.password = Md5Util.genMd5(password);
+        this.identifier = identifier;
+        this.credential = Md5Util.genMd5(credential);
     }
 
     public void resetPassword(String password) {
-        this.password = Md5Util.genMd5(password);
+        this.credential = Md5Util.genMd5(password);
     }
 
     public boolean isValid(String password) {
-        return this.password.equals(Md5Util.genMd5(password));
+        return this.credential.equals(Md5Util.genMd5(password));
     }
 
 }
