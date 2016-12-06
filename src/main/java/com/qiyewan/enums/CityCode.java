@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * （硬编码）城市编号
  */
-
 public enum CityCode {
     北京("BJBJ"),
     上海("SHSH"),

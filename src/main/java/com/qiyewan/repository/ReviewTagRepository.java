@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  *
  * 评论-标签
  */
-
 @Repository
 public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long> {
 }

@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 支付方式
  */
-
 public enum Payment {
     // 支付宝
     Alipay,

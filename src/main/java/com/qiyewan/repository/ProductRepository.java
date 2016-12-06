@@ -1,6 +1,9 @@
 package com.qiyewan.repository;
 
 import com.qiyewan.domain.Product;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,10 +15,8 @@ import java.util.List;
  *
  * 产品
  */
-
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
     List<Product> findAllByRegionCode(String regionCode);
 
     List<Product> findAllByClassificationNameAndRegionCode(String classificationName,
@@ -28,5 +29,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<String> findDistinctClassificationName();
 
     Product findBySerialId(String serialId);
-
 }

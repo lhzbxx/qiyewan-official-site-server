@@ -11,10 +11,7 @@ import org.springframework.stereotype.Repository;
  *
  * 用户-登录记录
  */
-
 @Repository
 public interface LoginHistoryRepository extends JpaRepository<LoginHistory, Long> {
-
     Page<LoginHistory> findByUserId(Long userId, Pageable pageable);
-
 }

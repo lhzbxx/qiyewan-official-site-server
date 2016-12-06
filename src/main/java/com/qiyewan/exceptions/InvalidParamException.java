@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * 参数错误
  */
-
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class InvalidParamException extends RuntimeException {
-
     public InvalidParamException(String message) {
         super(message);
     }
-
 }

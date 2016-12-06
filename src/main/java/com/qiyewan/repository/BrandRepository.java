@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
  *
  * 商标查询-缓存。
  */
-
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
-
     Brand findFirstByKeywordAndPage(String keyword, int page);
-
 }

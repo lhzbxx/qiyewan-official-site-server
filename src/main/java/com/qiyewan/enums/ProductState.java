@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 产品-状态
  */
-
 public enum ProductState {
     // 在售
     OnOffer,

@@ -11,12 +11,9 @@ import org.springframework.stereotype.Repository;
  *
  * 购物车
  */
-
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
-
     Page<Cart> findByUserId(Long userId, Pageable pageable);
 
     Cart findFirstByUserIdAndSerialId(Long userId, String productId);
-
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  *
  * 区域
  */
-
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
 }

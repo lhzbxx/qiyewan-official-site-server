@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 账号类型
  */
-
 public enum AuthType {
     // 手机
     Phone,

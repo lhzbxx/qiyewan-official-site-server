@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 统一的错误定义
  */
-
 public enum ErrorType {
 
     // 系统级别的错误

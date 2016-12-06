@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 大分类
  */
-
 public enum Classification {
     IC("工商服务"),
     FC("财税服务"),

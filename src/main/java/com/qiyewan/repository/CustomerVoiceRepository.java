@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  *
  * 客户之声
  */
-
 @Repository
 public interface CustomerVoiceRepository extends JpaRepository<CustomerVoice, Long> {
 }

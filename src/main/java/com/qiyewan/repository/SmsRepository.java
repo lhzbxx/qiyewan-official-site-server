@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  *
  * 短信
  */
-
 @Repository
 public interface SmsRepository extends JpaRepository<Sms, Long> {
 }

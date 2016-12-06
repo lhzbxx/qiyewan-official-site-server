@@ -5,7 +5,6 @@ package com.qiyewan.enums;
  *
  * 登录方式
  */
-
 public enum LoginMode {
     // PC
     WEB_PC,

@@ -12,14 +12,11 @@ import org.springframework.stereotype.Repository;
  *
  * 订单
  */
-
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-
     Page<Order> findByUserId(Long userId, Pageable pageable);
 
     Page<Order> findByUserIdAndOrderStage(Long userId, OrderStage orderStage, Pageable pageable);
 
     Order findBySerialId(String serialId);
-
 }

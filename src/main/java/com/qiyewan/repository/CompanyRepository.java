@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
  *
  * 公司/企业
  */
-
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
-
     Company findByUserId(Long userId);
-
 }
