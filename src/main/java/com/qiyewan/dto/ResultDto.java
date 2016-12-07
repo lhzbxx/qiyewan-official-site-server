@@ -16,10 +16,6 @@ public class ResultDto {
 
     public ResultDto() {}
 
-    public ResultDto(ErrorType errorType) {
-        this.type = errorType.getCode();
-    }
-
     public ResultDto(ErrorType errorType, String message) {
         this.type = errorType.getCode();
         this.message = message;

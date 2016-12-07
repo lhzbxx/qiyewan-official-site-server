@@ -28,7 +28,7 @@ public class ExceptionConfig {
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ResponseBody
 //    public ResultDto processException(Exception e) throws Exception {
-//        return new ResultDto(ErrorType.UnknownError, e.getMessage());
+//        return new ResultDto(ErrorType.UnknownError, "未知的错误。");
 //    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
