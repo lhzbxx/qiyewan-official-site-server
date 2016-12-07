@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * 不存在资源
  */
-
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException {
-
     public NotFoundException(String message) {
         super(message);
     }
-
 }

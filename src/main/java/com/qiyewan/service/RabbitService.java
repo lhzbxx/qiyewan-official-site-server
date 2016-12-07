@@ -3,7 +3,7 @@ package com.qiyewan.service;
 import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.Sms;
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.enums.OrderStage;
 import com.qiyewan.domain.LoginHistoryRepository;
 import com.qiyewan.domain.OrderRepository;
@@ -40,14 +40,14 @@ public class RabbitService {
     // 生产环境使用打印验证码的形式方便测试。
     // 正式环境中要解除这部分注释。
     @RabbitListener(queues = "sms-queue")
-    public void sendCaptcha(AuthDto authDto) {
+    public void sendCaptcha(PhonePayload phonePayload) {
         if (env.equals("dev")) {
-            System.out.println(authDto.getCaptcha());
+            System.out.println(phonePayload.getCaptcha());
         } else {
             try {
-                String content = "您的验证码是" + authDto.getCaptcha() + ", 15分钟内有效。";
-                SmsUtil.send(authDto.getPhone(), content);
-                smsRepository.save(new Sms(authDto.getPhone(), content));
+                String content = "您的验证码是" + phonePayload.getCaptcha() + ", 15分钟内有效。";
+                SmsUtil.send(phonePayload.getPhone(), content);
+                smsRepository.save(new Sms(phonePayload.getPhone(), content));
             } catch (Exception e) {
                 e.printStackTrace();
             }

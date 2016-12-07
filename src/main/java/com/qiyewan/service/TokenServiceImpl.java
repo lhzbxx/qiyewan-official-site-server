@@ -21,7 +21,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Long getUserIdWithToken(String token) {
         String userId = template.opsForValue().get(keyWithToken(token));
-        if (userId == null) throw new NoAuthException("Error.Auth.INVALID_TOKEN");
+        if (userId == null) throw new NoAuthException("无效的Token。");
         return Long.parseLong(userId);
     }
 

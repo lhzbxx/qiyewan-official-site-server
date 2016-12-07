@@ -1,6 +1,6 @@
 package com.qiyewan.service;
 
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.PhonePayload;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -16,7 +16,7 @@ public interface CaptchaService {
     long expire = 15 * 60;
     String numberChars = "0123456789";
 
-    AuthDto getAuthDtoWithPhone(String phone);
+    PhonePayload getAuthDtoWithPhone(String phone);
 
-    AuthDto setCaptcha(String phone);
+    PhonePayload setCaptcha(String phone);
 }

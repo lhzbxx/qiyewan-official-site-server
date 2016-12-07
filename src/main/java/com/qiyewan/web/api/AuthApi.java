@@ -2,8 +2,8 @@ package com.qiyewan.web.api;
 
 import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.User;
-import com.qiyewan.dto.AuthDto;
-import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.dto.PhonePayload;
+import com.qiyewan.dto.ResultDto;
 import com.qiyewan.dto.UserDto;
 import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.service.CaptchaService;
@@ -45,14 +45,14 @@ public class AuthApi {
     // 重新绑定手机
     @CrossOrigin
     @PutMapping("/auth")
-    public ErrorDto resetPhone(@Validated @RequestBody AuthDto authDto) {
+    public ResultDto resetPhone(@Validated @RequestBody PhonePayload phonePayload) {
         Long userId = (Long) request.getAttribute("userId");
-        AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
-        if (!auth.isEqual(authDto)) {
+        PhonePayload auth = captchaService.getAuthDtoWithPhone(phonePayload.getPhone());
+        if (!auth.isEqual(phonePayload)) {
             throw new InvalidRequestException("验证码错误。");
         }
-        userService.updateUserPhone(userId, authDto);
-        return new ErrorDto();
+        userService.updateUserPhone(userId, phonePayload);
+        return new ResultDto();
     }
 
     @CrossOrigin
@@ -65,9 +65,9 @@ public class AuthApi {
     // 修改头像或昵称
     @CrossOrigin
     @PatchMapping("/users")
-    public ErrorDto resetInfo(@Validated @RequestBody UserDto userDto) {
+    public ResultDto resetInfo(@Validated @RequestBody UserDto userDto) {
         Long userId = (Long) request.getAttribute("userId");
         userService.updateUserInfo(userId, userDto);
-        return new ErrorDto();
+        return new ResultDto();
     }
 }

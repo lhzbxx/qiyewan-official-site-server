@@ -96,8 +96,8 @@ public class OrderServiceImpl implements OrderService {
 
     private void checkOrder(Long userId, Order order) {
         if (order == null)
-            throw new NotFoundException("Error.Order.NOT_EXIST");
+            throw new NotFoundException("该笔订单不存在。");
         if (!userId.equals(order.getUserId()))
-            throw new InvalidRequestException("Error.Order.NOT_YOUR_ORDER");
+            throw new InvalidRequestException("无法更改别人的订单。");
     }
 }

@@ -1,6 +1,6 @@
 package com.qiyewan.service;
 
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,26 +17,26 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
     @Autowired
-    private RedisTemplate<String, AuthDto> template;
+    private RedisTemplate<String, PhonePayload> template;
 
     @Override
-    public AuthDto getAuthDtoWithPhone(String phone) {
+    public PhonePayload getAuthDtoWithPhone(String phone) {
         String key = keyWithPhone(phone);
-        AuthDto authDto = template.opsForValue().get(key);
-        if (authDto == null) {
-            throw new InvalidRequestException("Error.Action.INVALID_OR_EXPIRED_CAPTCHA");
+        PhonePayload phonePayload = template.opsForValue().get(key);
+        if (phonePayload == null) {
+            throw new InvalidRequestException("无效的验证码。");
         }
-        return authDto;
+        return phonePayload;
     }
 
     @Override
-    public AuthDto setCaptcha(String phone) {
+    public PhonePayload setCaptcha(String phone) {
         String captcha = generateCaptcha();
         String key = keyWithPhone(phone);
-        AuthDto authDto = new AuthDto(phone, "", captcha);
-        template.opsForValue().set(key, authDto);
+        PhonePayload phonePayload = new PhonePayload(phone, "", captcha);
+        template.opsForValue().set(key, phonePayload);
         template.expire(key, expire, TimeUnit.SECONDS);
-        return authDto;
+        return phonePayload;
     }
 
     private String keyWithPhone(String phone) {

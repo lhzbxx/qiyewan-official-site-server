@@ -1,6 +1,6 @@
 package com.qiyewan.configs;
 
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.dto.Simple1ProductDto;
 import com.qiyewan.dto.Simple2ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ public class RedisConfig {
     private JedisConnectionFactory jedisConnectionFactory;
 
     @Bean
-    public RedisTemplate<String, AuthDto> authRedisTemplate() {
-        RedisTemplate<String, AuthDto> template = new RedisTemplate<>();
+    public RedisTemplate<String, PhonePayload> authRedisTemplate() {
+        RedisTemplate<String, PhonePayload> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory);
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(AuthDto.class));
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(PhonePayload.class));
         return template;
     }
 

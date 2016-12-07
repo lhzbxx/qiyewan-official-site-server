@@ -21,16 +21,12 @@ import java.util.List;
  *
  * 产品
  */
-
 @RestController
 public class ProductController {
-
     @Autowired
     private ProductService productService;
-
     @Autowired
     private FaqService faqService;
-
     @Autowired
     private ReviewService reviewService;
 
@@ -42,9 +38,8 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping("/products")
-    public List<?> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                           @RequestParam String regionCode,
-                                           @RequestParam(required = false) String classificationName) {
+    public List<?> showList(@RequestParam String regionCode,
+                            @RequestParam(required = false) String classificationName) {
         if (classificationName != null) {
             return productService.getProductsWithClassification(regionCode, classificationName);
         }
@@ -63,16 +58,15 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping("/products/{serialId}/faq")
-    public Page<Faq> faq(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public Page<Faq> faq(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                          @PathVariable String serialId) {
         return faqService.getFaqs(serialId, pageable);
     }
 
     @CrossOrigin
     @GetMapping("/products/{serialId}/reviews")
-    public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                @PathVariable String serialId) {
         return reviewService.getReviewsByProductSerialId(serialId, pageable);
     }
-
 }

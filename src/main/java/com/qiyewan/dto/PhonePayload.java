@@ -13,7 +13,7 @@ import java.util.Date;
  */
 
 @Data
-public class AuthDto {
+public class PhonePayload {
     @NotNull(message = "手机号不能为空。")
     @Size
     private String phone;
@@ -28,21 +28,21 @@ public class AuthDto {
 
     private Date date = new Date();
 
-    public AuthDto() {}
+    public PhonePayload() {}
 
-    public AuthDto(String phone, String password) {
+    public PhonePayload(String phone, String password) {
         this.phone = phone;
         this.password = password;
     }
 
-    public AuthDto(String phone, String password, String captcha) {
+    public PhonePayload(String phone, String password, String captcha) {
         this.phone = phone;
         this.password = password;
         this.captcha = captcha;
     }
 
-    public boolean isEqual(AuthDto authDto) {
-        return this.phone.equals(authDto.getPhone()) &&
-                this.captcha.equals(authDto.getCaptcha());
+    public boolean isEqual(PhonePayload phonePayload) {
+        return this.phone.equals(phonePayload.getPhone()) &&
+                this.captcha.equals(phonePayload.getCaptcha());
     }
 }

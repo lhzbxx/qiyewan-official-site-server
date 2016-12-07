@@ -25,8 +25,8 @@ public class BrandServiceImpl implements BrandService {
             BrandDto brandDto;
             try {
                 brandDto = BrandUtil.fuzzyQuery(keyword, page);
-                if (Integer.parseInt(brandDto.getRemainCount()) < 10) {
-                    SmsUtil.send("15121085325", "商标查询-接口-剩余次数已经不足10次。");
+                if (Integer.parseInt(brandDto.getRemainCount()) < 5) {
+                    SmsUtil.send("15121085325", "商标查询-接口-剩余次数已经不足5次。");
                 }
                 if (brandDto.getRet() == 0) {
                     Brand b = new Brand(keyword, page, brandDto);

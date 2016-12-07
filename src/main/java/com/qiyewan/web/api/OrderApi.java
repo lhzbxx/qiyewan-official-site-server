@@ -3,8 +3,8 @@ package com.qiyewan.web.api;
 import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
-import com.qiyewan.dto.ErrorDto;
-import com.qiyewan.dto.PayDto;
+import com.qiyewan.dto.ResultDto;
+import com.qiyewan.dto.PayPayload;
 import com.qiyewan.enums.OrderStage;
 import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.service.CartService;
@@ -58,9 +58,9 @@ public class OrderApi {
 
     @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public Order add(@RequestBody PayDto payDto) throws Exception {
+    public Order add(@RequestBody PayPayload payPayload) throws Exception {
         Long userId = (Long) request.getAttribute("userId");
-        List<Long> carts = payDto.getCarts();
+        List<Long> carts = payPayload.getCarts();
         if (carts == null || carts.isEmpty())
             throw new InvalidRequestException("Error.Cart.EMPTY_CARTS");
         Order order = new Order(userId);
@@ -90,7 +90,7 @@ public class OrderApi {
             message.getMessageProperties().setDelay(3600000);
             return message;
         });
-        switch (payDto.getPayment()) {
+        switch (payPayload.getPayment()) {
             case AliPay:
                 order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
                 break;
@@ -103,7 +103,7 @@ public class OrderApi {
                         Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
                 break;
         }
-        order.setPayment(payDto.getPayment());
+        order.setPayment(payPayload.getPayment());
         order.setTotalPrice(total_fee);
         orderService.saveOrder(order);
         return order;
@@ -118,10 +118,10 @@ public class OrderApi {
 
     @CrossOrigin
     @DeleteMapping("/orders/{serialId}")
-    public ErrorDto remove(@PathVariable String serialId) {
+    public ResultDto remove(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         orderService.deleteOrder(userId, serialId);
-        return new ErrorDto();
+        return new ResultDto();
     }
 
 }

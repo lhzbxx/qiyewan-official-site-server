@@ -1,6 +1,6 @@
 package com.qiyewan.configs;
 
-import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.dto.ResultDto;
 import com.qiyewan.enums.ErrorType;
 import com.qiyewan.exceptions.*;
 import org.springframework.http.HttpStatus;
@@ -27,92 +27,91 @@ public class ExceptionConfig {
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ResponseBody
-//    public ErrorDto processException(Exception e) throws Exception {
-//        return new ErrorDto(ErrorType.UnknownError, e.getMessage());
+//    public ResultDto processException(Exception e) throws Exception {
+//        return new ResultDto(ErrorType.UnknownError, e.getMessage());
 //    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processValidationError(MethodArgumentNotValidException e) throws Exception {
-        return new ErrorDto(ErrorType.InvalidParamError, e.getBindingResult().getFieldError().getDefaultMessage());
+    public ResultDto processValidationError(MethodArgumentNotValidException e) throws Exception {
+        return new ResultDto(ErrorType.InvalidParamError, e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processMethodArgumentTypeError(MethodArgumentTypeMismatchException e) throws Exception {
-        return new ErrorDto(ErrorType.InvalidMethodError, e.getMessage());
+    public ResultDto processMethodArgumentTypeError(MethodArgumentTypeMismatchException e) throws Exception {
+        return new ResultDto(ErrorType.InvalidMethodError, e.getMessage());
     }
 
     @ExceptionHandler(ExistedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processDuplicatedError(ExistedException e) throws Exception {
-        return new ErrorDto(ErrorType.ExistedError, e.getMessage());
+    public ResultDto processDuplicatedError(ExistedException e) throws Exception {
+        return new ResultDto(ErrorType.ExistedError, e.getMessage());
     }
 
     @ExceptionHandler(value = NoAuthException.class)
     @ResponseStatus(value = HttpStatus.NON_AUTHORITATIVE_INFORMATION)
     @ResponseBody
-    public ErrorDto processAuthError(NoAuthException e) throws Exception {
-        return new ErrorDto(ErrorType.NoAuthError, e.getMessage());
+    public ResultDto processAuthError(NoAuthException e) throws Exception {
+        return new ResultDto(ErrorType.NoAuthError, e.getMessage());
     }
 
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ErrorDto processNotFoundError(NotFoundException e) throws Exception {
-        return new ErrorDto(ErrorType.NotFoundError, e.getMessage());
+    public ResultDto processNotFoundError(NotFoundException e) throws Exception {
+        return new ResultDto(ErrorType.NotFoundError, e.getMessage());
     }
 
     @ExceptionHandler(value = PersistenceException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processPersistenceError(PersistenceException e) throws Exception {
-        return new ErrorDto(ErrorType.DatabaseError, e.getMessage());
+    public ResultDto processPersistenceError(PersistenceException e) throws Exception {
+        return new ResultDto(ErrorType.DatabaseError, e.getMessage());
     }
 
     @ExceptionHandler(value = InvalidRequestException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     @ResponseBody
-    public ErrorDto processIllegalActionError(InvalidRequestException e) throws Exception {
-        return new ErrorDto(ErrorType.InvalidRequestError, e.getMessage());
+    public ResultDto processIllegalActionError(InvalidRequestException e) throws Exception {
+        return new ResultDto(ErrorType.InvalidRequestError, e.getMessage());
     }
 
     @ExceptionHandler(value = InvalidParamException.class)
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
-    public ErrorDto processInvalidParamError(InvalidParamException e) throws Exception {
-        return new ErrorDto(ErrorType.InvalidParamError, e.getMessage());
+    public ResultDto processInvalidParamError(InvalidParamException e) throws Exception {
+        return new ResultDto(ErrorType.InvalidParamError, e.getMessage());
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processMissingParamError(MissingServletRequestParameterException e) throws Exception {
-        return new ErrorDto(ErrorType.InvalidParamError, "缺少`" + e.getParameterName() + "`参数");
+    public ResultDto processMissingParamError(MissingServletRequestParameterException e) throws Exception {
+        return new ResultDto(ErrorType.InvalidParamError, "缺少`" + e.getParameterName() + "`参数。");
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processNotSupportMethodError(HttpRequestMethodNotSupportedException e) {
-        return new ErrorDto(ErrorType.InvalidMethodError, "请求方法不正确。");
+    public ResultDto processNotSupportMethodError(HttpRequestMethodNotSupportedException e) {
+        return new ResultDto(ErrorType.InvalidMethodError, "请求方法不正确。");
     }
 
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDto processUnsupportedMediaError(HttpMediaTypeException e) {
-        return new ErrorDto(ErrorType.UnsupportedMedia, "请使用`JSON`格式传输数据。");
+    public ResultDto processUnsupportedMediaError(HttpMediaTypeException e) {
+        return new ResultDto(ErrorType.UnsupportedMedia, "请使用`JSON`格式传输数据。");
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
     @ResponseBody
-    public ErrorDto processHttpRequestBodyError(HttpMessageNotReadableException e) {
-        return new ErrorDto(ErrorType.InvalidParamError, e.getMessage());
+    public ResultDto processHttpRequestBodyError(HttpMessageNotReadableException e) {
+        return new ResultDto(ErrorType.InvalidParamError, e.getMessage());
     }
-
 }

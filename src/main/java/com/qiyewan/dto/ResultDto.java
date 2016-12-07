@@ -10,17 +10,17 @@ import lombok.Data;
  */
 
 @Data
-public class ErrorDto {
+public class ResultDto {
     private String type = "SUCCESS";
     private String message = "成功。";
 
-    public ErrorDto() {}
+    public ResultDto() {}
 
-    public ErrorDto(ErrorType errorType) {
+    public ResultDto(ErrorType errorType) {
         this.type = errorType.getCode();
     }
 
-    public ErrorDto(ErrorType errorType, String message) {
+    public ResultDto(ErrorType errorType, String message) {
         this.type = errorType.getCode();
         this.message = message;
     }

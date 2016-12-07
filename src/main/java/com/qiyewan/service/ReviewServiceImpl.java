@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -37,12 +38,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public Review addReview(Long userId, Review review) {
         Order order = orderRepository.findBySerialId(review.getSerialId());
         checkOrder(userId, order);
-        OrderDetail orderDetail = null;
         if (order.getOrderStage() != OrderStage.Paid)
-            throw new InvalidRequestException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
+            throw new InvalidRequestException("订单未支付或已评价。");
         for (OrderDetail detail : order.getDetails()) {
             if (detail.getProductSerialId().equals(review.getProductSerialId())) {
                 detail.setIsReviewed(true);
@@ -78,8 +79,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     private void checkOrder(Long userId, Order order) {
         if (order == null)
-            throw new NotFoundException("Error.Order.NOT_EXIST");
+            throw new NotFoundException("订单不存在。");
         if (!userId.equals(order.getUserId()))
-            throw new InvalidRequestException("Error.Review.NOT_YOUR_ORDER");
+            throw new InvalidRequestException("不能评价别人的订单。");
     }
 }

@@ -1,17 +1,14 @@
 package com.qiyewan.service;
 
-import com.qiyewan.domain.Company;
-import com.qiyewan.domain.User;
-import com.qiyewan.domain.UserAuth;
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.domain.*;
+import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.dto.UserDto;
 import com.qiyewan.exceptions.ExistedException;
-import com.qiyewan.exceptions.NoAuthException;
-import com.qiyewan.domain.CompanyRepository;
-import com.qiyewan.domain.UserAuthRepository;
-import com.qiyewan.domain.UserRepository;
+import com.qiyewan.exceptions.InvalidParamException;
+import com.qiyewan.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by lhzbxx on 2016/10/26.
@@ -39,53 +36,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByAuth(AuthDto authDto) {
-        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(authDto.getPhone());
-        if (userAuth == null) {
-            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
-        }
-        if (!userAuth.isValid(authDto.getPassword())) {
-            throw new NoAuthException("Error.Auth.WRONG_PASSWORD");
+    public User getUserByAuth(PhonePayload phonePayload) {
+        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(phonePayload.getPhone());
+        checkUserAuth(userAuth);
+        if (!userAuth.isValid(phonePayload.getPassword())) {
+            throw new InvalidParamException("密码错误。");
         }
         Long userId = userAuth.getUserId();
         return this.userRepository.findOne(userId);
     }
 
     @Override
-    public Long createAndSaveUser(AuthDto authDto) {
-        if (userAuthRepository.findFirstByIdentifier(authDto.getPhone()) != null) {
-            throw new ExistedException("Error.Duplicated.USER_EXISTS");
+    @Transactional
+    public Long createAndSaveUser(PhonePayload phonePayload) {
+        if (userAuthRepository.findFirstByIdentifier(phonePayload.getPhone()) != null) {
+            throw new ExistedException("用户已存在。");
         }
-        User user = new User(authDto.getPhone());
+        User user = new User(phonePayload.getPhone());
         userRepository.saveAndFlush(user);
-        UserAuth userAuth = new UserAuth(user.getId(), authDto.getPhone(), authDto.getPassword());
+        UserAuth userAuth = new UserAuth(user.getId(), phonePayload.getPhone(), phonePayload.getPassword());
         this.userAuthRepository.save(userAuth);
         this.companyRepository.save(new Company(user.getId()));
         return user.getId();
     }
 
     @Override
-    public Long updateUserPhone(Long userId, AuthDto authDto) {
+    public Long updateUserPhone(Long userId, PhonePayload phonePayload) {
         UserAuth userAuth = userAuthRepository.findByUserId(userId);
-        if (userAuth == null) {
-            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
-        }
+        checkUserAuth(userAuth);
         User user = userRepository.findOne(userId);
-        user.setPhone(authDto.getPhone());
-        userAuth.setIdentifier(authDto.getPhone());
-        userAuth.resetCredential(authDto.getPassword());
+        user.setPhone(phonePayload.getPhone());
+        userAuth.setIdentifier(phonePayload.getPhone());
+        userAuth.resetCredential(phonePayload.getPassword());
         userRepository.save(user);
         userAuthRepository.save(userAuth);
         return userId;
     }
 
     @Override
-    public Long updateUserPassword(AuthDto authDto) {
-        UserAuth userAuth = userAuthRepository.findFirstByIdentifier(authDto.getPhone());
-        if (userAuth == null) {
-            throw new NoAuthException("Error.Auth.USER_NOT_EXISTS");
-        }
-        userAuth.resetCredential(authDto.getPassword());
+    public Long updateUserPassword(PhonePayload phonePayload) {
+        UserAuth userAuth = userAuthRepository.findFirstByIdentifier(phonePayload.getPhone());
+        checkUserAuth(userAuth);
+        userAuth.resetCredential(phonePayload.getPassword());
         userAuthRepository.save(userAuth);
         return userAuth.getUserId();
     }
@@ -96,5 +88,11 @@ public class UserServiceImpl implements UserService {
         user.reset(userDto);
         userRepository.save(user);
         return user;
+    }
+
+    private void checkUserAuth(UserAuth userAuth) {
+        if (userAuth == null) {
+            throw new NotFoundException("用户不存在。");
+        }
     }
 }

@@ -39,7 +39,7 @@ public class CartServiceImpl implements CartService {
         cart.setUserId(userId);
         Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
-            throw new NotFoundException("Error.Product.NOT_EXIST");
+            throw new NotFoundException("该产品不存在。");
         if (!isOverride) {
             Cart c = cartRepository.findFirstByUserIdAndSerialId(userId, product.getSerialId());
             if (c != null) {
@@ -57,7 +57,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public Cart updateCart(Long userId, Cart cart) {
         if (cart.getId() == null)
-            throw new InvalidParamException("Error.Cart.NO_CART_ID");
+            throw new InvalidParamException("无效的购物车ID。");
         Cart c = cartRepository.findOne(cart.getId());
         checkCart(userId, c);
         cartRepository.save(c.copy(cart));
@@ -90,8 +90,8 @@ public class CartServiceImpl implements CartService {
 
     private void checkCart(Long userId, Cart cart) {
         if (cart == null)
-            throw new NotFoundException("Error.Cart.NOT_EXIST");
+            throw new NotFoundException("购物车不存在。");
         if (!cart.getUserId().equals(userId))
-            throw new InvalidRequestException("Error.Cart.NOT_YOUR_CART");
+            throw new InvalidRequestException("无法更改别人的购物车");
     }
 }

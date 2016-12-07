@@ -4,6 +4,7 @@ import com.qiyewan.utils.Ip2Region.Ip2RegionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,11 @@ public class PublicController {
 
     @CrossOrigin
     @GetMapping(value = "/")
+    @ResponseBody
     public String check() {
-        return "OK";
+        return "{\n" +
+                "  \"status\": \"OK\",\n" +
+                "  \"IP\": \"106.75.11.210\"\n" +
+                "}";
     }
 }

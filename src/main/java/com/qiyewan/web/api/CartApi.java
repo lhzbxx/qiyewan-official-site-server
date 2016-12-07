@@ -1,7 +1,7 @@
 package com.qiyewan.web.api;
 
 import com.qiyewan.domain.Cart;
-import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.dto.ResultDto;
 import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +55,15 @@ public class CartApi {
 
     @CrossOrigin
     @DeleteMapping("/carts/{id}")
-    public ErrorDto remove(@PathVariable String id) {
+    public ResultDto remove(@PathVariable String id) {
         Long userId = (Long) request.getAttribute("userId");
         BASE64Decoder decoder = new BASE64Decoder();
         try {
-            cartService.deleteCart(userId, Long.parseLong(new String(decoder.decodeBuffer(id))));
+            Long cartId = Long.parseLong(new String(decoder.decodeBuffer(id)));
+            cartService.deleteCart(userId, cartId);
         } catch (IOException e) {
-            throw new InvalidParamException("Error.Cart.INVALID_ID");
+            throw new InvalidParamException("非法的购物车ID。");
         }
-        return new ErrorDto();
+        return new ResultDto();
     }
-
 }

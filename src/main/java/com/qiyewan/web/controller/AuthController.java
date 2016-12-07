@@ -2,11 +2,10 @@ package com.qiyewan.web.controller;
 
 import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.User;
-import com.qiyewan.dto.AuthDto;
-import com.qiyewan.dto.ErrorDto;
+import com.qiyewan.dto.PhonePayload;
+import com.qiyewan.dto.ResultDto;
 import com.qiyewan.dto.TokenDto;
 import com.qiyewan.exceptions.InvalidRequestException;
-import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.LoginHistoryService;
 import com.qiyewan.service.TokenService;
@@ -24,7 +23,6 @@ import javax.validation.constraints.NotNull;
  *
  * 用户-身份认证
  */
-
 @RestController
 public class AuthController {
     @Autowired
@@ -42,10 +40,10 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/captcha.do")
-    public ErrorDto captcha(@RequestParam @NotNull String phone) {
-        AuthDto authDto = captchaService.setCaptcha(phone);
-        rabbitTemplate.convertAndSend("sms-queue", authDto);
-        return new ErrorDto();
+    public ResultDto captcha(@RequestParam @NotNull String phone) {
+        PhonePayload phonePayload = captchaService.setCaptcha(phone);
+        rabbitTemplate.convertAndSend("sms-queue", phonePayload);
+        return new ResultDto();
     }
 
     @CrossOrigin
@@ -58,8 +56,8 @@ public class AuthController {
     @GetMapping(value = "/auth")
     public TokenDto login(@RequestParam String phone,
                           @RequestParam String password,
-                          @RequestParam(defaultValue = "PC") String mode) {
-        User user = userService.getUserByAuth(new AuthDto(phone, password));
+                          @RequestParam(defaultValue = "WEB_PC") String mode) {
+        User user = userService.getUserByAuth(new PhonePayload(phone, password));
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
             ip = request.getRemoteAddr();
@@ -72,15 +70,12 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping(value = "/auth")
-    public TokenDto register(@Validated @RequestBody AuthDto authDto) {
-        if (authDto.getCaptcha().isEmpty()) {
-            throw new InvalidParamException("Error.Param.NO_CAPTCHA");
+    public TokenDto register(@Validated @RequestBody PhonePayload phonePayload) {
+        PhonePayload auth = captchaService.getAuthDtoWithPhone(phonePayload.getPhone());
+        if (!auth.isEqual(phonePayload)) {
+            throw new InvalidRequestException("验证码不正确。");
         }
-        AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
-        if (!auth.isEqual(authDto)) {
-            throw new InvalidRequestException("Error.Action.WRONG_CAPTCHA");
-        }
-        Long userId = userService.createAndSaveUser(authDto);
+        Long userId = userService.createAndSaveUser(phonePayload);
         String token = tokenService.setToken(userId);
         return new TokenDto(token);
     }
@@ -88,15 +83,12 @@ public class AuthController {
     // 修改密码
     @CrossOrigin
     @PatchMapping("/auth")
-    public TokenDto resetPassword(@Validated @RequestBody AuthDto authDto) {
-        if (authDto.getCaptcha().isEmpty()) {
-            throw new InvalidParamException("Error.Param.NO_CAPTCHA");
+    public TokenDto resetPassword(@Validated @RequestBody PhonePayload phonePayload) {
+        PhonePayload auth = captchaService.getAuthDtoWithPhone(phonePayload.getPhone());
+        if (!auth.isEqual(phonePayload)) {
+            throw new InvalidRequestException("验证码不正确。");
         }
-        AuthDto auth = captchaService.getAuthDtoWithPhone(authDto.getPhone());
-        if (!auth.isEqual(authDto)) {
-            throw new InvalidRequestException("Error.Action.WRONG_CAPTCHA");
-        }
-        Long userId = userService.updateUserPassword(authDto);
+        Long userId = userService.updateUserPassword(phonePayload);
         String token = tokenService.setToken(userId);
         return new TokenDto(token);
     }

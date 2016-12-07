@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.User;
-import com.qiyewan.dto.AuthDto;
+import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.dto.UserDto;
 
 /**
@@ -14,13 +14,13 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User getUserByAuth(AuthDto authDto);
+    User getUserByAuth(PhonePayload phonePayload);
 
-    Long createAndSaveUser(AuthDto authDto);
+    Long createAndSaveUser(PhonePayload phonePayload);
 
-    Long updateUserPhone(Long userId, AuthDto authDto);
+    Long updateUserPhone(Long userId, PhonePayload phonePayload);
 
-    Long updateUserPassword(AuthDto authDto);
+    Long updateUserPassword(PhonePayload phonePayload);
 
     User updateUserInfo(Long userId, UserDto userDto);
 }
