@@ -2,12 +2,12 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.*;
 import com.qiyewan.enums.OrderStage;
-import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.exceptions.NotFoundException;
-import com.qiyewan.repository.OrderRepository;
-import com.qiyewan.repository.ProductRepository;
-import com.qiyewan.repository.ReviewRepository;
-import com.qiyewan.repository.UserRepository;
+import com.qiyewan.domain.OrderRepository;
+import com.qiyewan.domain.ProductRepository;
+import com.qiyewan.domain.ReviewRepository;
+import com.qiyewan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +42,7 @@ public class ReviewServiceImpl implements ReviewService {
         checkOrder(userId, order);
         OrderDetail orderDetail = null;
         if (order.getOrderStage() != OrderStage.Paid)
-            throw new IllegalActionException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
+            throw new InvalidRequestException("Error.Review.ORDER_UNPAID_OR_REVIEWED");
         for (OrderDetail detail : order.getDetails()) {
             if (detail.getProductSerialId().equals(review.getProductSerialId())) {
                 detail.setIsReviewed(true);
@@ -80,6 +80,6 @@ public class ReviewServiceImpl implements ReviewService {
         if (order == null)
             throw new NotFoundException("Error.Order.NOT_EXIST");
         if (!userId.equals(order.getUserId()))
-            throw new IllegalActionException("Error.Review.NOT_YOUR_ORDER");
+            throw new InvalidRequestException("Error.Review.NOT_YOUR_ORDER");
     }
 }

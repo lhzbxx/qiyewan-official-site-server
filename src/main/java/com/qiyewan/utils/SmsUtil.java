@@ -1,8 +1,5 @@
 package com.qiyewan.utils;
 
-import com.qiyewan.repository.SmsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

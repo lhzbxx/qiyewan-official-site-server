@@ -14,16 +14,16 @@ import java.util.Date;
 
 @Data
 public class AuthDto {
-
-    @NotNull(message = "Error.Param.NO_PHONE")
+    @NotNull(message = "手机号不能为空。")
     @Size
     private String phone;
 
-    @NotNull
+    @NotNull(message = "密码不能为空。")
     @Size
     private String password;
 
-    @Size(min = 4, max = 6)
+    @NotNull(message = "验证码不能为空。")
+    @Size(min = 6, max = 6, message = "验证码格式不正确。")
     private String captcha;
 
     private Date date = new Date();
@@ -45,5 +45,4 @@ public class AuthDto {
         return this.phone.equals(authDto.getPhone()) &&
                 this.captcha.equals(authDto.getCaptcha());
     }
-
 }

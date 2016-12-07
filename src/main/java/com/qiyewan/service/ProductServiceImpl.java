@@ -1,10 +1,10 @@
 package com.qiyewan.service;
 
-import com.qiyewan.config.Constants;
+import com.qiyewan.configs.Constants;
 import com.qiyewan.domain.Product;
 import com.qiyewan.dto.Simple1ProductDto;
 import com.qiyewan.dto.Simple2ProductDto;
-import com.qiyewan.repository.ProductRepository;
+import com.qiyewan.domain.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

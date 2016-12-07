@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Created by lhzbxx on 2016/10/27.
  *
- * 重复异常
+ * 非法请求
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class ExistedException extends RuntimeException {
-    public ExistedException(String message) {
+public class InvalidRequestException extends RuntimeException {
+    public InvalidRequestException(String message) {
         super(message);
     }
 }

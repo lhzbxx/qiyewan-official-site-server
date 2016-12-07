@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Faq;
-import com.qiyewan.repository.FaqRepository;
+import com.qiyewan.domain.FaqRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.Company;
-import com.qiyewan.repository.CompanyRepository;
+import com.qiyewan.domain.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

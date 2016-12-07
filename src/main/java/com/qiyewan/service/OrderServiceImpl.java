@@ -3,9 +3,9 @@ package com.qiyewan.service;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.enums.OrderStage;
-import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.exceptions.NotFoundException;
-import com.qiyewan.repository.OrderRepository;
+import com.qiyewan.domain.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -98,6 +98,6 @@ public class OrderServiceImpl implements OrderService {
         if (order == null)
             throw new NotFoundException("Error.Order.NOT_EXIST");
         if (!userId.equals(order.getUserId()))
-            throw new IllegalActionException("Error.Order.NOT_YOUR_ORDER");
+            throw new InvalidRequestException("Error.Order.NOT_YOUR_ORDER");
     }
 }

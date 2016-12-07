@@ -1,11 +1,11 @@
 package com.qiyewan.runner;
 
-import com.qiyewan.config.Constants;
+import com.qiyewan.configs.Constants;
 import com.qiyewan.dto.Simple1ProductDto;
 import com.qiyewan.dto.Simple2ProductDto;
 import com.qiyewan.enums.Classification;
 import com.qiyewan.enums.CityCode;
-import com.qiyewan.repository.ProductRepository;
+import com.qiyewan.domain.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  *
  * 将SimpleProductDto置入Cache中
  * List<Simple1ProductDto> -> Redis
+ * List<Simple2ProductDto> -> Redis
  */
 @Configuration
 public class CacheProducts implements CommandLineRunner {

@@ -7,9 +7,9 @@ package com.qiyewan.enums;
  */
 public enum Payment {
     // 支付宝
-    Alipay,
-    //微信支付（移动端-H5支付)
+    AliPay,
+    //微信支付
     WeChat_Mobile,
-    //微信支付（PC端-扫码支付）
+    //微信支付
     WeChat_PC
 }

@@ -3,11 +3,11 @@ package com.qiyewan.service;
 import com.qiyewan.domain.Cart;
 import com.qiyewan.domain.OrderDetail;
 import com.qiyewan.domain.Product;
-import com.qiyewan.exceptions.IllegalActionException;
+import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.exceptions.InvalidParamException;
 import com.qiyewan.exceptions.NotFoundException;
-import com.qiyewan.repository.CartRepository;
-import com.qiyewan.repository.ProductRepository;
+import com.qiyewan.domain.CartRepository;
+import com.qiyewan.domain.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -92,6 +92,6 @@ public class CartServiceImpl implements CartService {
         if (cart == null)
             throw new NotFoundException("Error.Cart.NOT_EXIST");
         if (!cart.getUserId().equals(userId))
-            throw new IllegalActionException("Error.Cart.NOT_YOUR_CART");
+            throw new InvalidRequestException("Error.Cart.NOT_YOUR_CART");
     }
 }

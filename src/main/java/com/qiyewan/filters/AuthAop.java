@@ -27,7 +27,7 @@ public class AuthAop {
     @Autowired
     private TokenService tokenService;
 
-    @Pointcut("execution(public * com.qiyewan.api..*.*(..))")
+    @Pointcut("execution(public * com.qiyewan.web.api..*.*(..))")
     public void apiAuth() {}
 
     @Before("apiAuth()")

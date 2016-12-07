@@ -7,9 +7,9 @@ import com.qiyewan.dto.AuthDto;
 import com.qiyewan.dto.UserDto;
 import com.qiyewan.exceptions.ExistedException;
 import com.qiyewan.exceptions.NoAuthException;
-import com.qiyewan.repository.CompanyRepository;
-import com.qiyewan.repository.UserAuthRepository;
-import com.qiyewan.repository.UserRepository;
+import com.qiyewan.domain.CompanyRepository;
+import com.qiyewan.domain.UserAuthRepository;
+import com.qiyewan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

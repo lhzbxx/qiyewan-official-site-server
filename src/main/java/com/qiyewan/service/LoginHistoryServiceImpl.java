@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.domain.LoginHistory;
-import com.qiyewan.repository.LoginHistoryRepository;
+import com.qiyewan.domain.LoginHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

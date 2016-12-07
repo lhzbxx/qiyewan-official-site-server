@@ -2,7 +2,7 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.Brand;
 import com.qiyewan.dto.BrandDto;
-import com.qiyewan.repository.BrandRepository;
+import com.qiyewan.domain.BrandRepository;
 import com.qiyewan.utils.BrandUtil;
 import com.qiyewan.utils.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
