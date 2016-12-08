@@ -49,6 +49,10 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStage(OrderStage.Paid);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
+//            String what = "";
+//            for (OrderDetail detail : order.getDetails()) {
+//                what += "|" + detail.getRegion() + ">>>" + detail.getName() + "|";
+//            }
         }
         return order;
     }

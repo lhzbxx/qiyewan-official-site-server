@@ -30,19 +30,14 @@ import java.util.List;
  *
  * 购物车
  */
-
 @RestController
 public class OrderApi {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private CartService cartService;
-
     @Autowired
     private OrderService orderService;
-
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -65,7 +60,7 @@ public class OrderApi {
             throw new InvalidRequestException("Error.Cart.EMPTY_CARTS");
         Order order = new Order(userId);
         List<OrderDetail> details = new ArrayList<>();
-        for (Long cartId: carts) {
+        for (Long cartId : carts) {
             OrderDetail detail = cartService.convertToOrderDetail(userId, cartId);
             details.add(detail);
         }
@@ -79,7 +74,7 @@ public class OrderApi {
         BigDecimal total_fee = BigDecimal.ZERO;
         total_fee = orderService.fee(total_fee, detail);
         if (details.size() > 1) {
-            for (OrderDetail o: details.subList(1, details.size())) {
+            for (OrderDetail o : details.subList(1, details.size())) {
                 subject += " + " + o.getName();
                 body += " + " + o.getProductSerialId() + "*" + o.getAmount();
                 total_fee = orderService.fee(total_fee, o);
@@ -123,5 +118,4 @@ public class OrderApi {
         orderService.deleteOrder(userId, serialId);
         return new ResultDto();
     }
-
 }

@@ -15,27 +15,19 @@ import javax.persistence.Id;
 @Entity
 @Data
 public class CustomerVoice {
-
     @Id
     @GeneratedValue
     private Long id;
-
     // 头像
     private String avatar;
-
     // 顾客（公司）名称
     private String name;
-
     // 合作业务
     private String business;
-
     // 内容
     private String content;
-
     // 背景
     private String background;
-
     // 备注
     private String comment;
-
 }

@@ -13,7 +13,6 @@ import java.io.IOException;
  * Base64 -> Long
  */
 public class Base64ToLongDeserializer extends JsonDeserializer<Long> {
-
     @Override
     public Long deserialize(JsonParser jp, DeserializationContext context)
             throws IOException {
@@ -26,5 +25,4 @@ public class Base64ToLongDeserializer extends JsonDeserializer<Long> {
             return null;
         }
     }
-
 }

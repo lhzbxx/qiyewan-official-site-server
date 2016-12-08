@@ -1,7 +1,7 @@
 package com.qiyewan.service;
 
 import com.qiyewan.dto.PhonePayload;
-import com.qiyewan.exceptions.InvalidRequestException;
+import com.qiyewan.exceptions.InvalidParamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         String key = keyWithPhone(phone);
         PhonePayload phonePayload = template.opsForValue().get(key);
         if (phonePayload == null) {
-            throw new InvalidRequestException("无效的验证码。");
+            throw new InvalidParamException("无效的验证码。");
         }
         return phonePayload;
     }

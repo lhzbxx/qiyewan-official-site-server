@@ -4,7 +4,7 @@ import com.qiyewan.domain.LoginHistory;
 import com.qiyewan.domain.User;
 import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.dto.ResultDto;
-import com.qiyewan.dto.UserDto;
+import com.qiyewan.dto.UserInfoDto;
 import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.LoginHistoryService;
@@ -65,9 +65,9 @@ public class AuthApi {
     // 修改头像或昵称
     @CrossOrigin
     @PatchMapping("/users")
-    public ResultDto resetInfo(@Validated @RequestBody UserDto userDto) {
+    public ResultDto resetInfo(@Validated @RequestBody UserInfoDto userInfoDto) {
         Long userId = (Long) request.getAttribute("userId");
-        userService.updateUserInfo(userId, userDto);
+        userService.updateUserInfo(userId, userInfoDto);
         return new ResultDto();
     }
 }

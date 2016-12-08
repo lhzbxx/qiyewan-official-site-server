@@ -52,8 +52,7 @@ public class Order {
     @Column(columnDefinition = "TEXT")
     private String payUrl;
 
-    public Order() {
-    }
+    public Order() {}
 
     public Order(Long userId) {
         this.userId = userId;

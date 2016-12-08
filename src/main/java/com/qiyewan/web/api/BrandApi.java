@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * 商标查询
  */
-
 @RestController
 public class BrandApi {
     @Autowired

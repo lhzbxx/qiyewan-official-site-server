@@ -13,13 +13,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * 公司/企业
  */
-
 @RestController
 public class CompanyApi {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private CompanyService companyService;
 
@@ -36,5 +33,4 @@ public class CompanyApi {
         Long userId = (Long) request.getAttribute("userId");
         return companyService.save(userId, company);
     }
-
 }

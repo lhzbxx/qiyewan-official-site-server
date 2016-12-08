@@ -1,7 +1,7 @@
 package com.qiyewan.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qiyewan.dto.UserDto;
+import com.qiyewan.dto.UserInfoDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -40,8 +40,8 @@ public class User {
         this.phone = phone;
     }
 
-    public void reset(UserDto userDto) {
-        this.avatar = userDto.getAvatar();
-        this.nickname = userDto.getNickname();
+    public void reset(UserInfoDto userInfoDto) {
+        this.avatar = userInfoDto.getAvatar();
+        this.nickname = userInfoDto.getNickname();
     }
 }

@@ -10,19 +10,13 @@ import java.util.Date;
  *
  * 用户信息的格式
  */
-
 @Data
-public class UserDto {
-
-    @NotNull
+public class UserInfoDto {
+    @NotNull(message = "昵称不能为空。")
     private String nickname;
-
-    @NotNull
+    @NotNull(message = "头像不能为空。")
     private String avatar;
-
     private Date date = new Date();
 
-    public UserDto() {}
-
-
+    public UserInfoDto() {}
 }

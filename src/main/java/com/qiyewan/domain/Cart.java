@@ -29,20 +29,21 @@ public class Cart {
     @JsonIgnore
     private Long userId;
     // 产品编号
-    @NotNull
+    @NotNull(message = "产品编号不能为空。")
     private String serialId;
     @ManyToOne
     private Product product;
     // 区域编号
-    @NotNull
+    @NotNull(message = "区域编号不能为空。")
     private String regionCode;
     // 区域名称
-    @NotNull
+    @NotNull(message = "区域名称不能为空。")
     private String region;
     // 数量
-    @NotNull
+    @NotNull(message = "数量不能为空。")
     private Integer amount = 1;
     // 参与人数
+    @NotNull(message = "人数不能为空。")
     private Integer member = 1;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -51,8 +52,7 @@ public class Cart {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateAt = new Date();
 
-    public Cart() {
-    }
+    public Cart() {}
 
     public Cart copy(Cart cart) {
         this.updateAt = new Date();

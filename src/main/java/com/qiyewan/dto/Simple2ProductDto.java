@@ -10,20 +10,13 @@ import java.math.BigDecimal;
  *
  * （产品列表）产品的简要信息
  */
-
 @Data
 public class Simple2ProductDto {
-
     private String name;
-
     private String serialId;
-
     private String cover;
-
     private String summary;
-
     private BigDecimal price;
-
     private String classificationName;
 
     public Simple2ProductDto() {}
@@ -36,5 +29,4 @@ public class Simple2ProductDto {
         this.price = product.getUnitPrice();
         this.classificationName = product.getClassificationName();
     }
-
 }

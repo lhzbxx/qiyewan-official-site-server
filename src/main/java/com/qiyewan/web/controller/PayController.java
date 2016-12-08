@@ -17,10 +17,8 @@ import java.util.Map;
  *
  * 第三方支付
  */
-
 @RestController
 public class PayController {
-
     @Autowired
     private OrderService orderService;
 
@@ -48,5 +46,4 @@ public class PayController {
                 "  <return_msg><![CDATA[OK]]></return_msg>\n" +
                 "</xml>";
     }
-
 }

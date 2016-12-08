@@ -21,13 +21,10 @@ import java.io.IOException;
  *
  * 购物车
  */
-
 @RestController
 public class CartApi {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private CartService cartService;
 

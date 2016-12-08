@@ -8,16 +8,11 @@ import lombok.Data;
  *
  * （导航栏）产品的简要信息
  */
-
 @Data
 public class Simple1ProductDto {
-
     private String name;
-
     private String serialId;
-
     private String classificationName;
-
     private String classificationCode;
 
     public Simple1ProductDto() {}
@@ -28,5 +23,4 @@ public class Simple1ProductDto {
         this.classificationCode = product.getClassificationCode();
         this.classificationName = product.getClassificationName();
     }
-
 }

@@ -14,18 +14,12 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BrandDto {
-
     private String allRecords;
-
     private String logId;
-
     private String msg;
-
     private String remainCount;
-
     @JsonRawValue
     private Object results;
-
     private Integer ret;
 
     public String getResults() {
@@ -35,5 +29,4 @@ public class BrandDto {
     public void setResults(JsonNode node) {
         this.results = node;
     }
-
 }

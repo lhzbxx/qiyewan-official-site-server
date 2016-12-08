@@ -9,23 +9,19 @@ import java.util.Date;
 /**
  * Created by lhzbxx on 2016/10/26.
  *
- * 身份认证的格式
+ * （手机）注册/修改密码的格式
  */
-
 @Data
 public class PhonePayload {
     @NotNull(message = "手机号不能为空。")
     @Size
     private String phone;
-
     @NotNull(message = "密码不能为空。")
     @Size
     private String password;
-
     @NotNull(message = "验证码不能为空。")
     @Size(min = 6, max = 6, message = "验证码格式不正确。")
     private String captcha;
-
     private Date date = new Date();
 
     public PhonePayload() {}

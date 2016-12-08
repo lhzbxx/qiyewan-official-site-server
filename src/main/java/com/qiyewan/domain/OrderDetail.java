@@ -52,8 +52,7 @@ public class OrderDetail {
     // 参与人数
     private Integer member = 1;
 
-    public OrderDetail() {
-    }
+    public OrderDetail() {}
 
     public OrderDetail(Cart cart) {
         this.region = cart.getRegion();

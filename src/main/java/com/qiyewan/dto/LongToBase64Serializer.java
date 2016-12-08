@@ -12,9 +12,7 @@ import java.io.IOException;
  *
  * Long -> Base64
  */
-
 public class LongToBase64Serializer extends JsonSerializer<Long> {
-
     @Override
     public void serialize(Long s,
                           JsonGenerator jsonGenerator,
@@ -25,5 +23,4 @@ public class LongToBase64Serializer extends JsonSerializer<Long> {
         BASE64Encoder encoder = new BASE64Encoder();
         jsonGenerator.writeString(encoder.encode(s.toString().getBytes()));
     }
-
 }

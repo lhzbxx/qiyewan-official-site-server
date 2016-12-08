@@ -5,6 +5,7 @@ import com.qiyewan.domain.User;
 import com.qiyewan.dto.PhonePayload;
 import com.qiyewan.dto.ResultDto;
 import com.qiyewan.dto.TokenDto;
+import com.qiyewan.dto.UserStatusDto;
 import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.service.CaptchaService;
 import com.qiyewan.service.LoginHistoryService;
@@ -16,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by lhzbxx on 2016/10/20.
@@ -40,7 +40,7 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/captcha.do")
-    public ResultDto captcha(@RequestParam @NotNull String phone) {
+    public ResultDto captcha(@RequestParam String phone) {
         PhonePayload phonePayload = captchaService.setCaptcha(phone);
         rabbitTemplate.convertAndSend("sms-queue", phonePayload);
         return new ResultDto();
@@ -48,15 +48,15 @@ public class AuthController {
 
     @CrossOrigin
     @GetMapping(value = "/check-phone.do")
-    public boolean checkPhone(@RequestParam @NotNull String phone) {
-        return userService.isRegistered(phone);
+    public UserStatusDto checkPhone(@RequestParam String phone) {
+        return new UserStatusDto(userService.isRegistered(phone));
     }
 
     @CrossOrigin
     @GetMapping(value = "/auth")
     public TokenDto login(@RequestParam String phone,
                           @RequestParam String password,
-                          @RequestParam(defaultValue = "WEB_PC") String mode) {
+                          @RequestParam String mode) {
         User user = userService.getUserByAuth(new PhonePayload(phone, password));
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
@@ -64,7 +64,8 @@ public class AuthController {
         }
         String token = tokenService.setToken(user.getId());
         rabbitTemplate.convertAndSend("login-history-record-queue",
-                loginHistoryService.record(new LoginHistory(user.getId(), ip, token, mode)));
+                loginHistoryService.record(
+                        new LoginHistory(user.getId(), ip, token, mode)));
         return new TokenDto(token);
     }
 

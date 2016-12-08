@@ -22,4 +22,12 @@ public enum CityCode {
     public String getCode() {
         return this.code;
     }
+
+    public static String convert(String s) {
+        try {
+            return CityCode.valueOf(s).code;
+        } catch (Exception e) {
+            return CityCode.上海.code;
+        }
+    }
 }

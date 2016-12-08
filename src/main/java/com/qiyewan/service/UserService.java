@@ -2,7 +2,7 @@ package com.qiyewan.service;
 
 import com.qiyewan.domain.User;
 import com.qiyewan.dto.PhonePayload;
-import com.qiyewan.dto.UserDto;
+import com.qiyewan.dto.UserInfoDto;
 
 /**
  * Created by lhzbxx on 2016/10/19.
@@ -22,5 +22,5 @@ public interface UserService {
 
     Long updateUserPassword(PhonePayload phonePayload);
 
-    User updateUserInfo(Long userId, UserDto userDto);
+    User updateUserInfo(Long userId, UserInfoDto userInfoDto);
 }

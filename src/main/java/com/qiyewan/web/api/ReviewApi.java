@@ -16,13 +16,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * 评论
  */
-
 @RestController
 public class ReviewApi {
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private ReviewService reviewService;
 
@@ -32,5 +29,4 @@ public class ReviewApi {
         Long userId = (Long) request.getAttribute("userId");
         return reviewService.addReview(userId, review);
     }
-
 }
