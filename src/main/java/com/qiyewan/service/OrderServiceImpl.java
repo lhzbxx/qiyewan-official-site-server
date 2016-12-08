@@ -45,8 +45,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order finishOrderBySerialId(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
-        if (order.getOrderStage().equals(OrderStage.Unpaid)) {
-            order.setOrderStage(OrderStage.Paid);
+        if (order.getOrderStage().equals(OrderStage.UNPAID)) {
+            order.setOrderStage(OrderStage.PAID);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
 //            String what = "";
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(Long userId, String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         checkOrder(userId, order);
-        order.setOrderStage(OrderStage.Canceled);
+        order.setOrderStage(OrderStage.CANCELED);
         orderRepository.save(order);
     }
 

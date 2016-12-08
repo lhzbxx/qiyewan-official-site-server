@@ -7,7 +7,7 @@ package com.qiyewan.enums;
  */
 public enum AuthType {
     // 手机
-    Phone,
+    PHONE,
     // 微信
-    WeChat
+    WECHAT
 }

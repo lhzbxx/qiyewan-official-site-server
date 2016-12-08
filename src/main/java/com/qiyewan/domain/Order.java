@@ -38,7 +38,7 @@ public class Order {
     private Payment payment = Payment.AliPay;
     // 订单状态
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private OrderStage orderStage = OrderStage.Unpaid;
+    private OrderStage orderStage = OrderStage.UNPAID;
     // 总价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal totalPrice = BigDecimal.ZERO;

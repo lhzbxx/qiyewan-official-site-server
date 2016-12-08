@@ -38,7 +38,7 @@ public class CartApi {
     @CrossOrigin
     @PostMapping("/carts")
     public Cart add(@RequestBody @Validated Cart cart,
-                    @RequestParam(defaultValue = "false", required = false) boolean isOverride) {
+                    @RequestParam(defaultValue = "true", required = false) boolean isOverride) {
         Long userId = (Long) request.getAttribute("userId");
         return cartService.saveCart(userId, cart, isOverride);
     }
@@ -46,6 +46,9 @@ public class CartApi {
     @CrossOrigin
     @PatchMapping("/carts")
     public Cart update(@RequestBody @Validated Cart cart) {
+        if (cart.getId() == null) {
+            throw new InvalidParamException("购物车ID不能为空。");
+        }
         Long userId = (Long) request.getAttribute("userId");
         return cartService.updateCart(userId, cart);
     }

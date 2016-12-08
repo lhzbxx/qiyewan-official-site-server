@@ -28,90 +28,90 @@ public class ExceptionConfig {
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ResponseBody
 //    public ResultDto processException(Exception e) throws Exception {
-//        return new ResultDto(ErrorType.UnknownError, "未知的错误。");
+//        return new ResultDto(ErrorType.UNKNOWN_ERROR, "未知的错误。");
 //    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processValidationError(MethodArgumentNotValidException e) throws Exception {
-        return new ResultDto(ErrorType.InvalidParamError, e.getBindingResult().getFieldError().getDefaultMessage());
+        return new ResultDto(ErrorType.INVALID_PARAM_ERROR, e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processMethodArgumentTypeError(MethodArgumentTypeMismatchException e) throws Exception {
-        return new ResultDto(ErrorType.InvalidMethodError, e.getMessage());
+        return new ResultDto(ErrorType.INVALID_METHOD_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(ExistedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processDuplicatedError(ExistedException e) throws Exception {
-        return new ResultDto(ErrorType.ExistedError, e.getMessage());
+        return new ResultDto(ErrorType.EXISTED_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = NoAuthException.class)
     @ResponseStatus(value = HttpStatus.NON_AUTHORITATIVE_INFORMATION)
     @ResponseBody
     public ResultDto processAuthError(NoAuthException e) throws Exception {
-        return new ResultDto(ErrorType.NoAuthError, e.getMessage());
+        return new ResultDto(ErrorType.NO_AUTH_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public ResultDto processNotFoundError(NotFoundException e) throws Exception {
-        return new ResultDto(ErrorType.NotFoundError, e.getMessage());
+        return new ResultDto(ErrorType.NOT_FOUND_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = PersistenceException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processPersistenceError(PersistenceException e) throws Exception {
-        return new ResultDto(ErrorType.DatabaseError, e.getMessage());
+        return new ResultDto(ErrorType.DATABASE_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = InvalidRequestException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     @ResponseBody
     public ResultDto processIllegalActionError(InvalidRequestException e) throws Exception {
-        return new ResultDto(ErrorType.InvalidRequestError, e.getMessage());
+        return new ResultDto(ErrorType.INVALID_REQUEST_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = InvalidParamException.class)
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
     public ResultDto processInvalidParamError(InvalidParamException e) throws Exception {
-        return new ResultDto(ErrorType.InvalidParamError, e.getMessage());
+        return new ResultDto(ErrorType.INVALID_PARAM_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processMissingParamError(MissingServletRequestParameterException e) throws Exception {
-        return new ResultDto(ErrorType.InvalidParamError, "缺少`" + e.getParameterName() + "`参数。");
+        return new ResultDto(ErrorType.INVALID_PARAM_ERROR, "缺少`" + e.getParameterName() + "`参数。");
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processNotSupportMethodError(HttpRequestMethodNotSupportedException e) {
-        return new ResultDto(ErrorType.InvalidMethodError, "请求方法不正确。");
+        return new ResultDto(ErrorType.INVALID_METHOD_ERROR, "请求方法不正确。");
     }
 
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResultDto processUnsupportedMediaError(HttpMediaTypeException e) {
-        return new ResultDto(ErrorType.UnsupportedMedia, "请使用`JSON`格式传输数据。");
+        return new ResultDto(ErrorType.UNSUPPORTED_MEDIA, "请使用`JSON`格式传输数据。");
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
     @ResponseBody
     public ResultDto processHttpRequestBodyError(HttpMessageNotReadableException e) {
-        return new ResultDto(ErrorType.InvalidParamError, e.getMessage());
+        return new ResultDto(ErrorType.INVALID_PARAM_ERROR, e.getMessage());
     }
 }

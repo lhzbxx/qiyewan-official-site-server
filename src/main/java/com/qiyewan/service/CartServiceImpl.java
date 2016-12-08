@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
             throw new NotFoundException("该产品不存在。");
-        if (!isOverride) {
+        if (isOverride) {
             Cart c = cartRepository.findFirstByUserIdAndSerialId(userId, product.getSerialId());
             if (c != null) {
                 c.setAmount(c.getAmount() + cart.getAmount());

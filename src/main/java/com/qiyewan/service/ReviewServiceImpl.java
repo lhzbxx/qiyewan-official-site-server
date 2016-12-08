@@ -42,7 +42,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Review addReview(Long userId, Review review) {
         Order order = orderRepository.findBySerialId(review.getSerialId());
         checkOrder(userId, order);
-        if (order.getOrderStage() != OrderStage.Paid)
+        if (order.getOrderStage() != OrderStage.PAID)
             throw new InvalidRequestException("订单未支付或已评价。");
         for (OrderDetail detail : order.getDetails()) {
             if (detail.getProductSerialId().equals(review.getProductSerialId())) {
@@ -59,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
             count += 1;
         }
         if (count == order.getDetails().size()) {
-            order.setOrderStage(OrderStage.Reviewed);
+            order.setOrderStage(OrderStage.REVIEWED);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }

@@ -26,7 +26,7 @@ public class UserAuth {
     // 认证码
     private String credential;
     // 类型
-    private AuthType origin = AuthType.Phone;
+    private AuthType origin = AuthType.PHONE;
     // 加密盐
     private String salt;
 

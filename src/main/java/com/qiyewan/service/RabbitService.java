@@ -60,7 +60,7 @@ public class RabbitService {
         Order order = orderRepository.findBySerialId(serialId);
         if (order == null) return;
         switch (order.getOrderStage()) {
-            case Unpaid:
+            case UNPAID:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
                     String content = "您已下了订单号为" + order.getSerialId() + "，请及时支付。";
@@ -70,7 +70,7 @@ public class RabbitService {
                     e.printStackTrace();
                 }
                 break;
-            case Paid:
+            case PAID:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
                     String content = "您已支付成功，订单号为" + order.getSerialId() + "。满意请给好评，感谢您的使用！";
@@ -89,8 +89,8 @@ public class RabbitService {
     public void setTimeout(String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         if (order == null) return;
-        if (order.getOrderStage() == OrderStage.Unpaid) {
-            order.setOrderStage(OrderStage.Timeout);
+        if (order.getOrderStage() == OrderStage.UNPAID) {
+            order.setOrderStage(OrderStage.TIMEOUT);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
         }

@@ -34,7 +34,7 @@ public class Product {
     // 热度（排序）
     private Integer heat = 0;
     // 状态
-    private ProductState productState = ProductState.OnOffer;
+    private ProductState productState = ProductState.ON_OFFER;
     // 单价
     private BigDecimal unitPrice;
     // 数量量词

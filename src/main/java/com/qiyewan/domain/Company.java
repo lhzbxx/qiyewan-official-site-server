@@ -17,6 +17,7 @@ import java.util.Date;
 public class Company {
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
     // 用户ID
     @JsonIgnore
@@ -47,5 +48,16 @@ public class Company {
 
     public Company(Long userId) {
         this.userId = userId;
+    }
+
+    public void reset(Company company) {
+        this.name = company.getName();
+        this.legalRepresentative = company.getLegalRepresentative();
+        this.address = company.getAddress();
+        this.registeredCapital = company.getRegisteredCapital();
+        this.businessLicense = company.getBusinessLicense();
+        this.taxRegistration = company.getTaxRegistration();
+        this.telephone = company.getTelephone();
+        this.updateAt = new Date();
     }
 }

@@ -23,8 +23,8 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company save(Long userId, Company company) {
         Company c = companyRepository.findByUserId(userId);
-        company.setId(c.getId());
-        companyRepository.save(company);
-        return company;
+        c.reset(company);
+        companyRepository.save(c);
+        return c;
     }
 }

@@ -7,13 +7,13 @@ package com.qiyewan.enums;
  */
 public enum OrderStage {
     // 未付款
-    Unpaid,
+    UNPAID,
     // 已付款（未评价）
-    Paid,
+    PAID,
     // 已付款（完成评价）
-    Reviewed,
+    REVIEWED,
     // 超时
-    Timeout,
+    TIMEOUT,
     // 被取消
-    Canceled
+    CANCELED
 }

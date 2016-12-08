@@ -7,11 +7,11 @@ package com.qiyewan.enums;
  */
 public enum ProductState {
     // 在售
-    OnOffer,
+    ON_OFFER,
     // 停售
-    Halt,
+    HALT,
     // 审核中
-    Reviewing,
+    REVIEWING,
     // 已删除
-    Deleted
+    DELETED
 }

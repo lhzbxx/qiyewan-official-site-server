@@ -16,10 +16,8 @@ import java.util.Map;
  *
  * Rabbit配置
  */
-
 @Configuration
 public class RabbitConfig {
-
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
@@ -60,5 +58,4 @@ public class RabbitConfig {
     Binding binding(Queue orderTimeoutQueue, Exchange delayExchange) {
         return BindingBuilder.bind(orderTimeoutQueue).to(delayExchange).with("order-timeout-queue").noargs();
     }
-
 }
