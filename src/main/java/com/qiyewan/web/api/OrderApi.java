@@ -1,27 +1,25 @@
 package com.qiyewan.web.api;
 
-import com.alipay.util.AlipaySubmit;
 import com.qiyewan.domain.Order;
 import com.qiyewan.domain.OrderDetail;
-import com.qiyewan.dto.ResultDto;
 import com.qiyewan.dto.PayPayload;
+import com.qiyewan.dto.ResultDto;
 import com.qiyewan.enums.OrderStage;
 import com.qiyewan.exceptions.InvalidRequestException;
 import com.qiyewan.service.CartService;
 import com.qiyewan.service.OrderService;
-import com.tencent.WXPay;
-import com.tencent.protocol.pay_protocol.WebPayReqData;
+import com.qiyewan.utils.PayUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,10 +51,11 @@ public class OrderApi {
 
     @CrossOrigin
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public Order add(@RequestBody PayPayload payPayload) throws Exception {
+    @Transactional
+    public Order add(@RequestBody PayPayload payPayload) {
         Long userId = (Long) request.getAttribute("userId");
         List<Long> carts = payPayload.getCarts();
-        if (carts == null || carts.isEmpty())
+        if (carts.isEmpty())
             throw new InvalidRequestException("Error.Cart.EMPTY_CARTS");
         Order order = new Order(userId);
         List<OrderDetail> details = new ArrayList<>();
@@ -85,18 +84,11 @@ public class OrderApi {
             message.getMessageProperties().setDelay(3600000);
             return message;
         });
-        switch (payPayload.getPayment()) {
-            case AliPay:
-                order.setPayUrl(AlipaySubmit.buildLink(out_trade_no, subject, body, total_fee.toString()));
-                break;
-            case WeChat_Mobile:
-                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(subject, "JSAPI", out_trade_no,
-                        Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
-                break;
-            case WeChat_PC:
-                order.setPayUrl(WXPay.requestWebPayService(new WebPayReqData(subject, "NATIVE", out_trade_no,
-                        Integer.parseInt(total_fee.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_UP).toString()))));
-                break;
+        try {
+            order.setCharge(PayUtil.charge(order).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidRequestException("请求支付失败。");
         }
         order.setPayment(payPayload.getPayment());
         order.setTotalPrice(total_fee);

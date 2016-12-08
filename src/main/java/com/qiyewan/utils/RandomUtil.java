@@ -5,6 +5,5 @@ package com.qiyewan.utils;
  *
  * 随机数
  */
-
 public class RandomUtil {
 }

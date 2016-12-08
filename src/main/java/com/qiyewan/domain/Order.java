@@ -50,7 +50,7 @@ public class Order {
     private Date updateAt = new Date();
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(columnDefinition = "TEXT")
-    private String payUrl;
+    private String charge;
 
     public Order() {}
 

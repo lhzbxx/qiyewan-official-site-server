@@ -8,9 +8,7 @@ import java.security.MessageDigest;
  *
  * MD5
  */
-
 public class Md5Util {
-
     public static String genMd5(String str) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -21,5 +19,4 @@ public class Md5Util {
         }
         return "";
     }
-
 }

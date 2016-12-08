@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.ConvertGroup;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class PayPayload {
     private List<Long> carts;
 
     @NotNull(message = "支付方式不能为空。")
+    @ConvertGroup(from = String.class, to=Payment.class)
     private Payment payment;
 
     public PayPayload() {}

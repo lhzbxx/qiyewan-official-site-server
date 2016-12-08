@@ -15,9 +15,7 @@ import java.net.URLEncoder;
  * 对接第三方服务。
  * 商标查询相关。
  */
-
 public class BrandUtil {
-
     public static BrandDto fuzzyQuery(String keyword, int page) throws Exception {
         String url = "http://api.tmkoo.com/search.php";
         String apiKey = "4399320012393234";
@@ -63,5 +61,4 @@ public class BrandUtil {
         in.close();
         return response.toString();
     }
-
 }

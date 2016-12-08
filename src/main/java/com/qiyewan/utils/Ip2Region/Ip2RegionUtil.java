@@ -15,9 +15,7 @@ import java.net.URL;
  * IP->Region
  * 转换服务
  */
-
 public class Ip2RegionUtil {
-
     private String ip;
 
     public Ip2RegionUtil(String ip) {
@@ -58,7 +56,6 @@ public class Ip2RegionUtil {
         URL obj = new URL(getUrl());
         HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
         conn.setRequestMethod("POST");
-
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
@@ -66,7 +63,6 @@ public class Ip2RegionUtil {
             response.append(inputLine);
         }
         in.close();
-
         return response.toString();
     }
 
@@ -74,5 +70,4 @@ public class Ip2RegionUtil {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(response, IpLookupResult.class);
     }
-
 }

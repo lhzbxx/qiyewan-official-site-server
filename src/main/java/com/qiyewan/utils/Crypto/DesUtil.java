@@ -5,6 +5,5 @@ package com.qiyewan.utils.Crypto;
  *
  * DES对称加密
  */
-
 public class DesUtil {
 }
