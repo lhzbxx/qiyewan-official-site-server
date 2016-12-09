@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
  * 订单
  */
 public interface OrderService {
+    Page<Order> getOrders(Pageable pageable);
+
+    Page<Order> searchOrders(String query, Pageable pageable);
+
     Page<Order> getOrdersByUser(Long userId, Pageable pageable);
 
     Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable);

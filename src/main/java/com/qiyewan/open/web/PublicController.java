@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.controller;
+package com.qiyewan.open.web;
 
 import com.qiyewan.common.utils.Ip2RegionUtil;
 import org.springframework.beans.factory.annotation.Autowired;

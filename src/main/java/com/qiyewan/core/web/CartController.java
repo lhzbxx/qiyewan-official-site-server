@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.Cart;
 import com.qiyewan.core.other.dto.ResultDto;
@@ -22,7 +22,7 @@ import java.io.IOException;
  * 购物车
  */
 @RestController
-public class CartApi {
+public class CartController {
     @Autowired
     private HttpServletRequest request;
     @Autowired

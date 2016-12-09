@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.Company;
 import com.qiyewan.core.service.CompanyService;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * 公司/企业
  */
 @RestController
-public class CompanyApi {
+public class CompanyController {
     @Autowired
     private HttpServletRequest request;
     @Autowired

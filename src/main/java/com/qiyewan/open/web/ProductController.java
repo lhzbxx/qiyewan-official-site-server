@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.controller;
+package com.qiyewan.open.web;
 
 import com.qiyewan.core.domain.Faq;
 import com.qiyewan.core.domain.Product;

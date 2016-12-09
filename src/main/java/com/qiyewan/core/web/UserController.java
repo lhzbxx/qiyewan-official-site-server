@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.LoginHistory;
 import com.qiyewan.core.domain.User;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * 用户相关
  */
 @RestController
-public class AuthApi {
+public class UserController {
     @Autowired
     private HttpServletRequest request;
     @Autowired

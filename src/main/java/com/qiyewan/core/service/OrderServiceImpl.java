@@ -24,6 +24,16 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Override
+    public Page<Order> getOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Order> searchOrders(String query, Pageable pageable) {
+        return orderRepository.findBySerialIdLike(query, pageable);
+    }
+
+    @Override
     public Page<Order> getOrdersByUser(Long userId, Pageable pageable) {
         return orderRepository.findByUserId(userId, pageable);
     }

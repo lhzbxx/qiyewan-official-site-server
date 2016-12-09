@@ -16,18 +16,16 @@ import javax.servlet.http.HttpServletRequest;
  *
  * 令牌处理
  */
-
 @Aspect
 @Component
-public class AuthAop {
-
+public class UserAuthAop {
     @Autowired
     private HttpServletRequest request;
 
     @Autowired
     private TokenService tokenService;
 
-    @Pointcut("execution(public * com.qiyewan.core.web.api..*.*(..))")
+    @Pointcut("execution(public * com.qiyewan.core.web..*.*(..))")
     public void apiAuth() {}
 
     @Before("apiAuth()")
@@ -37,5 +35,4 @@ public class AuthAop {
         Long userId = tokenService.getUserIdWithToken(authorization);
         request.setAttribute("userId", userId);
     }
-
 }

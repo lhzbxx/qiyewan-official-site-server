@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.Brand;
 import com.qiyewan.core.service.BrandService;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 商标查询
  */
 @RestController
-public class BrandApi {
+public class BrandController {
     @Autowired
     private BrandService brandService;
 

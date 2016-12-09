@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.Order;
 import com.qiyewan.core.domain.OrderDetail;
@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * Created by lhzbxx on 2016/10/26.
  *
- * 购物车
+ * 订单
  */
 @RestController
-public class OrderApi {
+public class OrderController {
     @Autowired
     private HttpServletRequest request;
     @Autowired

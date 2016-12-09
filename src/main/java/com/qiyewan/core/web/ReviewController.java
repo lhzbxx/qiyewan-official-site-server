@@ -1,4 +1,4 @@
-package com.qiyewan.core.web.api;
+package com.qiyewan.core.web;
 
 import com.qiyewan.core.domain.Review;
 import com.qiyewan.core.service.ReviewService;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * 评论
  */
 @RestController
-public class ReviewApi {
+public class ReviewController {
     @Autowired
     private HttpServletRequest request;
     @Autowired
