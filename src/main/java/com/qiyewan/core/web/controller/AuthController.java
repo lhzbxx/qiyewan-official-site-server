@@ -1,12 +1,12 @@
 package com.qiyewan.core.web.controller;
 
+import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.core.domain.LoginHistory;
 import com.qiyewan.core.domain.User;
 import com.qiyewan.core.dto.PhonePayload;
 import com.qiyewan.core.dto.ResultDto;
 import com.qiyewan.core.dto.TokenDto;
 import com.qiyewan.core.dto.UserStatusDto;
-import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.core.service.CaptchaService;
 import com.qiyewan.core.service.LoginHistoryService;
 import com.qiyewan.core.service.TokenService;

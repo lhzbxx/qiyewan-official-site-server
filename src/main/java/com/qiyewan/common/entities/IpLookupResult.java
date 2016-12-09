@@ -1,4 +1,4 @@
-package com.qiyewan.common.utils.Ip2Region;
+package com.qiyewan.common.entities;
 
 import lombok.Data;
 
@@ -9,9 +9,8 @@ import lombok.Data;
  * IP->Region
  * 返回结果
  */
-
 @Data
-class IpLookupResult {
+public class IpLookupResult {
     private String country;
     private String province;
     private String city;

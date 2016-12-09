@@ -1,7 +1,7 @@
 package com.qiyewan.core.domain;
 
 import com.qiyewan.common.enums.AuthType;
-import com.qiyewan.common.utils.Crypto.Md5Util;
+import com.qiyewan.common.utils.Md5Util;
 import lombok.Data;
 
 import javax.persistence.Entity;

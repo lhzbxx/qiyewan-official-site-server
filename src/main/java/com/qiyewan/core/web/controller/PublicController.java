@@ -1,6 +1,6 @@
 package com.qiyewan.core.web.controller;
 
-import com.qiyewan.common.utils.Ip2Region.Ip2RegionUtil;
+import com.qiyewan.common.utils.Ip2RegionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

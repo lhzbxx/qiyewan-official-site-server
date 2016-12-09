@@ -9,7 +9,7 @@ import com.qiyewan.core.domain.LoginHistoryRepository;
 import com.qiyewan.core.domain.OrderRepository;
 import com.qiyewan.core.domain.SmsRepository;
 import com.qiyewan.core.domain.UserRepository;
-import com.qiyewan.common.utils.Ip2Region.Ip2RegionUtil;
+import com.qiyewan.common.utils.Ip2RegionUtil;
 import com.qiyewan.common.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

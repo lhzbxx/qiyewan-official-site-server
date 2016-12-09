@@ -1,4 +1,4 @@
-package com.qiyewan.common.utils.Crypto;
+package com.qiyewan.common.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

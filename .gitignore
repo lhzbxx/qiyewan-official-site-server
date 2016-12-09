@@ -23,4 +23,3 @@ nbdist/
 .nb-gradle/
 
 storage/data
-/src/main/resources/cache/
