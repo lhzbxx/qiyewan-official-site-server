@@ -1,7 +1,7 @@
 package com.qiyewan.core.service;
 
 import com.qiyewan.core.domain.Brand;
-import com.qiyewan.core.dto.BrandDto;
+import com.qiyewan.core.other.dto.BrandDto;
 import com.qiyewan.core.domain.BrandRepository;
 import com.qiyewan.common.utils.BrandUtil;
 import com.qiyewan.common.utils.SmsUtil;

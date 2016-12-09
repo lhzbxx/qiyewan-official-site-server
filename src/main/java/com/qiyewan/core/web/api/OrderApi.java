@@ -2,8 +2,8 @@ package com.qiyewan.core.web.api;
 
 import com.qiyewan.core.domain.Order;
 import com.qiyewan.core.domain.OrderDetail;
-import com.qiyewan.core.dto.PayPayload;
-import com.qiyewan.core.dto.ResultDto;
+import com.qiyewan.core.other.payload.PayPayload;
+import com.qiyewan.core.other.dto.ResultDto;
 import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.core.service.CartService;

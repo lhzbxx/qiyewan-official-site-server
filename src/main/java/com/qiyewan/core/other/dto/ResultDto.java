@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.dto;
 
 import com.qiyewan.common.enums.ErrorType;
 import lombok.Data;

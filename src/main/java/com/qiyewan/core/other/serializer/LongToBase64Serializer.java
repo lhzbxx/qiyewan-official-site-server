@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

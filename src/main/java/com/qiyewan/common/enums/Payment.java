@@ -9,11 +9,22 @@ import com.qiyewan.common.exceptions.InvalidParamException;
  */
 public enum Payment {
     // 支付宝
-    AliPay,
+    ALIPAY("alipay_pc_direct"),
+    ALIPAY_WAP("alipay_wap"),
     //微信支付
-    WeChat_Mobile,
-    //微信支付
-    WeChat_PC;
+    WXPAY("wx_pub_qr"),
+    WXPAY_WAP("wx_pub"),
+    UPACP("upacp"),
+    UPACP_WAP("upacp_wap");
+    private final String channel;
+
+    Payment(String channel) {
+        this.channel = channel;
+    }
+
+    public String getChannel() {
+        return this.channel;
+    }
 
     public Payment convert(String s) {
         try {

@@ -1,0 +1,2 @@
+id, account, password, nickname, role, create_at, update_at
+1, root, 123456, 超级管理员, 0, 2016/12/9 14:59:42, 2016/12/9 14:59:42

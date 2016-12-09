@@ -1,7 +1,7 @@
 package com.qiyewan.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qiyewan.core.dto.BrandDto;
+import com.qiyewan.core.other.dto.BrandDto;
 import lombok.Data;
 
 import javax.persistence.*;

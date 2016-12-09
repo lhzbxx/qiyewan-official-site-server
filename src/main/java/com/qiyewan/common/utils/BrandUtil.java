@@ -1,7 +1,7 @@
 package com.qiyewan.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qiyewan.core.dto.BrandDto;
+import com.qiyewan.core.other.dto.BrandDto;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

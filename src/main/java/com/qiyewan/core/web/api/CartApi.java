@@ -1,7 +1,7 @@
 package com.qiyewan.core.web.api;
 
 import com.qiyewan.core.domain.Cart;
-import com.qiyewan.core.dto.ResultDto;
+import com.qiyewan.core.other.dto.ResultDto;
 import com.qiyewan.common.exceptions.InvalidParamException;
 import com.qiyewan.core.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;

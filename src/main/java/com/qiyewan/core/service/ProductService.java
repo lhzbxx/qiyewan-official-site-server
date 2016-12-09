@@ -1,8 +1,8 @@
 package com.qiyewan.core.service;
 
 import com.qiyewan.core.domain.Product;
-import com.qiyewan.core.dto.Simple1ProductDto;
-import com.qiyewan.core.dto.Simple2ProductDto;
+import com.qiyewan.core.other.dto.Simple1ProductDto;
+import com.qiyewan.core.other.dto.Simple2ProductDto;
 
 import java.util.List;
 

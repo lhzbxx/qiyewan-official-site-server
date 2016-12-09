@@ -42,9 +42,25 @@ public class PayUtil {
         chargeParams.put("order_no", order.getSerialId());
         chargeParams.put("amount", total_fee.multiply(BigDecimal.valueOf(100).setScale(0, RoundingMode.HALF_UP)));
         Map<String, String> app = new HashMap<>();
+        Map<String, String> extra = new HashMap<>();
+        switch (order.getPayment()) {
+            case ALIPAY:
+                extra.put("success_url", "http://www.qiyewan.com/success");
+                break;
+            case ALIPAY_WAP:
+                extra.put("success_url", "http://www.qiyewan.com/#/success");
+                break;
+            case WXPAY:
+                extra.put("product_id", order.getSerialId());
+                break;
+            case WXPAY_WAP:
+                extra.put("open_id", "");
+                break;
+        }
         app.put("id", "app_9Seb90CS0SW1D80K");
         chargeParams.put("app", app);
-        chargeParams.put("channel", "alipay");
+        chargeParams.put("extra", extra);
+        chargeParams.put("channel", order.getPayment().getChannel());
         chargeParams.put("currency", "cny");
         chargeParams.put("client_ip", "127.0.0.1");
         chargeParams.put("subject", subject);

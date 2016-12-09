@@ -1,8 +1,8 @@
 package com.qiyewan.common.configs;
 
-import com.qiyewan.core.dto.PhonePayload;
-import com.qiyewan.core.dto.Simple1ProductDto;
-import com.qiyewan.core.dto.Simple2ProductDto;
+import com.qiyewan.core.other.payload.PhonePayload;
+import com.qiyewan.core.other.dto.Simple1ProductDto;
+import com.qiyewan.core.other.dto.Simple2ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -35,7 +35,7 @@ public class Order {
     private List<OrderDetail> details;
     // 支付方式
     // （默认为支付宝）
-    private Payment payment = Payment.AliPay;
+    private Payment payment = Payment.ALIPAY;
     // 订单状态
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OrderStage orderStage = OrderStage.UNPAID;

@@ -1,6 +1,6 @@
 package com.qiyewan.core.service;
 
-import com.qiyewan.core.dto.PhonePayload;
+import com.qiyewan.core.other.payload.PhonePayload;
 import com.qiyewan.common.exceptions.InvalidParamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

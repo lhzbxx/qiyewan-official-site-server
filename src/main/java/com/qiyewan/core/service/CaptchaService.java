@@ -1,6 +1,6 @@
 package com.qiyewan.core.service;
 
-import com.qiyewan.core.dto.PhonePayload;
+import com.qiyewan.core.other.payload.PhonePayload;
 
 /**
  * Created by lhzbxx on 2016/10/26.

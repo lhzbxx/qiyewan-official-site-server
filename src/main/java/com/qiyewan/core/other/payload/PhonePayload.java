@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.payload;
 
 import lombok.Data;
 

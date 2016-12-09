@@ -1,7 +1,8 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.payload;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.qiyewan.common.enums.Payment;
+import com.qiyewan.core.other.serializer.BListToLListDeserializer;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.serializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -16,8 +16,7 @@ import java.util.List;
  *
  * List<Base64> -> List<Long>
  */
-class BListToLListDeserializer extends JsonDeserializer<List<Long>> {
-
+public class BListToLListDeserializer extends JsonDeserializer<List<Long>> {
     @Override
     public List<Long> deserialize(JsonParser jp,
                                   DeserializationContext context)

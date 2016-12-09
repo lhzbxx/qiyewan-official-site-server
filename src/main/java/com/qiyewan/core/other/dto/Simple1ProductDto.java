@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.dto;
 
 import com.qiyewan.core.domain.Product;
 import lombok.Data;

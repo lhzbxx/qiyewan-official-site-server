@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE  'classpath:/data/products.vbsv'
+LOAD DATA LOCAL INFILE 'classpath:/data/products.vbsv'
 INTO TABLE product
 FIELDS TERMINATED BY '|'
 ENCLOSED BY '"'
@@ -9,7 +9,7 @@ IGNORE 1 LINES
  t_what_need, t_what_obtain)
 SET is_hot = (@var1 = 'TRUE'), is_instant = (@var2 = 'TRUE');
 
-LOAD DATA LOCAL INFILE  'classpath:/data/faq.csv'
+LOAD DATA LOCAL INFILE 'classpath:/data/faq.csv'
 INTO TABLE faq
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -18,7 +18,7 @@ LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (answer, question, serial_id, id);
 
-LOAD DATA LOCAL INFILE  'classpath:/data/region.csv'
+LOAD DATA LOCAL INFILE 'classpath:/data/region.csv'
 INTO TABLE region
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -27,7 +27,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (city_code, province, city, district, id);
 
-LOAD DATA LOCAL INFILE  'classpath:/data/users.csv'
+LOAD DATA LOCAL INFILE 'classpath:/data/users.csv'
 INTO TABLE user
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -35,7 +35,7 @@ ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 (id, phone, uuid, nickname, create_at, update_at);
 
-LOAD DATA LOCAL INFILE  'classpath:/data/user_auth.csv'
+LOAD DATA LOCAL INFILE 'classpath:/data/user_auth.csv'
 INTO TABLE user_auth
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -43,13 +43,22 @@ ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 (identifier, credential, user_id, id);
 
-LOAD DATA LOCAL INFILE  'classpath:/data/company.csv'
+LOAD DATA LOCAL INFILE 'classpath:/data/company.csv'
 INTO TABLE company
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 (user_id, create_at, update_at);
+
+LOAD DATA LOCAL INFILE 'classpath:/data/admin.csv'
+INTO TABLE admin
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+ESCAPED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(id, account, password, nickname, role, create_at, update_at);
 
 # 更新产品的评论个数：
 # UPDATE product SET purchase_number = (SELECT count(product_serial_id) FROM review T WHERE T.product_serial_id = product.serial_id GROUP BY product_serial_id);

@@ -1,8 +1,8 @@
 package com.qiyewan.core.service;
 
 import com.qiyewan.core.domain.*;
-import com.qiyewan.core.dto.PhonePayload;
-import com.qiyewan.core.dto.UserInfoDto;
+import com.qiyewan.core.other.payload.PhonePayload;
+import com.qiyewan.core.other.payload.UserInfoPayload;
 import com.qiyewan.common.exceptions.ExistedException;
 import com.qiyewan.common.exceptions.InvalidParamException;
 import com.qiyewan.common.exceptions.NotFoundException;
@@ -83,9 +83,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserInfo(Long userId, UserInfoDto userInfoDto) {
+    public User updateUserInfo(Long userId, UserInfoPayload userInfoPayload) {
         User user = userRepository.findOne(userId);
-        user.reset(userInfoDto);
+        user.reset(userInfoPayload);
         userRepository.save(user);
         return user;
     }

@@ -1,4 +1,4 @@
-package com.qiyewan.core.dto;
+package com.qiyewan.core.other.payload;
 
 import lombok.Data;
 
@@ -11,12 +11,12 @@ import java.util.Date;
  * 用户信息的格式
  */
 @Data
-public class UserInfoDto {
+public class UserInfoPayload {
     @NotNull(message = "昵称不能为空。")
     private String nickname;
     @NotNull(message = "头像不能为空。")
     private String avatar;
     private Date date = new Date();
 
-    public UserInfoDto() {}
+    public UserInfoPayload() {}
 }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.qiyewan.core.dto.Base64ToLongDeserializer;
-import com.qiyewan.core.dto.LongToBase64Serializer;
+import com.qiyewan.core.other.serializer.Base64ToLongDeserializer;
+import com.qiyewan.core.other.serializer.LongToBase64Serializer;
 import lombok.Data;
 
 import javax.persistence.*;

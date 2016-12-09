@@ -1,6 +1,6 @@
 package com.qiyewan.common.configs;
 
-import com.qiyewan.core.dto.ResultDto;
+import com.qiyewan.core.other.dto.ResultDto;
 import com.qiyewan.common.enums.ErrorType;
 import com.qiyewan.common.exceptions.*;
 import org.springframework.http.HttpStatus;

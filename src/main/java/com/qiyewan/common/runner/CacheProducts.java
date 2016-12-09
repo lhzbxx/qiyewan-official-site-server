@@ -1,8 +1,8 @@
 package com.qiyewan.common.runner;
 
 import com.qiyewan.common.configs.Constants;
-import com.qiyewan.core.dto.Simple1ProductDto;
-import com.qiyewan.core.dto.Simple2ProductDto;
+import com.qiyewan.core.other.dto.Simple1ProductDto;
+import com.qiyewan.core.other.dto.Simple2ProductDto;
 import com.qiyewan.common.enums.Classification;
 import com.qiyewan.common.enums.CityCode;
 import com.qiyewan.core.domain.ProductRepository;
