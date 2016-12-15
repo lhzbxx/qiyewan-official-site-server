@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/admin")
-public class ManageOrderController {
+public class AdminOrderController {
     @Autowired
     private OrderService orderService;
 
