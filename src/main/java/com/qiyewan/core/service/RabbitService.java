@@ -9,7 +9,7 @@ import com.qiyewan.core.domain.LoginHistoryRepository;
 import com.qiyewan.core.domain.OrderRepository;
 import com.qiyewan.core.domain.SmsRepository;
 import com.qiyewan.core.domain.UserRepository;
-import com.qiyewan.common.utils.Ip2RegionUtil;
+import com.qiyewan.common.utils.IP2RegionUtil;
 import com.qiyewan.common.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +101,7 @@ public class RabbitService {
         if (env.equals("dev")) return;
         LoginHistory loginHistory = loginHistoryRepository.findOne(recordId);
         if (loginHistory == null) return;
-        loginHistory.setAddress(new Ip2RegionUtil(loginHistory.getIp()).toRegion());
+        loginHistory.setAddress(new IP2RegionUtil(loginHistory.getIp()).toRegion());
         loginHistoryRepository.save(loginHistory);
     }
 }

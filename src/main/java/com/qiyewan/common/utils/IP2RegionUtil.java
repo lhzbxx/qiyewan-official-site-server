@@ -1,7 +1,7 @@
 package com.qiyewan.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qiyewan.common.entities.IpLookupResult;
+import com.qiyewan.common.entities.IPLookupResult;
 import com.qiyewan.common.enums.CityCode;
 
 import java.io.BufferedReader;
@@ -16,16 +16,16 @@ import java.net.URL;
  * IP->Region
  * 转换服务
  */
-public class Ip2RegionUtil {
+public class IP2RegionUtil {
     private String ip;
 
-    public Ip2RegionUtil(String ip) {
+    public IP2RegionUtil(String ip) {
         this.ip = ip;
     }
 
     public String toRegion() {
         String response;
-        IpLookupResult result;
+        IPLookupResult result;
         try {
             response = sendPost();
             result = parseResponse(response);
@@ -38,7 +38,7 @@ public class Ip2RegionUtil {
 
     public String toRegionCode() {
         String response;
-        IpLookupResult result;
+        IPLookupResult result;
         try {
             response = sendPost();
             result = parseResponse(response);
@@ -67,8 +67,8 @@ public class Ip2RegionUtil {
         return response.toString();
     }
 
-    private IpLookupResult parseResponse(String response) throws IOException {
+    private IPLookupResult parseResponse(String response) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(response, IpLookupResult.class);
+        return objectMapper.readValue(response, IPLookupResult.class);
     }
 }

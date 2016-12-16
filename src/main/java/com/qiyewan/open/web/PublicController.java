@@ -1,6 +1,6 @@
 package com.qiyewan.open.web;
 
-import com.qiyewan.common.utils.Ip2RegionUtil;
+import com.qiyewan.common.utils.IP2RegionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +27,7 @@ public class PublicController {
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
-        return new Ip2RegionUtil(ip).toRegionCode();
+        return new IP2RegionUtil(ip).toRegionCode();
     }
 
     @CrossOrigin

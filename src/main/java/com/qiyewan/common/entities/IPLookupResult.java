@@ -10,7 +10,7 @@ import lombok.Data;
  * 返回结果
  */
 @Data
-public class IpLookupResult {
+public class IPLookupResult {
     private String country;
     private String province;
     private String city;
@@ -22,7 +22,7 @@ public class IpLookupResult {
     private int end;
     private String type;
 
-    public IpLookupResult() {}
+    public IPLookupResult() {}
 
     @Override
     public String toString() {
