@@ -12,7 +12,8 @@ public enum CityCode {
     苏州("JSSZ"),
     镇江("JSZJ"),
     深圳("GDSZ"),
-    成都("SCCD");
+    成都("SCCD"),
+    合肥("AHHF");
     private final String code;
 
     CityCode(String code) {

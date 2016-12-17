@@ -35,17 +35,17 @@ public class RabbitConfig {
 
     @Bean
     public Queue captchaQueue() {
-        return new Queue("sms-queue");
+        return new Queue("sms-queue", true, false, false);
     }
 
     @Bean
-    public Queue orderNotifyQueue() { return new Queue("order-notify-queue"); }
+    public Queue orderNotifyQueue() { return new Queue("order-notify-queue", true, false, false); }
 
     @Bean
-    public Queue orderTimeoutQueue() { return new Queue("order-timeout-queue"); }
+    public Queue orderTimeoutQueue() { return new Queue("order-timeout-queue", true, false, false); }
 
     @Bean
-    public Queue loginHistoryRecord() { return new Queue("login-history-record-queue"); }
+    public Queue loginHistoryRecord() { return new Queue("login-history-record-queue", true, false, false); }
 
     @Bean
     CustomExchange delayExchange() {
