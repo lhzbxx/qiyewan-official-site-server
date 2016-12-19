@@ -57,6 +57,7 @@ public class OrderController {
         if (carts.isEmpty())
             throw new InvalidRequestException("Error.Cart.EMPTY_CARTS");
         Order order = new Order(userId);
+        order.setPayment(payPayload.getPayment());
         List<OrderDetail> details = new ArrayList<>();
         for (Long cartId : carts) {
             OrderDetail detail = cartService.convertToOrderDetail(userId, cartId);
@@ -77,7 +78,6 @@ public class OrderController {
             e.printStackTrace();
             throw new InvalidRequestException("请求支付失败。");
         }
-        order.setPayment(payPayload.getPayment());
         orderService.saveOrder(order);
         return order;
     }
