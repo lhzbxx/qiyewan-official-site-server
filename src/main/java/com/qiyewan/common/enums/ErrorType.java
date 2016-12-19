@@ -12,6 +12,7 @@ public enum ErrorType {
      */
     // 数据库读写失败（测试环境）
     DATABASE_ERROR("ERROR.DATABASE"),
+    // 未知错误
     UNKNOWN_ERROR("ERROR.UNKNOWN"),
     /**
      * 正常使用下，面向用户的错误。
