@@ -14,7 +14,11 @@ public interface UserService {
 
     User getUserById(Long id);
 
+    User getUserByOpenId(String openId);
+
     User getUserByAuth(PhonePayload phonePayload);
+
+    User updateUserOpenId(Long userId, String openId);
 
     Long createAndSaveUser(PhonePayload phonePayload);
 

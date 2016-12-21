@@ -3,6 +3,7 @@ package com.qiyewan.core.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qiyewan.core.other.payload.UserInfoPayload;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,9 @@ public class User {
     private String avatar;
     // 会员名
     private String nickname = "企业湾-会员";
+    // 是否绑定微信
+    @ColumnDefault(value = "false")
+    private Boolean isWxBound = false;
     // UUID
     private String uuid = UUID.randomUUID().toString();
     @Temporal(TemporalType.TIMESTAMP)

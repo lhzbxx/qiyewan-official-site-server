@@ -39,6 +39,14 @@ public class UserAuth {
         this.credential = Md5Util.genMd5(credential);
     }
 
+    public UserAuth(Long userId, String identifier, String credential, AuthType origin) {
+        this.salt = UUID.randomUUID().toString();
+        this.userId = userId;
+        this.identifier = identifier;
+        this.credential = Md5Util.genMd5(credential);
+        this.origin = origin;
+    }
+
     public void resetCredential(String credential) {
         this.credential = Md5Util.genMd5(credential);
     }

@@ -1,5 +1,6 @@
 package com.qiyewan.core.service;
 
+import com.qiyewan.common.enums.AuthType;
 import com.qiyewan.core.domain.*;
 import com.qiyewan.core.other.payload.PhonePayload;
 import com.qiyewan.core.other.payload.UserInfoPayload;
@@ -36,14 +37,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByOpenId(String openId) {
+        UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(openId);
+        checkUserAuth(userAuth);
+        return this.userRepository.findOne(userAuth.getUserId());
+    }
+
+    @Override
     public User getUserByAuth(PhonePayload phonePayload) {
         UserAuth userAuth = this.userAuthRepository.findFirstByIdentifier(phonePayload.getPhone());
         checkUserAuth(userAuth);
         if (!userAuth.isValid(phonePayload.getPassword())) {
             throw new InvalidParamException("密码错误。");
         }
-        Long userId = userAuth.getUserId();
-        return this.userRepository.findOne(userId);
+        return this.userRepository.findOne(userAuth.getUserId());
+    }
+
+    @Override
+    @Transactional
+    public User updateUserOpenId(Long userId, String openId) {
+        User user = userRepository.findOne(userId);
+        user.setIsWxBound(true);
+        userAuthRepository.save(new UserAuth(userId, openId, null, AuthType.WECHAT));
+        userRepository.save(user);
+        return user;
     }
 
     @Override

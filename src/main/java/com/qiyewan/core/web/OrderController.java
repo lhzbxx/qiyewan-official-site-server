@@ -55,7 +55,7 @@ public class OrderController {
         Long userId = (Long) request.getAttribute("userId");
         List<Long> carts = payPayload.getCarts();
         if (carts.isEmpty())
-            throw new InvalidRequestException("Error.Cart.EMPTY_CARTS");
+            throw new InvalidRequestException("订单内容为空。");
         Order order = new Order(userId);
         order.setPayment(payPayload.getPayment());
         List<OrderDetail> details = new ArrayList<>();

@@ -54,6 +54,15 @@ public class UserController {
         userService.updateUserPhone(userId, phonePayload);
         return new ResultDto();
     }
+    
+    // 绑定微信
+    @CrossOrigin
+    @PostMapping("/auth/wx.do")
+    public ResultDto bindWx(@RequestBody String openId) {
+        Long userId = (Long) request.getAttribute("userId");
+        userService.updateUserOpenId(userId, openId);
+        return new ResultDto();
+    }
 
     @CrossOrigin
     @GetMapping("/users")

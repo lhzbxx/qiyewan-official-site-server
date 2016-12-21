@@ -53,6 +53,13 @@ public class AuthController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "/auth/wx.do")
+    public TokenDto loginWithOpenId(@RequestParam String openId) {
+        User user = userService.getUserByOpenId(openId);
+        return new TokenDto(tokenService.setToken(user.getId()));
+    }
+
+    @CrossOrigin
     @GetMapping(value = "/auth")
     public TokenDto login(@RequestParam String phone,
                           @RequestParam String password,
