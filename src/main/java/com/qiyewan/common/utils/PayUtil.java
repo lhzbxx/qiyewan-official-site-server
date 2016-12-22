@@ -22,7 +22,6 @@ public class PayUtil {
             InvalidRequestException, APIConnectionException, AuthenticationException {
         Pingpp.apiKey = "sk_live_aLSWz5iPmLiTj108GGrj1S0G";
 //        Pingpp.privateKeyPath = "";
-
         List<OrderDetail> details = order.getDetails();
         OrderDetail detail = details.get(0);
         String subject = detail.getName();

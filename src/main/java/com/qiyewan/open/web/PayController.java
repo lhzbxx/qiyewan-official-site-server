@@ -1,13 +1,13 @@
 package com.qiyewan.open.web;
 
+import com.pingplusplus.model.Event;
+import com.pingplusplus.model.Webhooks;
 import com.qiyewan.core.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/11/9.
@@ -19,8 +19,12 @@ public class PayController {
     @Autowired
     private OrderService orderService;
     @CrossOrigin
-    @PostMapping("/orders/alipay/redirect")
-    public String alipay(@RequestParam Map<String, String> sParaTemp) {
+    @PostMapping("/pay-redirect.do")
+    public String alipay(@RequestBody String params) {
+        Event event = Webhooks.eventParse(params);
+        if (event.getType().equals("charge.succeeded")) {
+            System.out.println(event.getData().getObject().toString());
+        }
         return "success";
     }
 }

@@ -1,10 +1,13 @@
 package com.qiyewan.core.service;
 
-import com.qiyewan.core.domain.Order;
-import com.qiyewan.core.domain.OrderRepository;
 import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.common.exceptions.NotFoundException;
+import com.qiyewan.common.utils.SmsUtil;
+import com.qiyewan.core.domain.Order;
+import com.qiyewan.core.domain.OrderDetail;
+import com.qiyewan.core.domain.OrderRepository;
+import com.qiyewan.core.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,8 @@ import java.util.Date;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
 
@@ -57,10 +62,16 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStage(OrderStage.PAID);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
-//            String what = "";
-//            for (OrderDetail detail : order.getDetails()) {
-//                what += "|" + detail.getRegion() + ">>>" + detail.getName() + "|";
-//            }
+            String what = "";
+            for (OrderDetail detail : order.getDetails()) {
+                what += detail.getRegion() + ">>>" + detail.getName() + "|";
+            }
+            try {
+                SmsUtil.send("17317131563", "用户" + userRepository.findOne(order.getUserId()).getPhone()
+                        + "下了订单：" + serialId + what);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return order;
     }
