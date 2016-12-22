@@ -48,6 +48,7 @@ public class PayUtil {
                 break;
             case ALIPAY_WAP:
                 extra.put("success_url", "http://www.qiyewan.com/#/success");
+                extra.put("cancel_url", "http://www.qiyewan.com/#/cart");
                 break;
             case WXPAY:
                 extra.put("product_id", order.getSerialId());
