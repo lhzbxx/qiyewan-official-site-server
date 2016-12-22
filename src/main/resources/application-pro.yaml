@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://172.17.0.1:3306/db
     username: lhzbxx
-    credential: 5120309188
+    password: 5120309188
     driver-class-name: org.mariadb.jdbc.Driver
     data: classpath:/data.sql
     initialize: true

@@ -23,8 +23,11 @@ public class PayPayload {
     private List<Long> carts;
 
     @NotNull(message = "支付方式不能为空。")
-    @ConvertGroup(from = String.class, to=Payment.class)
+    @ConvertGroup(from = String.class, to = Payment.class)
     private Payment payment;
 
-    public PayPayload() {}
+    private String openId;
+
+    public PayPayload() {
+    }
 }

@@ -11,9 +11,7 @@ import java.net.URLEncoder;
  *
  * 短信服务
  */
-
 public class SmsUtil {
-
     public static String send(String mobile, String msg) throws Exception {
         String url = "http://222.73.117.156:80/msg/HttpBatchSendSM";
         String account = "vip-zjxx";
@@ -37,5 +35,4 @@ public class SmsUtil {
         in.close();
         return response.toString();
     }
-
 }

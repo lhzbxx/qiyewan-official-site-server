@@ -73,7 +73,7 @@ public class OrderController {
             return message;
         });
         try {
-            order.setCharge(PayUtil.charge(order).toString());
+            order.setCharge(PayUtil.charge(order, payPayload.getOpenId()).toString());
         } catch (Exception e) {
             e.printStackTrace();
             throw new InvalidRequestException("请求支付失败。");

@@ -2,7 +2,12 @@ package com.qiyewan.open.web;
 
 import com.qiyewan.core.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * Created by lhzbxx on 2016/11/9.
@@ -13,29 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PayController {
     @Autowired
     private OrderService orderService;
-//
-//    @CrossOrigin
-//    @PostMapping("/orders/alipay/redirect")
-//    public String alipay(@RequestParam Map<String, String> sParaTemp) {
-//        if (AlipayNotify.verify(sParaTemp)) {
-//            orderService.finishOrderBySerialId(sParaTemp.get("out_trade_no"));
-//        }
-//        return "success";
-//    }
-//
-//    @CrossOrigin
-//    @PostMapping("/orders/wechat/redirect")
-//    public String wechat(@RequestBody String xml) {
-//        try {
-//            if (Signature.checkIsSignValidFromResponseString(xml)) {
-//                orderService.finishOrderBySerialId((String) XMLParser.getMapFromXML(xml).get("out_trade_no"));
-//            }
-//        } catch (ParserConfigurationException | IOException | SAXException e) {
-//            e.printStackTrace();
-//        }
-//        return "<xml>\n" +
-//                "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
-//                "  <return_msg><![CDATA[OK]]></return_msg>\n" +
-//                "</xml>";
-//    }
+    @CrossOrigin
+    @PostMapping("/orders/alipay/redirect")
+    public String alipay(@RequestParam Map<String, String> sParaTemp) {
+        return "success";
+    }
 }

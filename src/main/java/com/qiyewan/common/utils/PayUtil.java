@@ -18,7 +18,7 @@ import java.util.Map;
  * 支付相关
  */
 public class PayUtil {
-    public static Charge charge(Order order) throws RateLimitException, APIException, ChannelException,
+    public static Charge charge(Order order, String openId) throws RateLimitException, APIException, ChannelException,
             InvalidRequestException, APIConnectionException, AuthenticationException {
         Pingpp.apiKey = "sk_live_aLSWz5iPmLiTj108GGrj1S0G";
 //        Pingpp.privateKeyPath = "";
@@ -54,7 +54,7 @@ public class PayUtil {
                 extra.put("product_id", order.getSerialId());
                 break;
             case WXPAY_WAP:
-                extra.put("open_id", "");
+                extra.put("open_id", openId);
                 break;
         }
         app.put("id", "app_9Seb90CS0SW1D80K");
