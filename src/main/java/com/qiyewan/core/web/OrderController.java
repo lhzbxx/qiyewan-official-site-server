@@ -67,11 +67,6 @@ public class OrderController {
         order.setDetails(details);
         cartService.deleteCarts(userId, carts);
         orderService.createAndSaveOrder(userId, order);
-        rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
-        rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
-            message.getMessageProperties().setDelay(3600000);
-            return message;
-        });
         try {
             order.setCharge(PayUtil.charge(order, payPayload.getOpenId()).toString());
         } catch (Exception e) {
@@ -79,6 +74,11 @@ public class OrderController {
             throw new InvalidRequestException("请求支付失败。");
         }
         orderService.saveOrder(order);
+        rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
+        rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
+            message.getMessageProperties().setDelay(3600000);
+            return message;
+        });
         return order;
     }
 
