@@ -1,14 +1,8 @@
 package com.qiyewan.core.service;
 
-import com.qiyewan.core.domain.LoginHistory;
-import com.qiyewan.core.domain.Order;
-import com.qiyewan.core.domain.Sms;
+import com.qiyewan.core.domain.*;
 import com.qiyewan.core.other.payload.PhonePayload;
 import com.qiyewan.common.enums.OrderStage;
-import com.qiyewan.core.domain.LoginHistoryRepository;
-import com.qiyewan.core.domain.OrderRepository;
-import com.qiyewan.core.domain.SmsRepository;
-import com.qiyewan.core.domain.UserRepository;
 import com.qiyewan.common.utils.IP2RegionUtil;
 import com.qiyewan.common.utils.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -16,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -59,11 +54,15 @@ public class RabbitService {
         if (env.equals("dev")) return;
         Order order = orderRepository.findBySerialId(serialId);
         if (order == null) return;
+        String what = "";
+        for (OrderDetail detail: order.getDetails()) {
+            what += detail.getName() + "，";
+        }
         switch (order.getOrderStage()) {
             case UNPAID:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
-                    String content = "您已下了订单号为" + order.getSerialId() + "，请及时支付。";
+                    String content = "您已下单购买产品：" + what + "，请及时支付。";
                     SmsUtil.send(phone, content);
                     smsRepository.save(new Sms(phone, content));
                 } catch (Exception e) {
@@ -73,7 +72,10 @@ public class RabbitService {
             case PAID:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
-                    String content = "您已支付成功，订单号为" + order.getSerialId() + "。满意请给好评，感谢您的使用！";
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+                    String content = "您于" + dateFormat.format(order.getUpdateAt()) +
+                            "成功购买产品：" + what +
+                            "，服务人员将于6小时内联系您（工作日），请您保持手机畅通！谢谢！";
                     SmsUtil.send(phone, content);
                     smsRepository.save(new Sms(phone, content));
                 } catch (Exception e) {

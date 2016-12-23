@@ -4,6 +4,7 @@ import com.pingplusplus.model.Charge;
 import com.pingplusplus.model.Event;
 import com.pingplusplus.model.Webhooks;
 import com.qiyewan.core.service.OrderService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,8 @@ import java.io.IOException;
 public class PayController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @CrossOrigin
     @PostMapping("/pay-redirect.do")
     public String alipay(@RequestBody String params) throws IOException {
@@ -28,6 +31,7 @@ public class PayController {
         if (event.getType().equals("charge.succeeded")) {
             Charge charge = (Charge) event.getData().getObject();
             orderService.finishOrderBySerialId(charge.getOrderNo());
+            rabbitTemplate.convertAndSend("order-notify-queue", charge.getOrderNo());
         }
         return "success";
     }
