@@ -62,7 +62,7 @@ public class RabbitService {
             case UNPAID:
                 try {
                     String phone = userRepository.findOne(order.getUserId()).getPhone();
-                    String content = "您已下单购买产品：" + what + "，请及时支付。";
+                    String content = "您已下单购买产品：" + what + "请及时支付。";
                     SmsUtil.send(phone, content);
                     smsRepository.save(new Sms(phone, content));
                 } catch (Exception e) {
@@ -75,7 +75,7 @@ public class RabbitService {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
                     String content = "您于" + dateFormat.format(order.getUpdateAt()) +
                             "成功购买产品：" + what +
-                            "，服务人员将于6小时内联系您（工作日），请您保持手机畅通！谢谢！";
+                            "服务人员将于6小时内联系您（工作日），请您保持手机畅通！谢谢！";
                     SmsUtil.send(phone, content);
                     smsRepository.save(new Sms(phone, content));
                 } catch (Exception e) {

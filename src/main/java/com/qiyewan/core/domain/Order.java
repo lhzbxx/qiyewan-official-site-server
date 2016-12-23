@@ -30,7 +30,7 @@ public class Order {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(unique = true, length = 30)
     private String serialId;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private List<OrderDetail> details;
     // 支付方式
