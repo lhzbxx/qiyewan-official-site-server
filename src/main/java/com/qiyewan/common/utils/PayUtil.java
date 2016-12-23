@@ -41,14 +41,14 @@ public class PayUtil {
         chargeParams.put("order_no", order.getSerialId());
         chargeParams.put("amount", total_fee.multiply(BigDecimal.valueOf(100).setScale(0, RoundingMode.HALF_UP)));
         Map<String, String> app = new HashMap<>();
-        Map<String, String> extra = new HashMap<>();
+        Map<String, Object> extra = new HashMap<>();
         switch (order.getPayment()) {
             case ALIPAY:
                 extra.put("success_url", "http://www.qiyewan.com/success");
                 break;
             case ALIPAY_WAP:
                 extra.put("success_url", "http://www.qiyewan.com/#/success");
-                extra.put("app_pay", "true");
+                extra.put("app_pay", true);
                 break;
             case WXPAY:
                 extra.put("product_id", order.getSerialId());
