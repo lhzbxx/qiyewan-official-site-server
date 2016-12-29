@@ -6,7 +6,10 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -29,6 +32,8 @@ public class User {
     // 是否绑定微信
     @ColumnDefault(value = "false")
     private Boolean isWxBound = false;
+    // 客户（主）编号
+    private String customerId;
     // UUID
     private String uuid = UUID.randomUUID().toString();
     @Temporal(TemporalType.TIMESTAMP)
@@ -42,6 +47,14 @@ public class User {
 
     public User(String phone) {
         this.phone = phone;
+    }
+
+    public void generateCustomerId() {
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        this.customerId = "W"
+                + sdf.format(this.createAt).substring(2, 5)
+                + this.id;
     }
 
     public void reset(UserInfoPayload userInfoPayload) {

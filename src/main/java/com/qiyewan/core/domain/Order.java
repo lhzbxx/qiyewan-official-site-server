@@ -62,9 +62,8 @@ public class Order {
     private void generateSerial() {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
-        this.serialId = sdf.format(this.createAt)
-                + (int) (Math.random() * 1000)
-                + this.userId
-                + (int) (Math.random() * 1000);
+        this.serialId = "S"
+                + sdf.format(this.createAt).substring(2, 5)
+                + this.id;
     }
 }
