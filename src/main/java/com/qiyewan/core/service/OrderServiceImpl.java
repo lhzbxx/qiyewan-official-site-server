@@ -3,11 +3,9 @@ package com.qiyewan.core.service;
 import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.common.exceptions.NotFoundException;
+import com.qiyewan.common.utils.CrmUtil;
 import com.qiyewan.common.utils.SmsUtil;
-import com.qiyewan.core.domain.Order;
-import com.qiyewan.core.domain.OrderDetail;
-import com.qiyewan.core.domain.OrderRepository;
-import com.qiyewan.core.domain.UserRepository;
+import com.qiyewan.core.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,6 +77,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createAndSaveOrder(Long userId, Order order) {
         orderRepository.saveAndFlush(order);
+        try {
+            User user = userRepository.findOne(userId);
+            if (user.getCustomerId() == null) {
+                user.generateCustomerId();
+            }
+            CrmUtil.createOrder(user.getCustomerId(), order);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return order;
     }
 

@@ -1,12 +1,13 @@
 package com.qiyewan.core.service;
 
 import com.qiyewan.common.enums.AuthType;
-import com.qiyewan.core.domain.*;
-import com.qiyewan.core.other.payload.PhonePayload;
-import com.qiyewan.core.other.payload.UserInfoPayload;
 import com.qiyewan.common.exceptions.ExistedException;
 import com.qiyewan.common.exceptions.InvalidParamException;
 import com.qiyewan.common.exceptions.NotFoundException;
+import com.qiyewan.common.utils.CrmUtil;
+import com.qiyewan.core.domain.*;
+import com.qiyewan.core.other.payload.PhonePayload;
+import com.qiyewan.core.other.payload.UserInfoPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,9 +72,16 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User(phonePayload.getPhone());
         userRepository.saveAndFlush(user);
+        user.generateCustomerId();
+        userRepository.save(user);
         UserAuth userAuth = new UserAuth(user.getId(), phonePayload.getPhone(), phonePayload.getPassword());
         this.userAuthRepository.save(userAuth);
         this.companyRepository.save(new Company(user.getId()));
+        try {
+            CrmUtil.createCustomer(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user.getId();
     }
 

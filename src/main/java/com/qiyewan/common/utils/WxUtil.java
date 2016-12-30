@@ -11,7 +11,6 @@ import java.net.URL;
  * 微信相关
  */
 public class WxUtil {
-
     public static String getAccessToken(String code) throws Exception {
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
                 "appid=wx6d3c480373a5418f" +
