@@ -14,14 +14,14 @@ import org.apache.http.impl.client.HttpClients;
  */
 public class CrmUtil {
     public static void createCustomer(User user) throws Exception {
-        String url = "http://127.0.0.1:8002/customers";
+        String url = "http://127.0.0.1:8082/customers";
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(new StringEntity(new ObjectMapper().writeValueAsString(user)));
         HttpClients.createDefault().execute(httpPost);
     }
 
     public static void createOrder(String customerId, Order order) throws Exception {
-        String url = "http://127.0.0.1:8002/orders?customerId=" + customerId;
+        String url = "http://127.0.0.1:8082/orders?customerId=" + customerId;
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(new StringEntity(new ObjectMapper().writeValueAsString(order)));
         HttpClients.createDefault().execute(httpPost);

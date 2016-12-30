@@ -77,6 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createAndSaveOrder(Long userId, Order order) {
         orderRepository.saveAndFlush(order);
+        order.generateSerial();
         try {
             User user = userRepository.findOne(userId);
             if (user.getCustomerId() == null) {

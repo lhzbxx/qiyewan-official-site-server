@@ -56,14 +56,18 @@ public class Order {
 
     public Order(Long userId) {
         this.userId = userId;
-        this.generateSerial();
     }
 
-    private void generateSerial() {
+    public void generateSerial() {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        String no = "";
+        int tmp = (int) (this.id / 10 + 1);
+        for (int i = 0; i < (7 - tmp); i++) {
+            no += "0";
+        }
         this.serialId = "S"
-                + sdf.format(this.createAt).substring(2, 5)
-                + this.id;
+                + sdf.format(this.createAt).substring(2, 6)
+                + no + this.id;
     }
 }

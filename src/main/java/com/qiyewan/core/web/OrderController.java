@@ -63,7 +63,6 @@ public class OrderController {
             OrderDetail detail = cartService.convertToOrderDetail(userId, cartId);
             details.add(detail);
         }
-        String out_trade_no = order.getSerialId();
         order.setDetails(details);
         cartService.deleteCarts(userId, carts);
         orderService.createAndSaveOrder(userId, order);
@@ -74,6 +73,7 @@ public class OrderController {
             throw new InvalidRequestException("请求支付失败。");
         }
         orderService.saveOrder(order);
+        String out_trade_no = order.getSerialId();
         rabbitTemplate.convertAndSend("order-notify-queue", out_trade_no);
         rabbitTemplate.convertAndSend("order-timeout-exchange", "order-timeout-queue", out_trade_no, message -> {
             message.getMessageProperties().setDelay(3600000);
