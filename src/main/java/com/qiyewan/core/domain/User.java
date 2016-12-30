@@ -52,14 +52,9 @@ public class User {
     public void generateCustomerId() {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
-        String no = "";
-        int tmp = (int) (this.id / 10 + 1);
-        for (int i = 0; i < (5 - tmp); i++) {
-            no += "0";
-        }
         this.customerId = "W"
                 + sdf.format(this.createAt).substring(2, 6)
-                + no + this.id;
+                + this.id.toString().substring(1);
     }
 
     public void reset(UserInfoPayload userInfoPayload) {

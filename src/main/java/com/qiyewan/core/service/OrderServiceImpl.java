@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
             if (user.getCustomerId() == null) {
                 user.generateCustomerId();
             }
-            CrmUtil.createOrder(user.getCustomerId(), order);
+            CrmUtil.createOrder(user.getCustomerId(), user.getPhone(), order);
         } catch (Exception e) {
             e.printStackTrace();
         }
