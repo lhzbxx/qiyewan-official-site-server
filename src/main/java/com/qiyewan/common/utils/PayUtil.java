@@ -64,6 +64,9 @@ public class PayUtil {
         chargeParams.put("channel", order.getPayment().getChannel());
         chargeParams.put("currency", "cny");
         chargeParams.put("client_ip", "106.75.11.210");
+        if (subject.length() > 32) {
+            subject = subject.substring(0, 32);
+        }
         chargeParams.put("subject", subject);
         chargeParams.put("body", body);
         return Charge.create(chargeParams);

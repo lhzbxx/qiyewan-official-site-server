@@ -62,7 +62,7 @@ public class Order {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         String no = "";
-        int tmp = (int) (this.id / 10 + 1);
+        int tmp = (int) (Math.log10(this.id) + 1);
         for (int i = 0; i < (7 - tmp); i++) {
             no += "0";
         }

@@ -60,6 +60,16 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStage(OrderStage.PAID);
             order.setUpdateAt(new Date());
             orderRepository.save(order);
+            try {
+                User user = userRepository.findOne(order.getUserId());
+                if (user.getCustomerId() == null) {
+                    user.generateCustomerId();
+                    CrmUtil.createCustomer(user);
+                }
+                CrmUtil.createOrder(user.getCustomerId(), user.getPhone(), order);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             String what = "";
             for (OrderDetail detail : order.getDetails()) {
                 what += detail.getRegion() + ">>>" + detail.getName() + "|";
@@ -78,15 +88,6 @@ public class OrderServiceImpl implements OrderService {
     public Order createAndSaveOrder(Long userId, Order order) {
         orderRepository.saveAndFlush(order);
         order.generateSerial();
-        try {
-            User user = userRepository.findOne(userId);
-            if (user.getCustomerId() == null) {
-                user.generateCustomerId();
-            }
-            CrmUtil.createOrder(user.getCustomerId(), user.getPhone(), order);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return order;
     }
 
