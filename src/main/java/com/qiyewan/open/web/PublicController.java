@@ -26,6 +26,8 @@ public class PublicController {
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
             ip = request.getRemoteAddr();
+        } else {
+            ip = ip.split(",")[0];
         }
         return new IP2RegionUtil(ip).toRegionCode();
     }
