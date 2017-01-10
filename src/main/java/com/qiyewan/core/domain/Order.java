@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.enums.Payment;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -51,6 +52,9 @@ public class Order {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(columnDefinition = "TEXT")
     private String charge;
+    // 软删除
+    @ColumnDefault(value = "false")
+    private Boolean isDeleted = false;
 
     public Order() {}
 

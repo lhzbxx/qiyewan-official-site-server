@@ -27,5 +27,7 @@ public interface OrderService {
 
     Order saveOrder(Order order);
 
-    void deleteOrder(Long userId, String serialId);
+    void cancelOrder(Long userId, String serialId);
+
+    void removeOrder(Long userId, String serialId);
 }

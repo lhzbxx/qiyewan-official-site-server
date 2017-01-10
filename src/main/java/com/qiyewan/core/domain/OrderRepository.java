@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findBySerialIdLike(String query, Pageable pageable);
 
-    Page<Order> findByUserId(Long userId, Pageable pageable);
+    Page<Order> findByUserIdAndIsDeletedFalse(Long userId, Pageable pageable);
 
-    Page<Order> findByUserIdAndOrderStage(Long userId, OrderStage orderStage, Pageable pageable);
+    Page<Order> findByUserIdAndIsDeletedFalseAndOrderStage(Long userId, OrderStage orderStage, Pageable pageable);
 
     Order findBySerialId(String serialId);
 }

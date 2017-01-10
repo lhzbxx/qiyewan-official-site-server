@@ -38,12 +38,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<Order> getOrdersByUser(Long userId, Pageable pageable) {
-        return orderRepository.findByUserId(userId, pageable);
+        return orderRepository.findByUserIdAndIsDeletedFalse(userId, pageable);
     }
 
     @Override
     public Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable) {
-        return orderRepository.findByUserIdAndOrderStage(userId, orderStage, pageable);
+        return orderRepository.findByUserIdAndIsDeletedFalseAndOrderStage(userId, orderStage, pageable);
     }
 
     @Override
@@ -98,10 +98,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Long userId, String serialId) {
+    public void cancelOrder(Long userId, String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         checkOrder(userId, order);
         order.setOrderStage(OrderStage.CANCELED);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void removeOrder(Long userId, String serialId) {
+        Order order = orderRepository.findBySerialId(serialId);
+        checkOrder(userId, order);
+        order.setIsDeleted(true);
         orderRepository.save(order);
     }
 

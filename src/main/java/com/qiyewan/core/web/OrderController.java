@@ -91,9 +91,17 @@ public class OrderController {
 
     @CrossOrigin
     @DeleteMapping("/orders/{serialId}")
-    public ResultDto remove(@PathVariable String serialId) {
+    public ResultDto cancel(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
-        orderService.deleteOrder(userId, serialId);
+        orderService.cancelOrder(userId, serialId);
+        return new ResultDto();
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/orders")
+    public ResultDto remove(@RequestParam String serialId) {
+        Long userId = (Long) request.getAttribute("userId");
+        orderService.removeOrder(userId, serialId);
         return new ResultDto();
     }
 }
