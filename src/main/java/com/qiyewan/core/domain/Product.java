@@ -3,6 +3,7 @@ package com.qiyewan.core.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qiyewan.common.enums.ProductState;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -65,6 +66,10 @@ public class Product {
     private Integer purchaseNumber = 0;
     // 备注
     private String comment;
+    // 版本
+    @ColumnDefault(value = "2")
+    @Column(columnDefinition = "TINYINT")
+    private Integer version;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();
