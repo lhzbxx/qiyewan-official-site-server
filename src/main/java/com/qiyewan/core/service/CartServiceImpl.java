@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,15 +84,19 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void deleteCarts(Long userId, List<Long> cartIds) {
+        List<Cart> carts = new ArrayList<>();
         for (Long cartId : cartIds) {
-            cartRepository.delete(cartId);
+            Cart cart = cartRepository.findOne(cartId);
+            checkCart(userId, cart);
+            carts.add(cart);
         }
+        cartRepository.delete(carts);
     }
 
     private void checkCart(Long userId, Cart cart) {
         if (cart == null)
             throw new NotFoundException("购物车不存在。");
         if (!cart.getUserId().equals(userId))
-            throw new InvalidRequestException("无法更改别人的购物车");
+            throw new InvalidRequestException("无法更改别人的购物车。");
     }
 }

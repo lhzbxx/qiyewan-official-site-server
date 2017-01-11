@@ -1,8 +1,9 @@
 package com.qiyewan.core.web;
 
+import com.qiyewan.common.exceptions.InvalidParamException;
 import com.qiyewan.core.domain.Cart;
 import com.qiyewan.core.other.dto.ResultDto;
-import com.qiyewan.common.exceptions.InvalidParamException;
+import com.qiyewan.core.other.payload.CartsPayload;
 import com.qiyewan.core.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,6 +65,14 @@ public class CartController {
         } catch (IOException e) {
             throw new InvalidParamException("非法的购物车ID。");
         }
+        return new ResultDto();
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/carts")
+    public ResultDto remove(@RequestBody CartsPayload cartsPayload) {
+        Long userId = (Long) request.getAttribute("userId");
+        cartService.deleteCarts(userId, cartsPayload.getCarts());
         return new ResultDto();
     }
 }
