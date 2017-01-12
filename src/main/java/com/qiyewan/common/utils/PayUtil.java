@@ -73,20 +73,15 @@ public class PayUtil {
     }
 
     private static BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail) {
-        BigDecimal amount = new BigDecimal(orderDetail.getAmount());
-        if (orderDetail.getProductSerialId().substring(4).equals("HR0003")) {
-            if (orderDetail.getMember() > 3) {
-                return totalFee.add((new BigDecimal(98)
-                        .add(new BigDecimal(18.8)
-                                .multiply(new BigDecimal(orderDetail.getMember() - 3))))
-                        .multiply(amount))
-                        .setScale(2, BigDecimal.ROUND_HALF_UP);
-            } else {
-                return totalFee.add(new BigDecimal(98).multiply(amount))
-                        .setScale(2, BigDecimal.ROUND_HALF_UP);
-            }
-        }
-        return totalFee.add(orderDetail.getUnitPrice().multiply(amount))
-                .setScale(2, BigDecimal.ROUND_HALF_UP);
+        // 最终价格：(unitPrice + (member - minMember) * perPrice) * amount
+        return totalFee.add(
+                new BigDecimal(orderDetail.getAmount()).multiply(
+                        orderDetail.getUnitPrice().add(
+                                orderDetail.getPerPrice().multiply(
+                                        new BigDecimal(orderDetail.getMember() - orderDetail.getMinMember())
+                                )
+                        )
+                )
+        ).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 }

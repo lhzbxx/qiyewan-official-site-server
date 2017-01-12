@@ -3,6 +3,7 @@ package com.qiyewan.core.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -37,6 +38,14 @@ public class OrderDetail {
     // 单价
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal unitPrice;
+    // 最低人数
+    @ColumnDefault(value = "1")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer minMember = 1;
+    // 每人价格
+    @ColumnDefault(value = "0")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private BigDecimal perPrice = BigDecimal.ZERO;
     // 数量量词
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String unit;
@@ -63,6 +72,8 @@ public class OrderDetail {
         this.name = product.getName();
         this.productSerialId = product.getSerialId();
         this.unitPrice = product.getUnitPrice();
+        this.minMember = product.getMinMember();
+        this.perPrice = product.getPerPrice();
         this.unit = product.getUnit();
         this.summary = product.getSummary();
         this.cover = product.getCover();
