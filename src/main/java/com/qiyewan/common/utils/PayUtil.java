@@ -76,7 +76,7 @@ public class PayUtil {
         BigDecimal amount = new BigDecimal(orderDetail.getAmount());
         if (orderDetail.getProductSerialId().substring(4).equals("HR0003")) {
             if (orderDetail.getMember() > 3) {
-                return totalFee.add((new BigDecimal(98.8)
+                return totalFee.add((new BigDecimal(98)
                         .add(new BigDecimal(18.8)
                                 .multiply(new BigDecimal(orderDetail.getMember() - 3))))
                         .multiply(amount))
