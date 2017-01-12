@@ -19,10 +19,8 @@ import java.util.Date;
 @Data
 public class Product {
     @Id
-    @GeneratedValue
-    private Long id;
-    // 产品编号
     @Column(unique = true, length = 10)
+    // 产品编号
     private String serialId;
     // 产品名称
     private String name;
@@ -38,6 +36,13 @@ public class Product {
     private ProductState productState = ProductState.ON_OFFER;
     // 单价
     private BigDecimal unitPrice;
+    // 最低人数（以上采用 perPrice 计算）
+    @ColumnDefault(value = "1")
+    private Integer minMember;
+    // 每人价格
+    // 最终价格：(unitPrice + (member - minMember) * perPrice) * amount
+    @ColumnDefault(value = "0")
+    private BigDecimal perPrice;
     // 数量量词
     private String unit;
     // 是否热门
@@ -58,8 +63,6 @@ public class Product {
     private String tWhatObtain;
     // 流程...
     private String process;
-    // 详细信息（Q&A形式）
-    private String info;
     // 评分
     private Double rate = 0.0;
     // 购买人次
