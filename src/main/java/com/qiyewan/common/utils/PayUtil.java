@@ -82,7 +82,7 @@ public class PayUtil {
                         .multiply(amount))
                         .setScale(2, BigDecimal.ROUND_HALF_UP);
             } else {
-                return totalFee.add(new BigDecimal(98.8).multiply(amount))
+                return totalFee.add(new BigDecimal(98).multiply(amount))
                         .setScale(2, BigDecimal.ROUND_HALF_UP);
             }
         }
