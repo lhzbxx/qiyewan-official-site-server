@@ -1,6 +1,7 @@
 package com.qiyewan.open.web;
 
 import com.qiyewan.common.utils.IP2RegionUtil;
+import com.qiyewan.core.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PublicController {
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private CacheService cacheService;
 
     @CrossOrigin
     @GetMapping(value = "/locate.do")
@@ -40,5 +43,13 @@ public class PublicController {
                 "  \"status\": \"OK\",\n" +
                 "  \"IP\": \"106.75.11.210\"\n" +
                 "}";
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/refresh.do")
+    @ResponseBody
+    public String refresh() {
+        cacheService.refreshProducts();
+        return "SUCCESS";
     }
 }
