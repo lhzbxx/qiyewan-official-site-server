@@ -8,7 +8,7 @@ IGNORE 1 LINES
 (serial_id, classification_code, classification_name, comment, cover, create_at, heat, @var1, @var2,
  min_member, name, per_price, process,
  product_state, purchase_number, rate, region_code, summary, t_what_need, t_what_obtain,
- unit, unit_price, update_at, what_need, what_obtain, version)
+ unit, unit_price, update_at, version, what_need, what_obtain)
 SET is_hot = (@var1 = 'true'), is_instant = (@var2 = 'true');
 
 LOAD DATA LOCAL INFILE 'classpath:/data/faq.csv'
