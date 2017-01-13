@@ -9,7 +9,7 @@ IGNORE 1 LINES
  min_member, name, per_price, process,
  product_state, purchase_number, rate, region_code, summary, t_what_need, t_what_obtain,
  unit, unit_price, update_at, what_need, what_obtain, version)
-SET is_hot = (@var1 = '1'), is_instant = (@var2 = '1');
+SET is_hot = (@var1 = 'true'), is_instant = (@var2 = 'true');
 
 LOAD DATA LOCAL INFILE 'classpath:/data/faq.csv'
 INTO TABLE faq
