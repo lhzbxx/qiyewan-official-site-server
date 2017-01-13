@@ -74,14 +74,21 @@ public class PayUtil {
 
     private static BigDecimal fee(BigDecimal totalFee, OrderDetail orderDetail) {
         // 最终价格：(unitPrice + (member - minMember) * perPrice) * amount
-        return totalFee.add(
-                new BigDecimal(orderDetail.getAmount()).multiply(
-                        orderDetail.getUnitPrice().add(
-                                orderDetail.getPerPrice().multiply(
-                                        new BigDecimal(orderDetail.getMember() - orderDetail.getMinMember())
-                                )
-                        )
-                )
-        ).setScale(2, BigDecimal.ROUND_HALF_UP);
+        Integer member = orderDetail.getMember() - orderDetail.getMinMember();
+        if (member > 0) {
+            return totalFee.add(
+                    new BigDecimal(orderDetail.getAmount()).multiply(
+                            orderDetail.getUnitPrice().add(
+                                    orderDetail.getPerPrice().multiply(
+                                            new BigDecimal(member)
+                                    )
+                            )
+                    )
+            ).setScale(2, BigDecimal.ROUND_HALF_UP);
+        } else {
+            return totalFee.add(
+                    new BigDecimal(orderDetail.getAmount()).multiply(orderDetail.getUnitPrice())
+            ).setScale(2, BigDecimal.ROUND_HALF_UP);
+        }
     }
 }
