@@ -5,8 +5,9 @@ OPTIONALLY ENCLOSED BY '"'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(classification_code, classification_name, comment, cover, create_at, heat, @var1, @var2, name, process,
- product_state, purchase_number, rate, region_code, serial_id, summary, t_what_need, t_what_obtain,
+(serial_id, classification_code, classification_name, comment, cover, create_at, heat, @var1, @var2,
+ min_member, name, per_price, process,
+ product_state, purchase_number, rate, region_code, summary, t_what_need, t_what_obtain,
  unit, unit_price, update_at, what_need, what_obtain, version)
 SET is_hot = (@var1 = '1'), is_instant = (@var2 = '1');
 
@@ -66,9 +67,9 @@ UPDATE product SET purchase_number = (SELECT count(product_serial_id) FROM revie
 UPDATE product SET purchase_number = 0 WHERE purchase_number IS NULL;
 
 # 更新图片规则：
-UPDATE product SET cover = CONCAT('product-', SUBSTR(serial_id, 4), '-cover.jpg'),
- what_need = CONCAT('product-', SUBSTR(serial_id, 4), '-what-need.png'),
- what_obtain = CONCAT('product-', SUBSTR(serial_id, 4), '-what-obtain.png');
+UPDATE product SET cover = CONCAT('product-', SUBSTR(serial_id, 5), '-cover.jpg'),
+ what_need = CONCAT('product-', SUBSTR(serial_id, 5), '-what-need.png'),
+ what_obtain = CONCAT('product-', SUBSTR(serial_id, 5), '-what-obtain.png');
 
 # 更新购物车中的外键。
 # UPDATE cart SET product_serial_id = serial_id;
