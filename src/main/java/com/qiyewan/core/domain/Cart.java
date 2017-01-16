@@ -10,6 +10,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -45,6 +46,9 @@ public class Cart {
     // 参与人数
     @NotNull(message = "人数不能为空。")
     private Integer member = 1;
+    // 补差价
+    @NotNull(message = "补差价不能为空。")
+    private BigDecimal premium = BigDecimal.ZERO;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createAt = new Date();

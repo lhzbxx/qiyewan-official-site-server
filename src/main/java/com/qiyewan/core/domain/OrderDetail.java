@@ -49,6 +49,8 @@ public class OrderDetail {
     // 数量量词
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String unit;
+    // 补差价
+    private BigDecimal premium = BigDecimal.ZERO;
     // 描述
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String summary;

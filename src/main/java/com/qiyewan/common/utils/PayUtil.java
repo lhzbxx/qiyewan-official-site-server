@@ -84,11 +84,11 @@ public class PayUtil {
                                     )
                             )
                     )
-            ).setScale(2, BigDecimal.ROUND_HALF_UP);
+            ).add(orderDetail.getPremium()).setScale(2, BigDecimal.ROUND_HALF_UP);
         } else {
             return totalFee.add(
                     new BigDecimal(orderDetail.getAmount()).multiply(orderDetail.getUnitPrice())
-            ).setScale(2, BigDecimal.ROUND_HALF_UP);
+            ).add(orderDetail.getPremium()).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     }
 }
