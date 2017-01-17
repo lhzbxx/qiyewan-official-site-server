@@ -61,7 +61,10 @@ public class Cart {
 
     public Cart copy(Cart cart) {
         this.updateAt = new Date();
-        this.amount = cart.amount;
+        this.amount = cart.getAmount();
+        this.premium = cart.getPremium();
+        this.region = cart.getRegion();
+        this.member = cart.getMember();
         return this;
     }
 }

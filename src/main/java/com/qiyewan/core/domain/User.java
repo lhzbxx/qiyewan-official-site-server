@@ -24,6 +24,7 @@ public class User {
     @GeneratedValue
     private Long id;
     // 手机号
+    @Column(unique = true)
     private String phone;
     // 头像
     private String avatar;

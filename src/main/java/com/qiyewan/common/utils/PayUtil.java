@@ -20,8 +20,8 @@ import java.util.Map;
 public class PayUtil {
     public static Charge charge(Order order, String openId) throws RateLimitException, APIException, ChannelException,
             InvalidRequestException, APIConnectionException, AuthenticationException {
-//        Pingpp.apiKey = "sk_test_iDKGyHKaP4CSDSab18LK8WfL";
-        Pingpp.apiKey = "sk_live_aLSWz5iPmLiTj108GGrj1S0G";
+        Pingpp.apiKey = "sk_test_iDKGyHKaP4CSDSab18LK8WfL";
+//        Pingpp.apiKey = "sk_live_aLSWz5iPmLiTj108GGrj1S0G";
 //        Pingpp.privateKeyPath = "";
         List<OrderDetail> details = order.getDetails();
         OrderDetail detail = details.get(0);
