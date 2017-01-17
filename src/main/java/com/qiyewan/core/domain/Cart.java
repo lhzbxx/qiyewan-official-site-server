@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.qiyewan.core.other.serializer.Base64ToLongDeserializer;
 import com.qiyewan.core.other.serializer.LongToBase64Serializer;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -47,7 +48,7 @@ public class Cart {
     @NotNull(message = "人数不能为空。")
     private Integer member = 1;
     // 补差价
-    @NotNull(message = "补差价不能为空。")
+    @ColumnDefault(value = "0")
     private BigDecimal premium = BigDecimal.ZERO;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

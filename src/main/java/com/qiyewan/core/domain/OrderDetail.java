@@ -50,6 +50,8 @@ public class OrderDetail {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String unit;
     // 补差价
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @ColumnDefault(value = "0")
     private BigDecimal premium = BigDecimal.ZERO;
     // 描述
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

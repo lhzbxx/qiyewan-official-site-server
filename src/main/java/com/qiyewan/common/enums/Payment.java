@@ -16,7 +16,8 @@ public enum Payment {
     WXPAY_WAP("wx_pub"),
     // 银联支付
     UPACP("upacp"),
-    UPACP_WAP("upacp_wap");
+    UPACP_WAP("upacp_wap"),
+    CRM("crm");
     private final String channel;
 
     Payment(String channel) {
