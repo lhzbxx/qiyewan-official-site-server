@@ -63,16 +63,19 @@ IGNORE 1 LINES
 (id, account, password, nickname, role, create_at, update_at);
 
 # 更新产品的评论个数：
-UPDATE product SET purchase_number = (SELECT count(product_serial_id) FROM review T WHERE T.product_serial_id = product.serial_id GROUP BY product_serial_id);
-UPDATE product SET purchase_number = 0 WHERE purchase_number IS NULL;
+# UPDATE product SET purchase_number = (SELECT count(product_serial_id) FROM review T WHERE T.product_serial_id = product.serial_id GROUP BY product_serial_id);
+# UPDATE product SET purchase_number = 0 WHERE purchase_number IS NULL;
 
 # 更新图片规则：
-UPDATE product SET cover = CONCAT('product-', SUBSTR(serial_id, 5), '-cover.jpg'),
- what_need = CONCAT('product-', SUBSTR(serial_id, 5), '-what-need.png'),
- what_obtain = CONCAT('product-', SUBSTR(serial_id, 5), '-what-obtain.png');
+# UPDATE product SET cover = CONCAT('product-', SUBSTR(serial_id, 5), '-cover.jpg'),
+#  what_need = CONCAT('product-', SUBSTR(serial_id, 5), '-what-need.png'),
+#  what_obtain = CONCAT('product-', SUBSTR(serial_id, 5), '-what-obtain.png');
 
 # 更新购物车中的外键。
 # UPDATE cart SET product_serial_id = serial_id;
 
 # 更新周期性产品的单位。
-UPDATE product SET unit = '月' WHERE is_instant = 0;
+# UPDATE product SET unit = '月' WHERE is_instant = 0;
+
+# 填充 pure_product_serial_id 字段
+# UPDATE review SET pure_product_serial_id = SUBSTR(product_serial_id, 5);
