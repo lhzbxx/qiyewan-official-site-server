@@ -38,6 +38,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Page<Review> getReviewsByPureProductSerialId(String serialId, Pageable pageable) {
+        return reviewRepository.findByPureProductSerialId(serialId, pageable);
+    }
+
+    @Override
     @Transactional
     public Review addReview(Long userId, Review review) {
         Order order = orderRepository.findBySerialId(review.getSerialId());

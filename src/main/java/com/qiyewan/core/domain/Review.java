@@ -24,9 +24,12 @@ public class Review {
     private Long id;
     @ManyToOne
     private User user;
-    // 产品编号
+    // 产品编号（包括地区）
     @NotNull
     private String productSerialId;
+    // 产品编号（无地区）
+    @NotNull
+    private String pureProductSerialId;
     // 订单编号
     @NotNull
     private String serialId;
@@ -52,6 +55,5 @@ public class Review {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date buyAt = new Date();
 
-    public Review() {
-    }
+    public Review() {}
 }

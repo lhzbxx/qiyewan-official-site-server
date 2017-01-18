@@ -67,6 +67,10 @@ public class ProductController {
     @GetMapping("/products/{serialId}/reviews")
     public Page<Review> review(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                @PathVariable String serialId) {
-        return reviewService.getReviewsByProductSerialId(serialId, pageable);
+        if (serialId.length() == 10) {
+            return reviewService.getReviewsByProductSerialId(serialId, pageable);
+        } else {
+            return reviewService.getReviewsByPureProductSerialId(serialId, pageable);
+        }
     }
 }
