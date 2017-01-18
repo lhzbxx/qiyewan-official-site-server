@@ -73,6 +73,7 @@ public class ReviewServiceImpl implements ReviewService {
         product.setPurchaseNumber(num + 1);
         product.setRate((num * product.getRate() + review.getStar()) / (num + 1));
         review.setProductSerialId(product.getSerialId());
+        review.setPureProductSerialId(product.getSerialId().substring(4));
         review.setUser(userRepository.findOne(userId));
         review.setBuyAt(order.getCreateAt());
         for (ReviewTag tag : review.getTags()) {
