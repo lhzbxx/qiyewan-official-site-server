@@ -14,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,10 +43,14 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findBySerialId(cart.getSerialId());
         if (product == null)
             throw new NotFoundException("该产品不存在。");
+        if (cart.getPremium().signum() == -1) {
+            cart.setPremium(BigDecimal.ZERO);
+        }
         if (isOverride) {
             Cart c = cartRepository.findFirstByUserIdAndSerialId(userId, product.getSerialId());
-            if (c != null) {
+            if (c != null && c.equal(cart)) {
                 c.setAmount(c.getAmount() + cart.getAmount());
+                c.setUpdateAt(new Date());
                 cartRepository.saveAndFlush(c);
                 return c;
             }

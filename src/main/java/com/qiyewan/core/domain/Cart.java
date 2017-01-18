@@ -67,4 +67,11 @@ public class Cart {
         this.member = cart.getMember();
         return this;
     }
+
+    public boolean equal(Cart cart) {
+        return this.premium.equals(cart.getPremium())
+                && this.member.equals(cart.getMember())
+                && this.regionCode.equals(cart.getRegionCode())
+                && this.region.equals(cart.getRegion());
+    }
 }
