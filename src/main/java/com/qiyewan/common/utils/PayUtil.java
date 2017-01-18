@@ -37,7 +37,6 @@ public class PayUtil {
             }
         }
         order.setTotalPrice(total_fee);
-
         Map<String, Object> chargeParams = new HashMap<>();
         chargeParams.put("order_no", order.getSerialId());
         chargeParams.put("amount", total_fee.multiply(BigDecimal.valueOf(100).setScale(0, RoundingMode.HALF_UP)));
