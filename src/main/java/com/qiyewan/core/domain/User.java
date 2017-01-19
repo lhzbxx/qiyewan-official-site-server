@@ -24,7 +24,7 @@ public class User {
     @GeneratedValue
     private Long id;
     // 手机号
-    @Column(unique = true)
+    @Column(unique = true, length = 20)
     private String phone;
     // 头像
     private String avatar;

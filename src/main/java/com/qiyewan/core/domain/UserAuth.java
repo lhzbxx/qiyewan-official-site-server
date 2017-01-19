@@ -4,6 +4,7 @@ import com.qiyewan.common.enums.AuthType;
 import com.qiyewan.common.utils.Md5Util;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ public class UserAuth {
     private Long id;
     private Long userId;
     // 标识符
+    @Column(unique = true, length = 128)
     private String identifier;
     // 认证码
     private String credential;
