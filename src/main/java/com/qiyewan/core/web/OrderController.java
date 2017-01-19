@@ -6,6 +6,7 @@ import com.qiyewan.core.other.payload.PayPayload;
 import com.qiyewan.core.other.dto.ResultDto;
 import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.exceptions.InvalidRequestException;
+import com.qiyewan.core.other.payload.PaymentPayload;
 import com.qiyewan.core.service.CartService;
 import com.qiyewan.core.service.OrderService;
 import com.qiyewan.common.utils.PayUtil;
@@ -39,7 +40,7 @@ public class OrderController {
     private RabbitTemplate rabbitTemplate;
 
     @CrossOrigin
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    @GetMapping(value = "/orders")
     public Page<Order> showList(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(required = false) OrderStage state) {
         Long userId = (Long) request.getAttribute("userId");
@@ -48,8 +49,13 @@ public class OrderController {
         return orderService.getOrdersByUserAndState(userId, state, pageable);
     }
 
+    /**
+     * 创建订单
+     * @param payPayload
+     * @return
+     */
     @CrossOrigin
-    @RequestMapping(value = "/orders", method = RequestMethod.POST)
+    @PostMapping(value = "/orders")
     @Transactional
     public Order add(@RequestBody PayPayload payPayload) {
         Long userId = (Long) request.getAttribute("userId");
@@ -87,6 +93,18 @@ public class OrderController {
     public Order show(@PathVariable String serialId) {
         Long userId = (Long) request.getAttribute("userId");
         return orderService.getOrderBySerialId(userId, serialId);
+    }
+
+    /**
+     * 修改支付方式
+     * @param paymentPayload
+     * @return
+     */
+    @CrossOrigin
+    @PatchMapping("/orders")
+    public Order change(@RequestBody PaymentPayload paymentPayload) {
+        Long userId = (Long) request.getAttribute("userId");
+        return orderService.changePayment(userId, paymentPayload);
     }
 
     @CrossOrigin

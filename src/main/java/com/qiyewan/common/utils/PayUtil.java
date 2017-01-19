@@ -67,6 +67,9 @@ public class PayUtil {
             subject = subject.substring(0, 32);
         }
         chargeParams.put("subject", subject);
+        if (body.length() > 128) {
+            body = body.substring(0, 128);
+        }
         chargeParams.put("body", body);
         return Charge.create(chargeParams);
     }

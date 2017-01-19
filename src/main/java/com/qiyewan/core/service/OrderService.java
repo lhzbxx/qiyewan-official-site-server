@@ -1,7 +1,8 @@
 package com.qiyewan.core.service;
 
-import com.qiyewan.core.domain.Order;
 import com.qiyewan.common.enums.OrderStage;
+import com.qiyewan.core.domain.Order;
+import com.qiyewan.core.other.payload.PaymentPayload;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,6 +21,8 @@ public interface OrderService {
     Page<Order> getOrdersByUserAndState(Long userId, OrderStage orderStage, Pageable pageable);
 
     Order getOrderBySerialId(Long userId, String serialId);
+
+    Order changePayment(Long userId, PaymentPayload paymentPayload);
 
     Order finishOrderBySerialId(String serialId);
 

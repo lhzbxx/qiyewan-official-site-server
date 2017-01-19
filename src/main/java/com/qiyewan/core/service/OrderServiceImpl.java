@@ -4,8 +4,10 @@ import com.qiyewan.common.enums.OrderStage;
 import com.qiyewan.common.exceptions.InvalidRequestException;
 import com.qiyewan.common.exceptions.NotFoundException;
 import com.qiyewan.common.utils.CrmUtil;
+import com.qiyewan.common.utils.PayUtil;
 import com.qiyewan.common.utils.SmsUtil;
 import com.qiyewan.core.domain.*;
+import com.qiyewan.core.other.payload.PaymentPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +52,24 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderBySerialId(Long userId, String serialId) {
         Order order = orderRepository.findBySerialId(serialId);
         checkOrder(userId, order);
+        return order;
+    }
+
+    @Override
+    public Order changePayment(Long userId, PaymentPayload paymentPayload) {
+        Order order = orderRepository.findBySerialId(paymentPayload.getSerialId());
+        checkOrder(userId, order);
+        if (order.getPayment().equals(paymentPayload.getPayment())) {
+            return order;
+        }
+        order.setPayment(paymentPayload.getPayment());
+        try {
+            order.setCharge(PayUtil.charge(order, paymentPayload.getOpenId()).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidRequestException("请求支付失败。");
+        }
+        order.setUpdateAt(new Date());
         return order;
     }
 
