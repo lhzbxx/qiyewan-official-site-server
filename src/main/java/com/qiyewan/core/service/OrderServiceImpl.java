@@ -70,6 +70,7 @@ public class OrderServiceImpl implements OrderService {
             throw new InvalidRequestException("请求支付失败。");
         }
         order.setUpdateAt(new Date());
+        orderRepository.save(order);
         return order;
     }
 
