@@ -1,6 +1,6 @@
 # qiyewan-site-server
 
-基于 SpringBoot 框架搭建，企业湾·官网的 RESTful 接口的服务。
+> 基于 SpringBoot 框架搭建，企业湾·官网的 RESTful 接口的服务。
 
 ### 基本信息
 
@@ -19,27 +19,28 @@ RabbitMQ 作为消息队列，主要用于短信发送、订单处理等异步�
 ### 启动
 
 1. 在以下两种方法中根据运行的操作系统**任选一个**启动基础服务：
-   1. 在 Mac 或 *nix 系统中，可以直接使用 docker-compose 工具在根目录下运行：
+   1.    在 Mac 或 *nix 系统中，可以直接使用 docker-compose 工具在根目录下运行：
 
-      ```shell
-      docker-compose up -d
-      ```
+         ```bash
+         docker-compose up -d
+         ```
 
-      即可。
+         即可。
 
-   2. 在 Windows 系统下，可以单一拉取所有的默认镜像，也可以配置一份额外的 docker-compose.yaml 文件。
+   2.    在 Windows 系统下，可以单一拉取所有的默认镜像，也可以配置一份额外的 docker-compose.yaml 文件。
 
-      我常用的一份配置是：
+            我常用的一份配置是：
 
-      ```yaml
-      version: '2'
+         ```yaml
+            version: '2'
 
-      services:
+            services:
 
-        mariadb:
-          build: ./maria
-          volumes:
-              - ./maria/data:/var/lib/mysql
+              mariadb:
+                build: ./maria
+                volumes:
+         - ./maria/data:/var/lib/mysql
+         ```
           ports:
               - "3306:3306"
           environment:
@@ -58,7 +59,7 @@ RabbitMQ 作为消息队列，主要用于短信发送、订单处理等异步�
               - "6379:6379"
           container_name:
               qiyewan_Redis
-
+       
         rabbitmq:
           build: ./rabbit
           ports:
@@ -73,13 +74,15 @@ RabbitMQ 作为消息队列，主要用于短信发送、订单处理等异步�
               qiyewan_RabbitMQ
       ```
 
-2. 接下来就是运行主服务，首先要明确的一点是，整个服务分为两种环境，一个是 **dev** 开发环境，另一种是 **prod** 生产环境。在运行本地服务或者是进行测试时候请务必使用 **dev** 开发环境。
+      ```
+
+2. 接下来就是运行主服务，首先要明确的一点是，整个服务分为两种环境，一个是 **dev** 开发环境，另一种是 **prod** 生产环境。在运行本地服务或者是进行测试时候请务必使用 **dev** 开发环境（默认为开发环境）。
 
    1. 如果在 IDE 环境中运行，在 IDE 自动导入 pom.xml 中的所有依赖后，在 **active profile** 中填写 **dev** 即可。
 
    2. 如果在非 IDE 环境中运行，则安装好 **Maven3** 之后，直接运行下述命令：
 
-      ```shell
+      ```bash
       mvn run spring-boot:run -Drun.profiles=dev
       ```
 
