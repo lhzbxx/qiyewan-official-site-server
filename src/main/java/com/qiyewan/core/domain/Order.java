@@ -52,8 +52,11 @@ public class Order {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(columnDefinition = "TEXT")
     private String charge;
+    // 备注
+    private String comment;
     // 软删除
     @ColumnDefault(value = "false")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isDeleted = false;
 
     public Order() {}

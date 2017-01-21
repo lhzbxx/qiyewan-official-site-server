@@ -63,6 +63,7 @@ public class OrderController {
         if (carts.isEmpty())
             throw new InvalidRequestException("订单内容为空。");
         Order order = new Order(userId);
+        order.setComment(payPayload.getComment());
         order.setPayment(payPayload.getPayment());
         List<OrderDetail> details = new ArrayList<>();
         for (Long cartId : carts) {

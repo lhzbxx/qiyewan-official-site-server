@@ -26,6 +26,9 @@ public class PayPayload {
     @ConvertGroup(from = String.class, to = Payment.class)
     private Payment payment;
 
+    @Size(max = 255, message = "备注的内容过长！")
+    private String comment;
+
     private String openId;
 
     public PayPayload() {}
