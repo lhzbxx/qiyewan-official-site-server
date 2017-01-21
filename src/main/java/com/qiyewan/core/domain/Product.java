@@ -1,7 +1,9 @@
 package com.qiyewan.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.qiyewan.common.enums.CityCode;
 import com.qiyewan.common.enums.ProductState;
+import com.qiyewan.core.other.payload.ProductPayload;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -46,7 +48,7 @@ public class Product {
     // 数量量词
     private String unit;
     // 是否热门
-    private Boolean isHot;
+    private Boolean isHot = false;
     // 是否立即交付
     private Boolean isInstant;
     // 描述
@@ -64,7 +66,7 @@ public class Product {
     // 流程...
     private String process;
     // 评分
-    private Double rate = 0.0;
+    private Double rate = 5.0;
     // 购买人次
     private Integer purchaseNumber = 0;
     // 备注
@@ -81,4 +83,24 @@ public class Product {
     private Date updateAt = new Date();
 
     public Product() {}
+
+    public Product(ProductPayload payload, CityCode cityCode) {
+        this.serialId = payload.getSerialId();
+        this.name = payload.getName();
+        this.classificationCode = payload.getClassificationCode();
+        this.classificationName = payload.getClassificationName();
+        this.regionCode = cityCode.getCode();
+        this.unitPrice = payload.getUnitPrice();
+        this.minMember = payload.getMinMember();
+        this.perPrice = payload.getPerPrice();
+        this.unit = payload.getUnit();
+        this.isInstant = payload.getIsInstant();
+        this.summary = payload.getSummary();
+        this.cover = "product-" + payload.getSerialId() + "-cover.jpg";
+        this.whatNeed = "product-" + payload.getSerialId() + "-what-need.png";
+        this.whatObtain = "product-" + payload.getSerialId() + "-what-obtain.png";
+        this.tWhatNeed = payload.getWhatNeed();
+        this.tWhatObtain = payload.getWhatObtain();
+        this.process = payload.getProcess();
+    }
 }

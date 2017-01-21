@@ -1,8 +1,10 @@
 package com.qiyewan.open.web;
 
+import com.qiyewan.common.enums.CityCode;
 import com.qiyewan.core.domain.Faq;
 import com.qiyewan.core.domain.Product;
 import com.qiyewan.core.domain.Review;
+import com.qiyewan.core.other.payload.ProductPayload;
 import com.qiyewan.core.service.FaqService;
 import com.qiyewan.core.service.ProductService;
 import com.qiyewan.core.service.ReviewService;
@@ -47,8 +49,11 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Product add(@Validated @RequestBody Product product) {
-        return productService.saveProduct(product);
+    public String add(@Validated @RequestBody ProductPayload productPayload) {
+        for (CityCode cityCode: CityCode.values()) {
+            productService.saveProduct(new Product(productPayload, cityCode));
+        }
+        return "SUCCESS";
     }
 
     @PutMapping("/products")
